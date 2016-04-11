@@ -31,6 +31,8 @@ protected:
     float   height;
     float   originX;
     float   originY;
+    
+    //pair<google::protobuf::Message*, int> registerResult;
 };
 
 #endif /* BaseScene_hpp */
