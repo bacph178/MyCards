@@ -1,5 +1,6 @@
 #include "RegisterScene.h"
 #include "LoginScene.h"
+#include "ShowGame.h"
 
 #include "UI/MSprite.hpp"
 #include "UI/MLabel.hpp"
@@ -7,6 +8,13 @@
 #include "UI/MEditBox.hpp"
 
 #include "Utils/TLMNConfig.hpp"
+#include "Utils/NetworkManager.h"
+
+#include <protobufObject/register.pb.h>
+#include <thread>
+
+#include <iostream>
+
 
 #define TAG_BTN_REGISTER 1
 #define TAG_BTN_BACK 2
@@ -39,6 +47,8 @@ bool RegisterScene::init() {
     this->addChild(bkg);
     
     this->initMenu();
+    
+    this->scheduleUpdate();
 
     return true;
 }
@@ -129,6 +139,44 @@ void RegisterScene::initMenu(){
     
 }
 
+bool registerSuccess = false;
+
+std::mutex mtx_register;
+
+void RegisterScene::update(float delta){
+   
+    int k = -1;
+    
+    mtx_register.lock();
+    pair<google::protobuf::Message*, int> registerResult;
+    for (int i=0; i<NetworkManager::listEvent.size(); i++) {
+        if(NetworkManager::listEvent[i][0].second == NetworkManager::REGISTER){
+            registerResult = NetworkManager::listEvent[i][0];
+            registerSuccess = ((BINRegisterResponse *) registerResult.first)->responsecode();
+            k = i;
+            break;
+        }
+    }
+    
+    if(k != -1)
+        NetworkManager::listEvent.erase(NetworkManager::listEvent.begin() + k);
+    mtx_register.unlock();
+    
+    if(k != -1) {
+        if(registerSuccess){
+            auto showgame = ShowGame::createScene();
+            Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f,showgame));
+            registerSuccess = false;
+        } else {
+            cocos2d::MessageBox(((BINRegisterResponse *) registerResult.first)->message().c_str(), "xxx");
+        }
+    }
+}
+
+std::string user_id_str_register;
+std::string password_str_register;
+std::string re_password_str_register;
+
 void RegisterScene::menuCallBack(Ref *sender,Widget::TouchEventType type)
 {
     if(type == Widget::TouchEventType::ENDED){
@@ -136,10 +184,23 @@ void RegisterScene::menuCallBack(Ref *sender,Widget::TouchEventType type)
         int tag = button->getTag();
         switch (tag) {
             case TAG_BTN_REGISTER:
-                {
-                    //auto registerscene = ShowGame::createScene();
-                    //Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, registerscene));
+            {
+                if(user_id_str_register.empty() || password_str_register.empty()
+                   || re_password_str_register.empty()){
+                    
+                    cocos2d::MessageBox("Vui lòng nhập vào ô còn trống!",
+                                        "Đăng ký");
+                    
+                    return;
                 }
+                if(password_str_register == re_password_str_register){
+                    NetworkManager::getInstance()->getRegisterMessageFromServer(
+                                                                                user_id_str_register,password_str_register, "");
+                }else{
+                    cocos2d::MessageBox("Mật khẩu xác nhận không chính xác!",
+                                        "Đăng ký");
+                }
+            }
                 break;
             case TAG_BTN_BACK:
                 {
@@ -161,6 +222,22 @@ void RegisterScene::editBoxEditingDidBegin(EditBox *editBox) {
 }
 
 void RegisterScene::editBoxEditingDidEnd(EditBox *editBox) {
+    switch (editBox->getTag()) {
+        case TAG_EDITBOX_NHAP_MATKHAU:
+            password_str_register = editBox->getText();
+            CCLOG("%s",this->nhap_matkhau_str.c_str());
+            break;
+        case TAG_EDITBOX_NHAPLAI_MATKHAU:
+            re_password_str_register = editBox->getText();
+            CCLOG("%s",this->nhaplai_matkhau_str.c_str());
+            break;
+        case TAG_EDITBOX_NHAP_SDT:
+            user_id_str_register = editBox->getText();
+            CCLOG("%s",this->nhap_sdt_str.c_str());
+            break;
+        default:
+            break;
+    }
     CCLOG("%s","edit end!");
 }
 
@@ -169,22 +246,7 @@ void RegisterScene::editBoxTextChanged(EditBox *editBox, std::string &text) {
 }
 
 void RegisterScene::editBoxReturn(EditBox *editBox) {
-    switch (editBox->getTag()) {
-        case TAG_EDITBOX_NHAP_MATKHAU:
-            this->nhap_matkhau_str = editBox->getText();
-            CCLOG("%s",this->nhap_matkhau_str.c_str());
-            break;
-        case TAG_EDITBOX_NHAPLAI_MATKHAU:
-            this->nhaplai_matkhau_str = editBox->getText();
-            CCLOG("%s",this->nhaplai_matkhau_str.c_str());
-            break;
-        case TAG_EDITBOX_NHAP_SDT:
-            this->nhap_sdt_str = editBox->getText();
-            CCLOG("%s",this->nhap_sdt_str.c_str());
-            break;
-        default:
-            break;
-    }
+   
 }
 
 void RegisterScene::onExit() {

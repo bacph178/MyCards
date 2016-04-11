@@ -7,7 +7,6 @@
 //
 
 #include "BaseScene.hpp"
-#include "Utils/NetworkManager.h"
 #include "Utils/TLMNConfig.hpp"
 
 bool BaseScene::init()

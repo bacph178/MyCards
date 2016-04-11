@@ -27,6 +27,8 @@ public:
 	// implement the "static create()" method manually
 	CREATE_FUNC(RegisterScene);
     
+    void update(float) override;
+    
 public:
     void initMenu();
     

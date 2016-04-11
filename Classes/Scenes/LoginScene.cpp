@@ -16,7 +16,6 @@
 #include "protobufObject/login.pb.h"
 #include "protobufObject/quick_play.pb.h"
 #include <thread>
-
 #include <iostream>
 
 #if WIN32
@@ -183,8 +182,6 @@ bool LoginScene::init() {
     
     this->scheduleUpdate();
     
-    
-    
     return true;
 }
 
@@ -262,18 +259,8 @@ void LoginScene::update(float delta){
 
 }
 
-
-
 std::string user_id_str;
 std::string password_str;
-
-struct membuf : std::streambuf
-{
-    membuf(char* begin, char* end) {
-        this->setg(begin, begin, end);
-    }
-};
-
 
 void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
     if(eventType == Widget::TouchEventType::ENDED){
@@ -345,5 +332,3 @@ void LoginScene::editBoxReturn(EditBox *editBox) {
 void LoginScene::onExit() {
     BaseScene::onExit();
 }
-
-
