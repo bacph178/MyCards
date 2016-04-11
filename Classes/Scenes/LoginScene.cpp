@@ -13,7 +13,8 @@
 
 #include "Utils/TLMNConfig.hpp"
 
-#include <protobufObject/login.pb.h>
+#include "protobufObject/login.pb.h"
+#include "protobufObject/quick_play.pb.h"
 #include <thread>
 
 #include <iostream>
@@ -201,11 +202,12 @@ void LoginScene::update(float delta){
     sprite->setPosition(position);
     int k = -1;
     mtx.lock();
-    pair<google::protobuf::Message*, int> loginResult;
+	//handle login
+    pair<google::protobuf::Message*, int> result;
     for (int i=0; i<NetworkManager::listEvent.size(); i++) {
         if(NetworkManager::listEvent[i][0].second == NetworkManager::LOGIN){
-            loginResult = NetworkManager::listEvent[i][0];
-            loginSuccess = ((BINLoginResponse *) loginResult.first)->responsecode();
+			result = NetworkManager::listEvent[i][0];
+			loginSuccess = ((BINLoginResponse *)result.first)->responsecode();
             k = i;
             break;
         }
@@ -224,9 +226,40 @@ void LoginScene::update(float delta){
             Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f,showgame));
             loginSuccess = false;
         } else {
-            cocos2d::MessageBox(((BINLoginResponse *) loginResult.first)->message().c_str(), "xxx");
+			cocos2d::MessageBox(((BINLoginResponse *)result.first)->message().c_str(), "xxx");
         }
     }
+	 // handle quick play
+	k = -1; 
+	bool quickPlaySuccess = false;
+	mtx.lock();
+	for (int i = 0; i<NetworkManager::listEvent.size(); i++) {
+		if (NetworkManager::listEvent[i][0].second == NetworkManager::QUICK_PLAY){
+			result = NetworkManager::listEvent[i][0];
+			quickPlaySuccess = ((BINQuickPlayResponse *)result.first)->responsecode();
+
+			
+			k = i;
+			break;
+		}
+	}
+
+	if (k != -1)
+		NetworkManager::listEvent.erase(NetworkManager::listEvent.begin() + k);
+	mtx.unlock();
+
+	if (k != -1) {
+		CCLOG("%s", ((BINQuickPlayResponse *)result.first)->message().c_str());
+		if (quickPlaySuccess){
+			auto showgame = ShowGame::createScene();
+			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f, showgame));
+			quickPlaySuccess = false;
+		}
+		else {
+			cocos2d::MessageBox(((BINQuickPlayResponse *)result.first)->message().c_str(), "xxx");
+		}
+	}
+
 }
 
 
@@ -240,234 +273,6 @@ struct membuf : std::streambuf
         this->setg(begin, begin, end);
     }
 };
-
-
-//======================
-
-std::string compress_gzip(const std::string& str,
-                          int compressionlevel = Z_BEST_COMPRESSION)
-{
-    z_stream zs;                        // z_stream is zlib's control structure
-    memset(&zs, 0, sizeof(zs));
-    
-    if (deflateInit2(&zs,
-                     compressionlevel,
-                     Z_DEFLATED,
-                     MOD_GZIP_ZLIB_WINDOWSIZE + 16,
-                     MOD_GZIP_ZLIB_CFACTOR,
-                     Z_DEFAULT_STRATEGY) != Z_OK
-        ) {
-        throw(std::runtime_error("deflateInit2 failed while compressing."));
-    }
-    
-    zs.next_in = (Bytef*)str.data();
-    zs.avail_in = str.size();           // set the z_stream's input
-    
-    int ret;
-    char outbuffer[32768];
-    std::string outstring;
-    
-    // retrieve the compressed bytes blockwise
-    do {
-        zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
-        zs.avail_out = sizeof(outbuffer);
-        
-        ret = deflate(&zs, Z_FINISH);
-        
-        if (outstring.size() < zs.total_out) {
-            // append the block to the output string
-            outstring.append(outbuffer,
-                             zs.total_out - outstring.size());
-        }
-    } while (ret == Z_OK);
-    
-    deflateEnd(&zs);
-    
-    if (ret != Z_STREAM_END) {          // an error occurred that was not EOF
-        std::ostringstream oss;
-        oss << "Exception during zlib compression: (" << ret << ") " << zs.msg;
-        throw(std::runtime_error(oss.str()));
-    }
-    
-    return outstring;
-}
-
-// Found this one here: http://panthema.net/2007/0328-ZLibString.html, author is Timo Bingmann
-/** Compress a STL string using zlib with given compression level and return
- * the binary data. */
-std::string compress_deflate(const std::string& str,
-                             int compressionlevel = Z_BEST_COMPRESSION)
-{
-    z_stream zs;                        // z_stream is zlib's control structure
-    memset(&zs, 0, sizeof(zs));
-    
-    if (deflateInit(&zs, compressionlevel) != Z_OK)
-        throw(std::runtime_error("deflateInit failed while compressing."));
-    
-    zs.next_in = (Bytef*)str.data();
-    zs.avail_in = str.size();           // set the z_stream's input
-    
-    int ret;
-    char outbuffer[32768];
-    std::string outstring;
-    
-    // retrieve the compressed bytes blockwise
-    do {
-        zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
-        zs.avail_out = sizeof(outbuffer);
-        
-        ret = deflate(&zs, Z_FINISH);
-        
-        if (outstring.size() < zs.total_out) {
-            // append the block to the output string
-            outstring.append(outbuffer,
-                             zs.total_out - outstring.size());
-        }
-    } while (ret == Z_OK);
-    
-    deflateEnd(&zs);
-    
-    if (ret != Z_STREAM_END) {          // an error occurred that was not EOF
-        std::ostringstream oss;
-        oss << "Exception during zlib compression: (" << ret << ") " << zs.msg;
-        throw(std::runtime_error(oss.str()));
-    }
-    
-    return outstring;
-}
-
-/** Decompress an STL string using zlib and return the original data. */
-std::string decompress_deflate(const std::string& str)
-{
-    z_stream zs;                        // z_stream is zlib's control structure
-    memset(&zs, 0, sizeof(zs));
-    
-    if (inflateInit(&zs) != Z_OK)
-        throw(std::runtime_error("inflateInit failed while decompressing."));
-    
-    zs.next_in = (Bytef*)str.data();
-    zs.avail_in = str.size();
-    
-    int ret;
-    char outbuffer[32768];
-    std::string outstring;
-    
-    // get the decompressed bytes blockwise using repeated calls to inflate
-    do {
-        zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
-        zs.avail_out = sizeof(outbuffer);
-        
-        ret = inflate(&zs, 0);
-        
-        if (outstring.size() < zs.total_out) {
-            outstring.append(outbuffer,
-                             zs.total_out - outstring.size());
-        }
-        
-    } while (ret == Z_OK);
-    
-    inflateEnd(&zs);
-    
-    if (ret != Z_STREAM_END) {          // an error occurred that was not EOF
-        std::ostringstream oss;
-        oss << "Exception during zlib decompression: (" << ret << ") "
-        << zs.msg;
-        throw(std::runtime_error(oss.str()));
-    }
-    
-    return outstring;
-}
-vector<char> LoginScene::decompress_gzip2(const char* byte_arr, uLong length) {
-    
-    vector<char> result;
-    vector<char> nil_vector;
-    if (length == 0) return nil_vector;
-    bool done = false;
-    z_stream zs;
-    memset(&zs, 0, sizeof(zs));
-    
-    zs.next_in = (Bytef*) byte_arr;
-    zs.avail_in = length;
-    zs.total_out = 0;
-    zs.zalloc = Z_NULL;
-    zs.zfree = Z_NULL;
-    
-    if (inflateInit2(&zs, MOD_GZIP_ZLIB_WINDOWSIZE + 16) != Z_OK)  return nil_vector;
-    
-    int ret;
-    
-    char outbuffer[32768];
-    
-    do {
-        zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
-        zs.avail_out = sizeof(outbuffer);
-        
-        ret = inflate(&zs, Z_SYNC_FLUSH);
-        
-        if (result.size() < zs.total_out) {
-            int size = result.size();
-            for (int i = 0; i < zs.total_out - size; i++)
-                result.push_back(outbuffer[i]);
-        }
-        
-    } while (ret == Z_OK);
-    
-    inflateEnd(&zs);
-    
-    if (ret != Z_STREAM_END) {          // an error occurred that was not EOF
-        std::ostringstream oss;
-        oss << "Exception during zlib decompression: (" << ret << ") "
-        << zs.msg;
-        return nil_vector;
-    }
-    return result;
-}
-
-std::string decompress_gzip(const std::string &str)
-{
-    z_stream zs;                        // z_stream is zlib's control structure
-    memset(&zs, 0, sizeof(zs));
-    
-    if (inflateInit2(&zs, MOD_GZIP_ZLIB_WINDOWSIZE + 16) != Z_OK)
-        throw(std::runtime_error("inflateInit failed while decompressing."));
-    
-    
-    zs.next_in = (Bytef*)str.data();
-    zs.avail_in = str.size();
-    
-    
-    int ret;
-    char outbuffer[32768];
-    std::string outstring;
-    
-    
-    
-    // get the decompressed bytes blockwise using repeated calls to inflate
-    do {
-        zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
-        zs.avail_out = sizeof(outbuffer);
-        
-        ret = inflate(&zs, 0);
-        
-        
-        if (outstring.size() < zs.total_out) {
-            outstring.append(outbuffer,
-                             zs.total_out - outstring.size());
-        }
-        
-    } while (ret == Z_OK);
-    
-    inflateEnd(&zs);
-    
-    if (ret != Z_STREAM_END) {          // an error occurred that was not EOF
-        std::ostringstream oss;
-        oss << "Exception during zlib decompression: (" << ret << ") "
-        << zs.msg;
-        throw(std::runtime_error(oss.str()));
-    }
-    
-    return outstring;
-}
 
 
 void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
@@ -492,8 +297,9 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
                 break;
             case TAG_BTN_PLAYNOW:
                 {
-                    auto select = ShowGame::createScene();
-                   Director::getInstance()->replaceScene(TransitionCrossFade::create(0.15f, select));
+					NetworkManager::getInstance()->getQuickPlayMessageFromServer("00000000", "Samsung galaxy S2");
+					// auto select = ShowGame::createScene();
+					// Director::getInstance()->replaceScene(TransitionCrossFade::create(0.15f, select));
                 }
                 break;
             case TAG_BTN_FOGOTPASSWORD:
