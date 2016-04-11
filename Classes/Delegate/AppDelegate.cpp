@@ -40,7 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         glview = GLViewImpl::createWithRect("My Cards", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
-        glview->setFrameSize(designResolutionSize.width * 0.25f, designResolutionSize.height * 0.25f);
+        glview->setFrameSize(designResolutionSize.width * 0.5f, designResolutionSize.height * 0.5f);
 #else
         glview = GLViewImpl::create("My Cards");
 #endif

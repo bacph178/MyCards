@@ -27,17 +27,20 @@ public:
 	static NetworkManager* getInstance();
 
 	google::protobuf::Message* initPingMessage(int = 0);
-	google::protobuf::Message* initLoginMessage(string = "sanglx", string = "12345678");
-	google::protobuf::Message* initRegisterMessage(string = "register", string = "12345678", string = "0", string = "1", int = 1, string = "00000000");
-	google::protobuf::Message* initInitializeMessage(string = "0", string = "1", string = "vn", string = "vi", string = "00000000", string = "Samsung galaxy S2",  string = "127.0.0.1");
+	google::protobuf::Message* initLoginMessage(string = "sanglx", string = 
+		"12345678");
+	google::protobuf::Message* initRegisterMessage(string = "register", string 
+		= "12345678", string="register");
+	google::protobuf::Message* initInitializeMessage(string = "0", string = "1"
+		, string = "vn", string = "vi", string = "00000000", string = 
+		"Samsung galaxy S2",  string = "127.0.0.1");
 
 	void connectServer(const char* , const int);
 	void recvMessage();
 	void listenData();
 
 
-	void getRegisterMessageFromServer(string, string, string, string, int,
-        string);
+	void getRegisterMessageFromServer(string, string, string);
 	void getLoginMessageFromServer(string, string);
 	void getInitializeMessageFromServer(string cp, string appversion, string
         country, string language, string device_id, string device_info, string

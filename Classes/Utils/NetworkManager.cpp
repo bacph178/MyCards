@@ -319,17 +319,14 @@ google::protobuf::Message* NetworkManager::initInitializeMessage(string cp, stri
 }
 
 google::protobuf::Message* NetworkManager::initRegisterMessage(string username, string password,
-	string cp, string app_version, int client_type, string device_id) 
+	string full_name) 
 {
 	BINRegisterRequest *request = new BINRegisterRequest(); 
 
 	request->set_username(username);
 	request->set_password(password);
-	request->set_cp(cp);
-	request->set_appversion(app_version);
-	request->set_clienttype(client_type);
-	request->set_deviceid(device_id);
-	
+	request->set_fullname(full_name);
+
 	return request; 
 }
 
@@ -389,11 +386,10 @@ void NetworkManager::getLoginMessageFromServer(string username, string password)
 }
 
 void NetworkManager::getRegisterMessageFromServer(string username, string 
-	password, string cp, string app_version, int client_type, string 
-	device_id) {
+	password, string full_name) {
 
 	int size; 
-	google::protobuf::Message *request = initRegisterMessage(username, password, cp, app_version, client_type, device_id);
+	google::protobuf::Message *request = initRegisterMessage(username, password, full_name);
 	char* ackBuf = sendData(request, 2, NetworkManager::REGISTER, "", size);
 
 

@@ -1,7 +1,8 @@
 #include "IntroScene.h"
-#include <UI/MLabel.hpp>
-#include <UI/MSprite.hpp>
-#include <LoginScene.h>
+#include "UI/MLabel.hpp"
+#include "UI/MSprite.hpp"
+#include "LoginScene.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "NativeUtility.h"
 #endif
@@ -29,14 +30,6 @@ bool IntroScene::init() {
     if ( !BaseScene::init() ) {
         return false;
     }
-    /*
-    auto cache = SpriteFrameCache::getInstance();
-    cache->addSpriteFramesWithFile("Cards.plist");
-    auto mySprite = Sprite::createWithSpriteFrameName("01bich.png");
-    mySprite->setPosition(MVec2(0, 0));
-    mySprite->setTag(100);
-    this->addChild(mySprite, 22);*/
-
 
     
     NetworkManager::getInstance()->connectServer(SERVER_NAME, SERVER_PORT);
@@ -46,7 +39,7 @@ bool IntroScene::init() {
     
     
 	auto background = MSprite::create("bg.png",visibleSize);
-	background->setPosition(MVec2(0,0));
+	background->setPosition(MVec2(0, 0)); 
     background->setColor(Color3B::BLACK);
 	this->addChild(background);
     

@@ -35,16 +35,10 @@ void protobuf_AssignDesc_register_2eproto() {
       "register.proto");
   GOOGLE_CHECK(file != NULL);
   BINRegisterRequest_descriptor_ = file->message_type(0);
-  static const int BINRegisterRequest_offsets_[9] = {
+  static const int BINRegisterRequest_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, username_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, password_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, fullname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, cp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, clienttype_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, deviceid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, deviceinfo_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, ipaddress_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINRegisterRequest, appversion_),
   };
   BINRegisterRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -107,14 +101,11 @@ void protobuf_AddDesc_register_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016register.proto\"\267\001\n\022BINRegisterRequest\022"
-    "\020\n\010userName\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\022\020\n\010f"
-    "ullName\030\003 \001(\t\022\n\n\002cp\030\004 \002(\t\022\022\n\nclientType\030"
-    "\006 \002(\005\022\020\n\010deviceId\030\007 \002(\t\022\022\n\ndeviceInfo\030\010 "
-    "\001(\t\022\021\n\tipAddress\030\t \001(\t\022\022\n\nappVersion\030\n \001"
-    "(\t\"<\n\023BINRegisterResponse\022\024\n\014responseCod"
-    "e\030\001 \002(\010\022\017\n\007message\030\002 \001(\tB\036\n\034com.mi.game."
-    "network.data.bin", 296);
+    "\n\016register.proto\"J\n\022BINRegisterRequest\022\020"
+    "\n\010userName\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\022\020\n\010fu"
+    "llName\030\003 \001(\t\"<\n\023BINRegisterResponse\022\024\n\014r"
+    "esponseCode\030\001 \002(\010\022\017\n\007message\030\002 \001(\tB\036\n\034co"
+    "m.mi.game.network.data.bin", 186);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "register.proto", &protobuf_RegisterTypes);
   BINRegisterRequest::default_instance_ = new BINRegisterRequest();
@@ -137,12 +128,6 @@ struct StaticDescriptorInitializer_register_2eproto {
 const int BINRegisterRequest::kUserNameFieldNumber;
 const int BINRegisterRequest::kPasswordFieldNumber;
 const int BINRegisterRequest::kFullNameFieldNumber;
-const int BINRegisterRequest::kCpFieldNumber;
-const int BINRegisterRequest::kClientTypeFieldNumber;
-const int BINRegisterRequest::kDeviceIdFieldNumber;
-const int BINRegisterRequest::kDeviceInfoFieldNumber;
-const int BINRegisterRequest::kIpAddressFieldNumber;
-const int BINRegisterRequest::kAppVersionFieldNumber;
 #endif  // !_MSC_VER
 
 BINRegisterRequest::BINRegisterRequest()
@@ -164,12 +149,6 @@ void BINRegisterRequest::SharedCtor() {
   username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   fullname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  cp_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  clienttype_ = 0;
-  deviceid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  deviceinfo_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  ipaddress_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  appversion_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -186,21 +165,6 @@ void BINRegisterRequest::SharedDtor() {
   }
   if (fullname_ != &::google::protobuf::internal::kEmptyString) {
     delete fullname_;
-  }
-  if (cp_ != &::google::protobuf::internal::kEmptyString) {
-    delete cp_;
-  }
-  if (deviceid_ != &::google::protobuf::internal::kEmptyString) {
-    delete deviceid_;
-  }
-  if (deviceinfo_ != &::google::protobuf::internal::kEmptyString) {
-    delete deviceinfo_;
-  }
-  if (ipaddress_ != &::google::protobuf::internal::kEmptyString) {
-    delete ipaddress_;
-  }
-  if (appversion_ != &::google::protobuf::internal::kEmptyString) {
-    delete appversion_;
   }
   if (this != default_instance_) {
   }
@@ -242,34 +206,6 @@ void BINRegisterRequest::Clear() {
     if (has_fullname()) {
       if (fullname_ != &::google::protobuf::internal::kEmptyString) {
         fullname_->clear();
-      }
-    }
-    if (has_cp()) {
-      if (cp_ != &::google::protobuf::internal::kEmptyString) {
-        cp_->clear();
-      }
-    }
-    clienttype_ = 0;
-    if (has_deviceid()) {
-      if (deviceid_ != &::google::protobuf::internal::kEmptyString) {
-        deviceid_->clear();
-      }
-    }
-    if (has_deviceinfo()) {
-      if (deviceinfo_ != &::google::protobuf::internal::kEmptyString) {
-        deviceinfo_->clear();
-      }
-    }
-    if (has_ipaddress()) {
-      if (ipaddress_ != &::google::protobuf::internal::kEmptyString) {
-        ipaddress_->clear();
-      }
-    }
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (has_appversion()) {
-      if (appversion_ != &::google::protobuf::internal::kEmptyString) {
-        appversion_->clear();
       }
     }
   }
@@ -329,107 +265,6 @@ bool BINRegisterRequest::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_cp;
-        break;
-      }
-
-      // required string cp = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_cp:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_cp()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->cp().data(), this->cp().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(48)) goto parse_clientType;
-        break;
-      }
-
-      // required int32 clientType = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_clientType:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &clienttype_)));
-          set_has_clienttype();
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(58)) goto parse_deviceId;
-        break;
-      }
-
-      // required string deviceId = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_deviceId:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_deviceid()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->deviceid().data(), this->deviceid().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(66)) goto parse_deviceInfo;
-        break;
-      }
-
-      // optional string deviceInfo = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_deviceInfo:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_deviceinfo()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->deviceinfo().data(), this->deviceinfo().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(74)) goto parse_ipAddress;
-        break;
-      }
-
-      // optional string ipAddress = 9;
-      case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_ipAddress:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_ipaddress()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->ipaddress().data(), this->ipaddress().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
-        if (input->ExpectTag(82)) goto parse_appVersion;
-        break;
-      }
-
-      // optional string appVersion = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_appVersion:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_appversion()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->appversion().data(), this->appversion().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
-        } else {
-          goto handle_uninterpreted;
-        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -479,56 +314,6 @@ void BINRegisterRequest::SerializeWithCachedSizes(
       3, this->fullname(), output);
   }
 
-  // required string cp = 4;
-  if (has_cp()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->cp().data(), this->cp().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->cp(), output);
-  }
-
-  // required int32 clientType = 6;
-  if (has_clienttype()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->clienttype(), output);
-  }
-
-  // required string deviceId = 7;
-  if (has_deviceid()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->deviceid().data(), this->deviceid().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      7, this->deviceid(), output);
-  }
-
-  // optional string deviceInfo = 8;
-  if (has_deviceinfo()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->deviceinfo().data(), this->deviceinfo().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      8, this->deviceinfo(), output);
-  }
-
-  // optional string ipAddress = 9;
-  if (has_ipaddress()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ipaddress().data(), this->ipaddress().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      9, this->ipaddress(), output);
-  }
-
-  // optional string appVersion = 10;
-  if (has_appversion()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appversion().data(), this->appversion().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      10, this->appversion(), output);
-  }
-
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -567,61 +352,6 @@ void BINRegisterRequest::SerializeWithCachedSizes(
         3, this->fullname(), target);
   }
 
-  // required string cp = 4;
-  if (has_cp()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->cp().data(), this->cp().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->cp(), target);
-  }
-
-  // required int32 clientType = 6;
-  if (has_clienttype()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->clienttype(), target);
-  }
-
-  // required string deviceId = 7;
-  if (has_deviceid()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->deviceid().data(), this->deviceid().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->deviceid(), target);
-  }
-
-  // optional string deviceInfo = 8;
-  if (has_deviceinfo()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->deviceinfo().data(), this->deviceinfo().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        8, this->deviceinfo(), target);
-  }
-
-  // optional string ipAddress = 9;
-  if (has_ipaddress()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->ipaddress().data(), this->ipaddress().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        9, this->ipaddress(), target);
-  }
-
-  // optional string appVersion = 10;
-  if (has_appversion()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->appversion().data(), this->appversion().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->appversion(), target);
-  }
-
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -652,50 +382,6 @@ int BINRegisterRequest::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->fullname());
-    }
-
-    // required string cp = 4;
-    if (has_cp()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->cp());
-    }
-
-    // required int32 clientType = 6;
-    if (has_clienttype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->clienttype());
-    }
-
-    // required string deviceId = 7;
-    if (has_deviceid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->deviceid());
-    }
-
-    // optional string deviceInfo = 8;
-    if (has_deviceinfo()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->deviceinfo());
-    }
-
-    // optional string ipAddress = 9;
-    if (has_ipaddress()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->ipaddress());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional string appVersion = 10;
-    if (has_appversion()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->appversion());
     }
 
   }
@@ -734,26 +420,6 @@ void BINRegisterRequest::MergeFrom(const BINRegisterRequest& from) {
     if (from.has_fullname()) {
       set_fullname(from.fullname());
     }
-    if (from.has_cp()) {
-      set_cp(from.cp());
-    }
-    if (from.has_clienttype()) {
-      set_clienttype(from.clienttype());
-    }
-    if (from.has_deviceid()) {
-      set_deviceid(from.deviceid());
-    }
-    if (from.has_deviceinfo()) {
-      set_deviceinfo(from.deviceinfo());
-    }
-    if (from.has_ipaddress()) {
-      set_ipaddress(from.ipaddress());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from.has_appversion()) {
-      set_appversion(from.appversion());
-    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -771,7 +437,7 @@ void BINRegisterRequest::CopyFrom(const BINRegisterRequest& from) {
 }
 
 bool BINRegisterRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000003b) != 0x0000003b) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -781,12 +447,6 @@ void BINRegisterRequest::Swap(BINRegisterRequest* other) {
     std::swap(username_, other->username_);
     std::swap(password_, other->password_);
     std::swap(fullname_, other->fullname_);
-    std::swap(cp_, other->cp_);
-    std::swap(clienttype_, other->clienttype_);
-    std::swap(deviceid_, other->deviceid_);
-    std::swap(deviceinfo_, other->deviceinfo_);
-    std::swap(ipaddress_, other->ipaddress_);
-    std::swap(appversion_, other->appversion_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
