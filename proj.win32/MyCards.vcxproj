@@ -157,6 +157,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\protobufObject\player.pb.cc" />
     <ClCompile Include="..\Classes\protobufObject\quick_play.pb.cc" />
     <ClCompile Include="..\Classes\protobufObject\register.pb.cc" />
+    <ClCompile Include="..\Classes\protobufObject\session_expired.pb.cc" />
     <ClCompile Include="..\Classes\Scenes\BaseScene.cpp" />
     <ClCompile Include="..\Classes\Scenes\IntroScene.cpp" />
     <ClCompile Include="..\Classes\Scenes\LoginScene.cpp" />
@@ -191,6 +192,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\protobufObject\player.pb.h" />
     <ClInclude Include="..\Classes\protobufObject\quick_play.pb.h" />
     <ClInclude Include="..\Classes\protobufObject\register.pb.h" />
+    <ClInclude Include="..\Classes\protobufObject\session_expired.pb.h" />
     <ClInclude Include="..\Classes\Scenes\BaseScene.hpp" />
     <ClInclude Include="..\Classes\Scenes\IntroScene.h" />
     <ClInclude Include="..\Classes\Scenes\LoginScene.h" />
