@@ -4,6 +4,21 @@
 	#pragma comment(lib, "libprotobuf.lib")
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+
+void sleep(int milliseconds)
+{
+	Sleep(milliseconds);
+}
+#else
+#include <unistd.h>
+
+void sleep(int milliseconds)
+{
+	usleep(milliseconds * 1000); // takes microseconds
+}
+#endif
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
@@ -357,7 +372,7 @@ google::protobuf::Message* NetworkManager::initPingMessage(int disconnectTime) {
 void sendPing(char* ackBuf, int size) {
 	while (1) {
 		DefaultSocket::getInstance()->sendData(ackBuf, size);
-		std::this_thread::sleep_for(chrono::seconds::duration(5));
+		sleep(1000);
 	}
 }
 

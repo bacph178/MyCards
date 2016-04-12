@@ -17,6 +17,9 @@
 #include "protobufObject/quick_play.pb.h"
 #include <thread>
 #include <iostream>
+#ifdef SDKBOX_ENABLED
+#include "PluginFacebook/PluginFacebook.h"
+#endif
 
 #if WIN32
 #pragma comment(lib, "libprotobuf.lib")
@@ -261,6 +264,9 @@ void LoginScene::update(float delta){
 
 std::string user_id_str;
 std::string password_str;
+#ifdef SDKBOX_ENABLED
+
+#endif
 
 void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
     if(eventType == Widget::TouchEventType::ENDED){
@@ -269,6 +275,10 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
         switch (tag) {
             case TAG_BTN_FACEBOOK:
                 CCLOG("%s","Login with facebook!");
+
+				#ifdef SDKBOX_ENABLED
+					sdkbox::PluginFacebook::login(); 
+				#endif
                 break;
             case TAG_BTN_LOGIN:
                 CCLOG("%s","Login with esxit!");

@@ -3,4 +3,7 @@ proj.win32/Debug.win32
 proj.win32/MyCards.opensdf
 proj.win32/MyCards.sdf
 proj.win32/MyCards.v12.suo
-
+bin
+proj.android/bin
+proj.android/gen
+proj.android/obj
