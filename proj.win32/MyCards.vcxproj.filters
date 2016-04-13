@@ -102,7 +102,6 @@
     <ClCompile Include="..\Classes\Utils\TLMNConfig.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\protobufObject\session_expired.pb.cc">
       <Filter>src</Filter>
     </ClCompile>
@@ -207,7 +206,6 @@
     <ClInclude Include="..\Classes\Utils\TLMNConfig.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\protobufObject\session_expired.pb.h">
       <Filter>src</Filter>
     </ClInclude>

@@ -54,11 +54,13 @@ bool TLMienNam::init()
     
     this->initMenu(visibleSize, origin);
 
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Cards.plist");
+
     sprite = Sprite::create("bgr_textview.png");
     sprite->setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
     this->addChild(sprite, 0);
     
-    this->initGame();
+   // this->initGame();
    
     this->scheduleUpdate();
     
@@ -209,7 +211,7 @@ void TLMienNam::createCards(PositionIndex positionIndex, int tag){
     double cardScale = this->cardScale();
     
     auto card = this->getCard();
-    CardSprite* cardSprite = CardSprite::create(card, positionIndex);
+    auto cardSprite = CardSprite::create(card, positionIndex);
     
     Size cardSize = Size(cardSprite->getContentSize().width * cardScale,
                          cardSprite->getContentSize().height * cardScale);
@@ -305,7 +307,7 @@ double TLMienNam::cardScale(){
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        auto card = Sprite::create("01co.png");
+		auto card = Sprite::create("nullx.png");
         double scaleX = ((visibleSize.width - CARD_MARGIN * (CARD_X_NUM + 1)) / CARD_X_NUM) / card->getContentSize().width;
         
         cardScale = scaleX;

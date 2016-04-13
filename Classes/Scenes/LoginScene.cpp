@@ -222,7 +222,7 @@ void LoginScene::update(float delta){
     
     if(k != -1) {
         if(loginSuccess){
-            auto showgame = RegisterScene::createScene();
+            auto showgame = ShowGame::createScene();
             Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f,showgame));
             loginSuccess = false;
         } else {

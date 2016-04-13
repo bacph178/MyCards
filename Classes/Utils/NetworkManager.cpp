@@ -4,21 +4,21 @@
 	#pragma comment(lib, "libprotobuf.lib")
 #endif
 
-#ifdef _WIN32
-#include <windows.h>
-
-void sleep(int milliseconds)
-{
-	Sleep(milliseconds);
-}
-#else
-#include <unistd.h>
-
-void sleep(int milliseconds)
-{
-	usleep(milliseconds * 1000); // takes microseconds
-}
-#endif
+//#ifdef _WIN32
+//#include <windows.h>
+//
+//void sleep(int milliseconds)
+//{
+//	Sleep(milliseconds);
+//}
+//#else
+//#include <unistd.h>
+//
+//void sleep(int milliseconds)
+//{
+//	usleep(milliseconds * 1000); // takes microseconds
+//}
+//#endif
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
@@ -42,6 +42,9 @@ void sleep(int milliseconds)
 #include "protobufObject/quick_play.pb.h"
 #include "protobufObject/session_expired.pb.h"
 #include "protobufObject/open_id_login.pb.h"
+#include "protobufObject/enter_zone.pb.h"
+#include "protobufObject/player.pb.h"
+
 
 
 #define MOD_GZIP_ZLIB_WINDOWSIZE 15
@@ -137,8 +140,13 @@ google::protobuf::Message* getTypeMessage(google::protobuf::Message* msg, int me
 	case NetworkManager::QUICK_PLAY:
 		msg = new BINQuickPlayResponse(); 
 		break;
-	case NetworkManager::EXPIRE_SESSION:
+	case NetworkManager::EXPIRED_SESSION:
 		msg = new BINSessionExpiredResponse(); 
+		break;
+	case NetworkManager::ENTER_ROOM:
+		break;
+	case NetworkManager::ENTER_ZONE:
+		msg = new BINEnterZoneResponse();
 		break;
 	default:
 		break;
@@ -358,6 +366,12 @@ google::protobuf::Message* NetworkManager::initRegisterMessage(string username, 
 	return request; 
 }
 
+google::protobuf::Message* NetworkManager::initEnterZoneMessage(int zoneId) {
+	BINEnterZoneRequest *request = new BINEnterZoneRequest(); 
+	request->set_zoneid(zoneId);
+	return request;
+}
+
 google::protobuf::Message* NetworkManager::initQuickPlayMessage(string
 	device_id, string device_info) {
 	BINQuickPlayRequest *request = new BINQuickPlayRequest(); 
@@ -381,7 +395,7 @@ google::protobuf::Message* NetworkManager::initPingMessage(int disconnectTime) {
 void sendPing(char* ackBuf, int size) {
 	while (1) {
 		DefaultSocket::getInstance()->sendData(ackBuf, size);
-		sleep(1000);
+	//	sleep(1000);
 	}
 }
 
@@ -401,6 +415,12 @@ void NetworkManager::getInitializeMessageFromServer(string cp, string
         country, language, device_id, device_info, ipaddress);
 	requestMessage(request, Common::getInstance()->getOS(), 
 		NetworkManager::INITIALIZE, "");
+}
+
+void NetworkManager::getEnterZoneMessageFromServer(int zoneId) {
+	google::protobuf::Message *request = initOpenIdLoginMessage(zoneId);
+	requestMessage(request, Common::getInstance()->getOS(),
+		NetworkManager::ENTER_ZONE, "");
 }
 
 void NetworkManager::requestMessage(google::protobuf::Message *request, int os,

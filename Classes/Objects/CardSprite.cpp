@@ -8,10 +8,11 @@ using namespace cocos2d;
 
 CardSprite* CardSprite::create(Card card, PositionIndex PositionIndex) {
     
-    CardSprite* cardSprite = (CardSprite*)CardSprite::createWithSpriteFrameName(card.ToString());
+	CardSprite* cardSprite = (CardSprite*)Sprite::createWithSpriteFrameName(card.ToString());
     cardSprite->setCard(card);
     cardSprite->setPositionIndex(PositionIndex);
-//    cardSprite->setTexture(cardSprite->getFileName(card));
+//    cardSprite->setTexture();
+	//cardSprite->setSpriteFrame(cardSprite->getFileName(card));
     cardSprite->addEvents();
     return cardSprite;
 }

@@ -25,6 +25,8 @@ public:
     void menuCallBack(Ref *sender,Widget::TouchEventType type);
     
     void gameItemCallBack(Ref *sender,Widget::TouchEventType type);
+
+	void update(float) override;
 	
 	// implement the "static create()" method manually
 	CREATE_FUNC(ShowGame);

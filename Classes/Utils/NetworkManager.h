@@ -37,6 +37,7 @@ public:
 
 	google::protobuf::Message* initQuickPlayMessage(string = "", string = "");
 	google::protobuf::Message* initOpenIdLoginMessage(int channelId = 0, string openId = "");
+	google::protobuf::Message* initEnterZoneMessage(int zoneId);
 	
 	void connectServer(const char* , const int);
 	void recvMessage();
@@ -51,7 +52,7 @@ public:
         ipaddress);
 	void getPingMessageFromServer();
 	void getOpenIdLoginMessageFromServer(int channelId, string openId);
-
+	void getEnterZoneMessageFromServer(int zoneId);
 
 	void requestMessage(google::protobuf::Message *, int, int, string);
 
@@ -65,14 +66,24 @@ public:
 
 	static vector<std::vector<std::pair<google::protobuf::Message*, int>>> listEvent;
 
-	static const int INITIALIZE = 1111; 
-	static const int LOGIN = 1001; 
-	static const int REGISTER = 1000; 
-	static const int QUICK_PLAY = 1002; 
-	static const int OPEN_ID_LOGIN = 1003; 
-	static const int LOGOUT = 1004; 
-	static const int PING = 8888; 
-	static const int EXPIRE_SESSION = 9999; 
+	 static const int REGISTER = 1000;
+	 static const int LOGIN = 1001;
+	 static const int QUICK_PLAY = 1002;
+	 static const int OPEN_ID_LOGIN = 1003;
+	 static const int LOGOUT = 1004;
+	 static const int ENTER_ZONE = 1005;
+	 static const int FILTER_ROOM = 1006;
+	 static const int CREATE_ROOM = 1007;
+	 static const int ENTER_ROOM = 1008;
+	 static const int NEW_PLAYER_ENTER_ROOM = 1009;
+	 static const int START_MATCH = 1010;
+	 static const int TURN = 1011;
+
+	 static const int LEFT_ROOM = 1010;
+	//special message
+	 static const int INITIALIZE = 1111;
+	 static const int PING = 8888;
+	 static const int EXPIRED_SESSION = 9999;
 	private: 
 		static NetworkManager* _instance; 
 };

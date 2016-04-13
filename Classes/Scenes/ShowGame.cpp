@@ -5,6 +5,9 @@
 #include "UI/MButton.hpp"
 #include "UI/MSprite.hpp"
 #include "Utils/TLMNConfig.hpp"
+#include "Utils/NetworkManager.h"
+#include "Utils/Common.h"
+#include "protobufObject/enter_zone.pb.h"
 
 
 #define TAG_BTN_BACK 1
@@ -168,7 +171,7 @@ bool ShowGame::init() {
     
     CCLOG("ShowGame-created");
     
-    
+	this->scheduleUpdate();
 
     return true;
 }
@@ -222,10 +225,8 @@ void ShowGame::gameItemCallBack(cocos2d::Ref *sender, Widget::TouchEventType typ
             case TAG_GAME_TLMN:
                 CCLOG("%s","game : tlmn");
                 {
-
-                    auto registerscene = TLMienNam::createScene();
-
-                    Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, registerscene));
+					NetworkManager::getInstance()->getEnterZoneMessageFromServer(
+						Common::getInstance()->getZoneId(tag));
                 }
                 break;
             case TAG_GAME_TLMB:
@@ -245,6 +246,40 @@ void ShowGame::gameItemCallBack(cocos2d::Ref *sender, Widget::TouchEventType typ
         }
     }
     
+}
+
+void ShowGame::update(float dt) {
+	std::mutex mtx;
+	bool isSuccess = false;
+	int k = -1;
+	mtx.lock();
+	//handle login
+	pair<google::protobuf::Message*, int> result;
+	for (int i = 0; i<NetworkManager::listEvent.size(); i++) {
+		if (NetworkManager::listEvent[i][0].second == NetworkManager::ENTER_ZONE){
+			result = NetworkManager::listEvent[i][0];
+			isSuccess = ((BINEnterZoneResponse *)result.first)->responsecode();
+			k = i;
+			break;
+		}
+	}
+
+	if (k != -1)
+		NetworkManager::listEvent.erase(NetworkManager::listEvent.begin() + k);
+
+	mtx.unlock();
+
+	if (k != -1) { //found
+		if (isSuccess) {
+			auto scene = TLMienNam::createScene();
+			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
+			isSuccess = false;
+		}
+		else {
+			cocos2d::MessageBox(((BINEnterZoneResponse *)result.first)->message().c_str(), "XXX");
+		}
+	}
+
 }
 
 
