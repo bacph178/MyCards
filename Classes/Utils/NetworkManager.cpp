@@ -420,7 +420,7 @@ void NetworkManager::getInitializeMessageFromServer(string cp, string
 void NetworkManager::getEnterZoneMessageFromServer(int zoneId) {
 	google::protobuf::Message *request = initOpenIdLoginMessage(zoneId);
 	requestMessage(request, Common::getInstance()->getOS(),
-		NetworkManager::ENTER_ZONE, "");
+		NetworkManager::ENTER_ZONE, Common::getInstance()->getSessionId());
 }
 
 void NetworkManager::requestMessage(google::protobuf::Message *request, int os,

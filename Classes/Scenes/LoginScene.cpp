@@ -11,6 +11,7 @@
 
 #include "Utils/NetworkManager.h"
 #include "Utils/TLMNConfig.hpp"
+#include "Utils/Common.h"
 
 #include "protobufObject/login.pb.h"
 #include "protobufObject/quick_play.pb.h"
@@ -221,6 +222,10 @@ void LoginScene::update(float delta){
     
     if(k != -1) {
         if(loginSuccess){
+			auto response = (BINLoginResponse *)result.first; 
+			std::string session_id = response->sessionid();
+			cocos2d::UserDefault::getInstance()->setStringForKey(
+				Common::KEY_SESSION_ID, response->sessionid());
             auto showgame = ShowGame::createScene();
             Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f,showgame));
             loginSuccess = false;
