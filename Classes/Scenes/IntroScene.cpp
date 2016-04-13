@@ -44,10 +44,6 @@ bool IntroScene::init() {
 		Common::getInstance()->getIpaddress());
 
     NetworkManager::getInstance()->listenData();
-    
-    
-	auto background = MSprite::create("bg.png",visibleSize);
-	background->setPosition(MVec2(0, 0));
 
     auto background = MSprite::create("bg.png",visibleSize);
 	background->setPosition(MVec2(0, 0));
@@ -62,6 +58,7 @@ bool IntroScene::init() {
         CCLOG("device id: %s",NativeUtility::deviceID().c_str());
         CCLOG("device name: %s",NativeUtility::deviceName().c_str());
         CCLOG("os version: %s",NativeUtility::osVersion().c_str());
+        CCLOG("app version: %s",NativeUtility::appVersion().c_str());
     #endif
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     

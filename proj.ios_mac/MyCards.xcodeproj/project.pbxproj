@@ -12,6 +12,10 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2F0A4F8E1CBE035900286FAF /* Common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A4F8C1CBE035900286FAF /* Common.cpp */; };
+		2F0A4F911CBE036500286FAF /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A4F8F1CBE036500286FAF /* AppDelegate.cpp */; };
+		2F0A4F951CBE056600286FAF /* session_expired.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2F0A4F921CBE056600286FAF /* session_expired.pb.cc */; };
+		2F0A4F961CBE056600286FAF /* session_expired.proto in Resources */ = {isa = PBXBuildFile; fileRef = 2F0A4F941CBE056600286FAF /* session_expired.proto */; };
 		2F65C6981CB8B9E2009620E9 /* descriptor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6411CB8B9E2009620E9 /* descriptor.cc */; };
 		2F65C6991CB8B9E2009620E9 /* descriptor.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6431CB8B9E2009620E9 /* descriptor.pb.cc */; };
 		2F65C69A1CB8B9E2009620E9 /* descriptor.proto in Resources */ = {isa = PBXBuildFile; fileRef = 2F65C6451CB8B9E2009620E9 /* descriptor.proto */; };
@@ -360,6 +364,13 @@
 		1D6058910D05DD3D006BFB54 /* MyCards-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MyCards-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2F0A4F8C1CBE035900286FAF /* Common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Common.cpp; sourceTree = "<group>"; };
+		2F0A4F8D1CBE035900286FAF /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		2F0A4F8F1CBE036500286FAF /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		2F0A4F901CBE036500286FAF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2F0A4F921CBE056600286FAF /* session_expired.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session_expired.pb.cc; sourceTree = "<group>"; };
+		2F0A4F931CBE056600286FAF /* session_expired.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = session_expired.pb.h; sourceTree = "<group>"; };
+		2F0A4F941CBE056600286FAF /* session_expired.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = session_expired.proto; sourceTree = "<group>"; };
 		2F65C63F1CB8B9E2009620E9 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		2F65C6411CB8B9E2009620E9 /* descriptor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor.cc; sourceTree = "<group>"; };
 		2F65C6421CB8B9E2009620E9 /* descriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = descriptor.h; sourceTree = "<group>"; };
@@ -945,6 +956,9 @@
 		2F65C6941CB8B9E2009620E9 /* protobufObject */ = {
 			isa = PBXGroup;
 			children = (
+				2F0A4F921CBE056600286FAF /* session_expired.pb.cc */,
+				2F0A4F931CBE056600286FAF /* session_expired.pb.h */,
+				2F0A4F941CBE056600286FAF /* session_expired.proto */,
 				2F9BACF41CBB4CD30073A210 /* create_room.proto */,
 				2F9BACF51CBB4CD30073A210 /* enter_room.proto */,
 				2F9BACF61CBB4CD30073A210 /* enter_zone.pb.cc */,
@@ -984,6 +998,8 @@
 		2F9BACE91CBB4AAB0073A210 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2F0A4F8C1CBE035900286FAF /* Common.cpp */,
+				2F0A4F8D1CBE035900286FAF /* Common.h */,
 				2F9BACEA1CBB4AAB0073A210 /* CommonSocket.h */,
 				2F9BACEB1CBB4AAB0073A210 /* DefaultSocket.cpp */,
 				2F9BACEC1CBB4AAB0073A210 /* DefaultSocket.h */,
@@ -1092,6 +1108,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2F0A4F8F1CBE036500286FAF /* AppDelegate.cpp */,
+				2F0A4F901CBE036500286FAF /* AppDelegate.h */,
 				2F9BACE91CBB4AAB0073A210 /* Utils */,
 				2F65C63E1CB8B9E2009620E9 /* google */,
 				2F65C6941CB8B9E2009620E9 /* protobufObject */,
@@ -1278,6 +1296,7 @@
 				2F65C7FE1CB8BF57009620E9 /* bgr_list_item.png in Resources */,
 				2F65C8581CB8BF57009620E9 /* ic_button_refresh.png in Resources */,
 				2F65C86A1CB8BF57009620E9 /* ic_navigationbar.png in Resources */,
+				2F0A4F961CBE056600286FAF /* session_expired.proto in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				2F65C80C1CB8BF57009620E9 /* bgr_tab_transfer.png in Resources */,
 				2F65C8361CB8BF57009620E9 /* Cards.plist in Resources */,
@@ -1493,6 +1512,7 @@
 				2F65C6A01CB8B9E2009620E9 /* generated_message_util.cc in Sources */,
 				2F65C6A41CB8B9E3009620E9 /* tokenizer.cc in Sources */,
 				2F65C6B51CB8B9E3009620E9 /* text_format.cc in Sources */,
+				2F0A4F951CBE056600286FAF /* session_expired.pb.cc in Sources */,
 				2F65C6EA1CB8BD0B009620E9 /* CardSprite.cpp in Sources */,
 				2F65C6B41CB8B9E3009620E9 /* substitute.cc in Sources */,
 				2F65C6B31CB8B9E3009620E9 /* strutil.cc in Sources */,
@@ -1504,6 +1524,7 @@
 				2F9BAD1F1CBB4CD30073A210 /* player.pb.cc in Sources */,
 				2F65C6A11CB8B9E2009620E9 /* coded_stream.cc in Sources */,
 				2F65C6991CB8B9E2009620E9 /* descriptor.pb.cc in Sources */,
+				2F0A4F8E1CBE035900286FAF /* Common.cpp in Sources */,
 				2F65C69E1CB8B9E2009620E9 /* extension_set_heavy.cc in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				2F65C6CE1CB8BB09009620E9 /* PopupMenu.cpp in Sources */,
@@ -1534,6 +1555,7 @@
 				2F9BAD1B1CBB4CD30073A210 /* open_id_login.pb.cc in Sources */,
 				2F65C6A61CB8B9E3009620E9 /* zero_copy_stream_impl.cc in Sources */,
 				2F65C6A51CB8B9E3009620E9 /* zero_copy_stream.cc in Sources */,
+				2F0A4F911CBE036500286FAF /* AppDelegate.cpp in Sources */,
 				2F65C6B61CB8B9E3009620E9 /* unknown_field_set.cc in Sources */,
 				2F9BACF21CBB4AAB0073A210 /* NetworkManager.cpp in Sources */,
 				2F65C6A81CB8B9E3009620E9 /* message.cc in Sources */,
@@ -1589,6 +1611,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1628,6 +1654,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
@@ -1745,7 +1775,6 @@
 					"$(SRCROOT)/../cocos2d/external",
 					"$(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../classes",
-					"$(SRCROOT)/../Frameworks",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1777,7 +1806,6 @@
 					"$(SRCROOT)/../cocos2d/external",
 					"$(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../classes",
-					"$(SRCROOT)/../Frameworks",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;

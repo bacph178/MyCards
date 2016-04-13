@@ -10,7 +10,6 @@
 #include "UI/MText.hpp"
 
 #include "Utils/NetworkManager.h"
-
 #include "Utils/TLMNConfig.hpp"
 
 #include "protobufObject/login.pb.h"
@@ -276,6 +275,7 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
             case TAG_BTN_FACEBOOK:
                 CCLOG("%s","Login with facebook!");
 
+                
 				#ifdef SDKBOX_ENABLED
 					sdkbox::PluginFacebook::login(); 
 				#endif

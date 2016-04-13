@@ -43,3 +43,9 @@ std::string NativeUtility::osVersion(){
     NSString *osVersion = [[UIDevice currentDevice] systemVersion];
     return std::string([osVersion UTF8String]);
 }
+
+std::string NativeUtility::appVersion(){
+   NSString *version = [[[NSBundle mainBundle] infoDictionary]
+                        objectForKey:@"CFBundleShortVersionString"];
+    return std::string([version UTF8String]);
+}
