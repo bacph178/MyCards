@@ -35,6 +35,9 @@ public:
 		, string = "vn", string = "vi", string = "00000000", string = 
 		"Samsung galaxy S2",  string = "127.0.0.1");
 
+	google::protobuf::Message* initQuickPlayMessage(string = "", string = "");
+	google::protobuf::Message* initOpenIdLoginMessage(int channelId = 0, string openId = "");
+	
 	void connectServer(const char* , const int);
 	void recvMessage();
 	void listenData();
@@ -42,12 +45,17 @@ public:
 
 	void getRegisterMessageFromServer(string, string, string);
 	void getLoginMessageFromServer(string, string);
+	void getQuickPlayMessageFromServer(string, string);
 	void getInitializeMessageFromServer(string cp, string appversion, string
         country, string language, string device_id, string device_info, string
         ipaddress);
 	void getPingMessageFromServer();
+	void getOpenIdLoginMessageFromServer(int channelId, string openId);
 
-	char* sendData(google::protobuf::Message* ,int ,int ,std::string ,int &);
+
+	void requestMessage(google::protobuf::Message *, int, int, string);
+
+	char* initData(google::protobuf::Message* ,int ,int ,std::string ,int &);
 	// static void callNetwork(char* , int); 
 	static std::vector<std::pair<google::protobuf::Message*, int>> parseFrom(std::vector<char>, int);
 

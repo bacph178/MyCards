@@ -1,9 +1,24 @@
 #include "NetworkManager.h"
-
+#include "Common.h"
 #if WIN32
 	#pragma comment(lib, "libprotobuf.lib")
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+
+void sleep(int milliseconds)
+{
+	Sleep(milliseconds);
+}
+#else
+#include <unistd.h>
+
+void sleep(int milliseconds)
+{
+	usleep(milliseconds * 1000); // takes microseconds
+}
+#endif
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
@@ -24,13 +39,16 @@
 #include "protobufObject/initialize.pb.h"
 #include "protobufObject/login.pb.h"
 #include "protobufObject/ping.pb.h"
+#include "protobufObject/quick_play.pb.h"
+#include "protobufObject/session_expired.pb.h"
+#include "protobufObject/open_id_login.pb.h"
 
 
 #define MOD_GZIP_ZLIB_WINDOWSIZE 15
 #define MOD_GZIP_ZLIB_CFACTOR    9
 #define MOD_GZIP_ZLIB_BSIZE      8096
 #define MAX_SIZE 1024 * 1024
-#define DEBUG 0
+#define DEBUG 1
 
 USING_NS_CC; 
 using namespace std;
@@ -81,10 +99,14 @@ vector<char> decompress_gzip2(const char* byte_arr, int length) {
 	return result;
 }
 
-void callNetwork(char* ackBuf, int size) {
-    
+void callNetwork(char* ackBuf, int size) {  
 	DefaultSocket::getInstance()->sendData(ackBuf, size);
-    
+	/*if (DEBUG) {
+		vector<char> bufferRead(4096);
+		int canRead = DefaultSocket::getInstance()->readData(bufferRead, 4096);
+		vector<pair<google::protobuf::Message*, int>> listMessages =
+			NetworkManager::parseFrom(bufferRead, 4096);
+	}*/
 }
 
 NetworkManager *NetworkManager::getInstance() {
@@ -111,6 +133,13 @@ google::protobuf::Message* getTypeMessage(google::protobuf::Message* msg, int me
 		break;
 	case NetworkManager::LOGIN:
 		msg = new BINLoginResponse(); 
+		break;
+	case NetworkManager::QUICK_PLAY:
+		msg = new BINQuickPlayResponse(); 
+		break;
+	case NetworkManager::EXPIRE_SESSION:
+		msg = new BINSessionExpiredResponse(); 
+		break;
 	default:
 		break;
 	}
@@ -163,16 +192,7 @@ std::vector<std::pair<google::protobuf::Message*, int>> NetworkManager::parseFro
 			int messageid = ((data_uncompressed[index + 2] & 0xFF) << 8) + ((data_uncompressed[index + 3] & 0xFF) << 0);
 			//read protobuf message
 
-			switch (messageid) {
-				case NetworkManager::INITIALIZE:
-					response = new BINInitializeResponse();
-					break;
-				case NetworkManager::REGISTER:
-					response = new BINRegisterResponse();
-					break;
-				default:
-					break;
-			}
+			response = getTypeMessage(response, messageid);
 
 			response->ParseFromArray(&data_uncompressed[index + 4], data_size_block - 2);
 			index += (data_size_block + 2);
@@ -229,7 +249,15 @@ google::protobuf::Message* NetworkManager::initLoginMessage(string username, str
 
 }
 
-char* NetworkManager::sendData(google::protobuf::Message* request, int os, int messid, 
+
+google::protobuf::Message* NetworkManager::initOpenIdLoginMessage(int channelId, string openId) {
+	auto request = new BINOpenIdLoginRequest(); 
+	request->set_channel(channelId);
+	request->set_openid(openId);
+	return request;
+}
+
+char* NetworkManager::initData(google::protobuf::Message* request, int os, int messid, 
 	std::string _session, int &len) 
 {
 	std::vector<char> bytes(_session.begin(), _session.end());
@@ -330,6 +358,15 @@ google::protobuf::Message* NetworkManager::initRegisterMessage(string username, 
 	return request; 
 }
 
+google::protobuf::Message* NetworkManager::initQuickPlayMessage(string
+	device_id, string device_info) {
+	BINQuickPlayRequest *request = new BINQuickPlayRequest(); 
+	request->set_deviceid(device_id);
+	request->set_deviceinfo(device_info);
+	return request;
+}
+
+
 void NetworkManager::connectServer(const char* ip, const int port)
 {
     DefaultSocket::getInstance()->connectSocket(ip, port);
@@ -344,66 +381,75 @@ google::protobuf::Message* NetworkManager::initPingMessage(int disconnectTime) {
 void sendPing(char* ackBuf, int size) {
 	while (1) {
 		DefaultSocket::getInstance()->sendData(ackBuf, size);
-		std::this_thread::sleep_for(chrono::seconds::duration(5));
+		sleep(1000);
 	}
 }
 
 void NetworkManager::getPingMessageFromServer() {
 	google::protobuf::Message* request = initPingMessage(0);
 	int size; 
-	char* ackBuf = sendData(request, 2, NetworkManager::PING, "", size);
+	char* ackBuf = initData(request, Common::getInstance()->getOS(), NetworkManager::PING, "", size);
 	std::thread *t = new std::thread(sendPing, ackBuf, size);
 	if (t->joinable())
 		t->detach();
 }
 
-void NetworkManager::getInitializeMessageFromServer(string cp, string appversion
-    , string country, string language, string device_id, string device_info,
-    string ipaddress) {
-	//connect to server
-	// DefaultSocket::getInstance()->connectSocket("192.168.1.50", 1240);
-
-
+void NetworkManager::getInitializeMessageFromServer(string cp, string 
+	appversion , string country, string language, string device_id, string
+	device_info, string ipaddress) {
 	google::protobuf::Message *request = initInitializeMessage(cp, appversion,
         country, language, device_id, device_info, ipaddress);
-	int size; 
-	char* ackBuf = sendData(request, 2, NetworkManager::INITIALIZE, "", size); 
+	requestMessage(request, Common::getInstance()->getOS(), 
+		NetworkManager::INITIALIZE, "");
+}
 
+void NetworkManager::requestMessage(google::protobuf::Message *request, int os,
+	int message_id, string session_id) {
+	int size; 
+	char* ackBuf = initData(request, os, message_id, session_id, size);
 	std::thread *t = new std::thread(callNetwork, ackBuf, size);
 	if (t->joinable())
 		t->detach(); 
 }
 
+void NetworkManager::getQuickPlayMessageFromServer(string device_id, string 
+	device_info) {
+	google::protobuf::Message *request = initQuickPlayMessage(device_id,
+		device_info);
+	requestMessage(request, Common::getInstance()->getOS(), 
+		NetworkManager::QUICK_PLAY, "");
+}
+
 void NetworkManager::getLoginMessageFromServer(string username, string password)
 {
 	google::protobuf::Message *request = initLoginMessage(username, password);
-	int size;
-	char* ackBuf = sendData(request, 2, NetworkManager::LOGIN, "", size);
-
-	std::thread *t = new std::thread(callNetwork, ackBuf, size);
-	if (t->joinable())
-		t->detach();
+	requestMessage(request, Common::getInstance()->getOS(), 
+		NetworkManager::LOGIN, "");
 }
+
 
 void NetworkManager::getRegisterMessageFromServer(string username, string 
 	password, string full_name) {
+	google::protobuf::Message *request = initRegisterMessage(username, password
+		, full_name);
+	requestMessage(request, Common::getInstance()->getOS(), 
+		NetworkManager::REGISTER, "");
+}
 
-	int size; 
-	google::protobuf::Message *request = initRegisterMessage(username, password, full_name);
-	char* ackBuf = sendData(request, 2, NetworkManager::REGISTER, "", size);
-
-
-	std::thread *t = new std::thread(callNetwork, ackBuf, size);
-	if (t->joinable())
-		t->detach();
-	
+void NetworkManager::getOpenIdLoginMessageFromServer(int channelId, string 
+	openId) {
+	google::protobuf::Message *request = initOpenIdLoginMessage(channelId, 
+		openId);
+	requestMessage(request, Common::getInstance()->getOS(),
+		NetworkManager::OPEN_ID_LOGIN, "");
 }
 
 void NetworkManager::recvMessage() {
 	while (1) {
 		vector<char> bufferRead(4096);
 		int canRead = DefaultSocket::getInstance()->readData(bufferRead, 4096);
-		vector<pair<google::protobuf::Message*, int>> listMessages = NetworkManager::parseFrom(bufferRead, 4096);
+		vector<pair<google::protobuf::Message*, int>> listMessages = 
+			NetworkManager::parseFrom(bufferRead, 4096);
 		if (listMessages.size() > 0) {
 			NetworkManager::listEvent.push_back(listMessages);
 		}

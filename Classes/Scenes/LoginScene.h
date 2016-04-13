@@ -9,7 +9,7 @@
 USING_NS_CC;
 
 using namespace cocos2d::ui;
-class LoginScene : public BaseScene,public EditBoxDelegate
+class LoginScene : public BaseScene, public EditBoxDelegate
 {
 public:
     static cocos2d::Scene* createScene();

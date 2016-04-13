@@ -13,9 +13,13 @@
 
 #include "Utils/TLMNConfig.hpp"
 
-#include <protobufObject/login.pb.h>
+#include "protobufObject/login.pb.h"
+#include "protobufObject/quick_play.pb.h"
 #include <thread>
 #include <iostream>
+#ifdef SDKBOX_ENABLED
+#include "PluginFacebook/PluginFacebook.h"
+#endif
 
 #if WIN32
 #pragma comment(lib, "libprotobuf.lib")
@@ -198,11 +202,12 @@ void LoginScene::update(float delta){
     sprite->setPosition(position);
     int k = -1;
     mtx.lock();
-    pair<google::protobuf::Message*, int> loginResult;
+	//handle login
+    pair<google::protobuf::Message*, int> result;
     for (int i=0; i<NetworkManager::listEvent.size(); i++) {
         if(NetworkManager::listEvent[i][0].second == NetworkManager::LOGIN){
-            loginResult = NetworkManager::listEvent[i][0];
-            loginSuccess = ((BINLoginResponse *) loginResult.first)->responsecode();
+			result = NetworkManager::listEvent[i][0];
+			loginSuccess = ((BINLoginResponse *)result.first)->responsecode();
             k = i;
             break;
         }
@@ -221,13 +226,47 @@ void LoginScene::update(float delta){
             Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f,showgame));
             loginSuccess = false;
         } else {
-            cocos2d::MessageBox(((BINLoginResponse *) loginResult.first)->message().c_str(), "xxx");
+			cocos2d::MessageBox(((BINLoginResponse *)result.first)->message().c_str(), "xxx");
         }
     }
+	 // handle quick play
+	k = -1; 
+	bool quickPlaySuccess = false;
+	mtx.lock();
+	for (int i = 0; i<NetworkManager::listEvent.size(); i++) {
+		if (NetworkManager::listEvent[i][0].second == NetworkManager::QUICK_PLAY){
+			result = NetworkManager::listEvent[i][0];
+			quickPlaySuccess = ((BINQuickPlayResponse *)result.first)->responsecode();
+
+			
+			k = i;
+			break;
+		}
+	}
+
+	if (k != -1)
+		NetworkManager::listEvent.erase(NetworkManager::listEvent.begin() + k);
+	mtx.unlock();
+
+	if (k != -1) {
+		CCLOG("%s", ((BINQuickPlayResponse *)result.first)->message().c_str());
+		if (quickPlaySuccess){
+			auto showgame = ShowGame::createScene();
+			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.1f, showgame));
+			quickPlaySuccess = false;
+		}
+		else {
+			cocos2d::MessageBox(((BINQuickPlayResponse *)result.first)->message().c_str(), "xxx");
+		}
+	}
+
 }
 
 std::string user_id_str;
 std::string password_str;
+#ifdef SDKBOX_ENABLED
+
+#endif
 
 void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
     if(eventType == Widget::TouchEventType::ENDED){
@@ -236,6 +275,11 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
         switch (tag) {
             case TAG_BTN_FACEBOOK:
                 CCLOG("%s","Login with facebook!");
+
+				#ifdef SDKBOX_ENABLED
+					sdkbox::PluginFacebook::login(); 
+				#endif
+
                 break;
             case TAG_BTN_LOGIN:
                 CCLOG("%s","Login with esxit!");
@@ -251,8 +295,9 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
                 break;
             case TAG_BTN_PLAYNOW:
                 {
-                    auto select = ShowGame::createScene();
-                   Director::getInstance()->replaceScene(TransitionCrossFade::create(0.15f, select));
+					NetworkManager::getInstance()->getQuickPlayMessageFromServer("00000000", "Samsung galaxy S2");
+					// auto select = ShowGame::createScene();
+					// Director::getInstance()->replaceScene(TransitionCrossFade::create(0.15f, select));
                 }
                 break;
             case TAG_BTN_FOGOTPASSWORD:
@@ -298,5 +343,3 @@ void LoginScene::editBoxReturn(EditBox *editBox) {
 void LoginScene::onExit() {
     BaseScene::onExit();
 }
-
-

@@ -2,6 +2,7 @@
 #include "UI/MLabel.hpp"
 #include "UI/MSprite.hpp"
 #include "LoginScene.h"
+#include "Utils/Common.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "NativeUtility.h"
@@ -33,12 +34,22 @@ bool IntroScene::init() {
     }
     
     NetworkManager::getInstance()->connectServer(SERVER_NAME, SERVER_PORT);
-    NetworkManager::getInstance()->getInitializeMessageFromServer("0", "1", "vn"
-        ,"vi", "00000000", "Samsung galaxy S2", "192.168.1.47");
+    NetworkManager::getInstance()->getInitializeMessageFromServer(
+		Common::getInstance()->getCp(),
+		Common::getInstance()->getAppVersion(), 
+		Common::getInstance()->getCountry(), 
+		Common::getInstance()->getLanguage(), 
+		Common::getInstance()->getDeviceId(), 
+		Common::getInstance()->getDeviceInfo(), 
+		Common::getInstance()->getIpaddress());
+
     NetworkManager::getInstance()->listenData();
     
     
 	auto background = MSprite::create("bg.png",visibleSize);
+	background->setPosition(MVec2(0, 0));
+
+    auto background = MSprite::create("bg.png",visibleSize);
 	background->setPosition(MVec2(0, 0));
     background->setColor(Color3B::BLACK);
 	this->addChild(background);

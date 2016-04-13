@@ -12,8 +12,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		2F65C6391CB8B49B009620E9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6331CB8B49B009620E9 /* AppDelegate.cpp */; };
-		2F65C63D1CB8B80F009620E9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6331CB8B49B009620E9 /* AppDelegate.cpp */; };
 		2F65C6981CB8B9E2009620E9 /* descriptor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6411CB8B9E2009620E9 /* descriptor.cc */; };
 		2F65C6991CB8B9E2009620E9 /* descriptor.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6431CB8B9E2009620E9 /* descriptor.pb.cc */; };
 		2F65C69A1CB8B9E2009620E9 /* descriptor.proto in Resources */ = {isa = PBXBuildFile; fileRef = 2F65C6451CB8B9E2009620E9 /* descriptor.proto */; };
@@ -362,8 +360,6 @@
 		1D6058910D05DD3D006BFB54 /* MyCards-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MyCards-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		2F65C6331CB8B49B009620E9 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
-		2F65C6341CB8B49B009620E9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2F65C63F1CB8B9E2009620E9 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		2F65C6411CB8B9E2009620E9 /* descriptor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = descriptor.cc; sourceTree = "<group>"; };
 		2F65C6421CB8B9E2009620E9 /* descriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = descriptor.h; sourceTree = "<group>"; };
@@ -776,8 +772,6 @@
 		2F65C6321CB8B49B009620E9 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				2F65C6331CB8B49B009620E9 /* AppDelegate.cpp */,
-				2F65C6341CB8B49B009620E9 /* AppDelegate.h */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -1521,7 +1515,6 @@
 				2F65C6B01CB8B9E3009620E9 /* once.cc in Sources */,
 				2F65C6E11CB8BB5F009620E9 /* M9Path.cpp in Sources */,
 				2F65C6AE1CB8B9E3009620E9 /* atomicops_internals_x86_msvc.cc in Sources */,
-				2F65C6391CB8B49B009620E9 /* AppDelegate.cpp in Sources */,
 				2F9BAD131CBB4CD30073A210 /* enter_zone.pb.cc in Sources */,
 				2F9BAD1D1CBB4CD30073A210 /* ping.pb.cc in Sources */,
 				2F65C6B91CB8B9E3009620E9 /* login.pb.cc in Sources */,
@@ -1566,7 +1559,6 @@
 				2FDCBEEA1CBDD887002C1C53 /* PopupMenu.cpp in Sources */,
 				2FDCBEE91CBDD885002C1C53 /* LoginScene.cpp in Sources */,
 				2FDCBEE61CBDD867002C1C53 /* Popup.cpp in Sources */,
-				2F65C63D1CB8B80F009620E9 /* AppDelegate.cpp in Sources */,
 				2F65C6F61CB8BE6B009620E9 /* NativeUtility.mm in Sources */,
 				2FDCBEE11CBDD85B002C1C53 /* MButton.cpp in Sources */,
 				2FDCBEE31CBDD85F002C1C53 /* MLabel.cpp in Sources */,
