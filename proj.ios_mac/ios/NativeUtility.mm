@@ -24,10 +24,22 @@
 
 #include "NativeUtility.h"
 
-std::string NativeUtility::objectiveC_call(){
-    
+std::string NativeUtility::objectiveC_call() {
     NSString *deviceId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     return std::string([deviceId UTF8String]);
-    
-    //NSLog(@"ID iphone : %@",deviceId);
+}
+
+std::string NativeUtility::deviceID() {
+    NSString *deviceId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    return std::string([deviceId UTF8String]);
+}
+
+std::string NativeUtility::deviceName() {
+    NSString *deviceName = [[UIDevice currentDevice] model];
+    return std::string([deviceName UTF8String]);
+}
+
+std::string NativeUtility::osVersion(){
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    return std::string([osVersion UTF8String]);
 }

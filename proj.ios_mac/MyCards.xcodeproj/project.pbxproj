@@ -258,10 +258,25 @@
 		2F9BAD221CBB4CD30073A210 /* quick_play.proto in Resources */ = {isa = PBXBuildFile; fileRef = 2F9BAD0D1CBB4CD30073A210 /* quick_play.proto */; };
 		2F9BAD231CBB4CD30073A210 /* register.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2F9BAD0E1CBB4CD30073A210 /* register.pb.cc */; };
 		2F9BAD241CBB4CD30073A210 /* register.proto in Resources */ = {isa = PBXBuildFile; fileRef = 2F9BAD101CBB4CD30073A210 /* register.proto */; };
+		2FDCBEDF1CBDD7D9002C1C53 /* RegisterScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6C51CB8BB09009620E9 /* RegisterScene.cpp */; };
+		2FDCBEE01CBDD858002C1C53 /* M9Path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6D31CB8BB5F009620E9 /* M9Path.cpp */; };
+		2FDCBEE11CBDD85B002C1C53 /* MButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6D51CB8BB5F009620E9 /* MButton.cpp */; };
+		2FDCBEE21CBDD85D002C1C53 /* MEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6D71CB8BB5F009620E9 /* MEditBox.cpp */; };
+		2FDCBEE31CBDD85F002C1C53 /* MLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6D91CB8BB5F009620E9 /* MLabel.cpp */; };
+		2FDCBEE41CBDD862002C1C53 /* MSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6DB1CB8BB5F009620E9 /* MSprite.cpp */; };
+		2FDCBEE51CBDD864002C1C53 /* MText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6DD1CB8BB5F009620E9 /* MText.cpp */; };
+		2FDCBEE61CBDD867002C1C53 /* Popup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6DF1CB8BB5F009620E9 /* Popup.cpp */; };
+		2FDCBEE71CBDD87F002C1C53 /* BaseScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6BB1CB8BB09009620E9 /* BaseScene.cpp */; };
+		2FDCBEE81CBDD882002C1C53 /* IntroScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6BD1CB8BB09009620E9 /* IntroScene.cpp */; };
+		2FDCBEE91CBDD885002C1C53 /* LoginScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6BF1CB8BB09009620E9 /* LoginScene.cpp */; };
+		2FDCBEEA1CBDD887002C1C53 /* PopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6C11CB8BB09009620E9 /* PopupMenu.cpp */; };
+		2FDCBEEB1CBDD88A002C1C53 /* PopupSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6C31CB8BB09009620E9 /* PopupSetting.cpp */; };
+		2FDCBEEC1CBDD88E002C1C53 /* ShowGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6C71CB8BB09009620E9 /* ShowGame.cpp */; };
+		2FDCBEED1CBDD891002C1C53 /* TLMienNam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6C91CB8BB09009620E9 /* TLMienNam.cpp */; };
+		2FDCBEEE1CBDD897002C1C53 /* CardSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6E81CB8BD0B009620E9 /* CardSprite.cpp */; };
+		2FDCBEF11CBDE8AD002C1C53 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDCBEEF1CBDE849002C1C53 /* JavaVM.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
-		46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
-		46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -588,9 +603,8 @@
 		2F9BAD0E1CBB4CD30073A210 /* register.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = register.pb.cc; sourceTree = "<group>"; };
 		2F9BAD0F1CBB4CD30073A210 /* register.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = register.pb.h; sourceTree = "<group>"; };
 		2F9BAD101CBB4CD30073A210 /* register.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = register.proto; sourceTree = "<group>"; };
+		2FDCBEEF1CBDE849002C1C53 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
-		46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		46880B8719C43A87006E1F66 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -667,6 +681,7 @@
 				ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */,
 				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
+				2FDCBEF11CBDE8AD002C1C53 /* JavaVM.framework in Frameworks */,
 				8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
 				5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */,
@@ -734,6 +749,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2FDCBEEF1CBDE849002C1C53 /* JavaVM.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
 				8262943D1AAF051F00CB7CF7 /* Security.framework */,
@@ -1089,8 +1105,6 @@
 				2F65C6351CB8B49B009620E9 /* Objects */,
 				2F65C6361CB8B49B009620E9 /* Scenes */,
 				2F65C6371CB8B49B009620E9 /* UI */,
-				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
-				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -1486,7 +1500,6 @@
 				2F65C6A41CB8B9E3009620E9 /* tokenizer.cc in Sources */,
 				2F65C6B51CB8B9E3009620E9 /* text_format.cc in Sources */,
 				2F65C6EA1CB8BD0B009620E9 /* CardSprite.cpp in Sources */,
-				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				2F65C6B41CB8B9E3009620E9 /* substitute.cc in Sources */,
 				2F65C6B31CB8B9E3009620E9 /* strutil.cc in Sources */,
 				2F65C6AC1CB8B9E3009620E9 /* service.cc in Sources */,
@@ -1538,10 +1551,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FDCBEE01CBDD858002C1C53 /* M9Path.cpp in Sources */,
+				2FDCBEE21CBDD85D002C1C53 /* MEditBox.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
-				46880B8B19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				2FDCBEEC1CBDD88E002C1C53 /* ShowGame.cpp in Sources */,
+				2FDCBEEB1CBDD88A002C1C53 /* PopupSetting.cpp in Sources */,
+				2FDCBEEE1CBDD897002C1C53 /* CardSprite.cpp in Sources */,
+				2FDCBEE81CBDD882002C1C53 /* IntroScene.cpp in Sources */,
+				2FDCBEE71CBDD87F002C1C53 /* BaseScene.cpp in Sources */,
+				2FDCBEDF1CBDD7D9002C1C53 /* RegisterScene.cpp in Sources */,
+				2FDCBEE51CBDD864002C1C53 /* MText.cpp in Sources */,
+				2FDCBEED1CBDD891002C1C53 /* TLMienNam.cpp in Sources */,
+				2FDCBEE41CBDD862002C1C53 /* MSprite.cpp in Sources */,
+				2FDCBEEA1CBDD887002C1C53 /* PopupMenu.cpp in Sources */,
+				2FDCBEE91CBDD885002C1C53 /* LoginScene.cpp in Sources */,
+				2FDCBEE61CBDD867002C1C53 /* Popup.cpp in Sources */,
 				2F65C63D1CB8B80F009620E9 /* AppDelegate.cpp in Sources */,
 				2F65C6F61CB8BE6B009620E9 /* NativeUtility.mm in Sources */,
+				2FDCBEE11CBDD85B002C1C53 /* MButton.cpp in Sources */,
+				2FDCBEE31CBDD85F002C1C53 /* MLabel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1725,6 +1753,7 @@
 					"$(SRCROOT)/../cocos2d/external",
 					"$(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../classes",
+					"$(SRCROOT)/../Frameworks",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
@@ -1756,6 +1785,7 @@
 					"$(SRCROOT)/../cocos2d/external",
 					"$(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk",
 					"$(SRCROOT)/../classes",
+					"$(SRCROOT)/../Frameworks",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
