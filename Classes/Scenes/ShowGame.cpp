@@ -222,7 +222,9 @@ void ShowGame::gameItemCallBack(cocos2d::Ref *sender, Widget::TouchEventType typ
             case TAG_GAME_TLMN:
                 CCLOG("%s","game : tlmn");
                 {
+
                     auto registerscene = TLMienNam::createScene();
+
                     Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, registerscene));
                 }
                 break;

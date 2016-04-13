@@ -41,6 +41,7 @@ void sleep(int milliseconds)
 #include "protobufObject/ping.pb.h"
 #include "protobufObject/quick_play.pb.h"
 #include "protobufObject/session_expired.pb.h"
+#include "protobufObject/open_id_login.pb.h"
 
 
 #define MOD_GZIP_ZLIB_WINDOWSIZE 15
@@ -248,6 +249,14 @@ google::protobuf::Message* NetworkManager::initLoginMessage(string username, str
 
 }
 
+
+google::protobuf::Message* NetworkManager::initOpenIdLoginMessage(int channelId, string openId) {
+	auto request = new BINOpenIdLoginRequest(); 
+	request->set_channel(channelId);
+	request->set_openid(openId);
+	return request;
+}
+
 char* NetworkManager::initData(google::protobuf::Message* request, int os, int messid, 
 	std::string _session, int &len) 
 {
@@ -425,6 +434,14 @@ void NetworkManager::getRegisterMessageFromServer(string username, string
 		, full_name);
 	requestMessage(request, Common::getInstance()->getOS(), 
 		NetworkManager::REGISTER, "");
+}
+
+void NetworkManager::getOpenIdLoginMessageFromServer(int channelId, string 
+	openId) {
+	google::protobuf::Message *request = initOpenIdLoginMessage(channelId, 
+		openId);
+	requestMessage(request, Common::getInstance()->getOS(),
+		NetworkManager::OPEN_ID_LOGIN, "");
 }
 
 void NetworkManager::recvMessage() {

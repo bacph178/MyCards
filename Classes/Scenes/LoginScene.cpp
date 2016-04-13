@@ -279,6 +279,7 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
 				#ifdef SDKBOX_ENABLED
 					sdkbox::PluginFacebook::login(); 
 				#endif
+
                 break;
             case TAG_BTN_LOGIN:
                 CCLOG("%s","Login with esxit!");

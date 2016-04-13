@@ -36,7 +36,8 @@ public:
 		"Samsung galaxy S2",  string = "127.0.0.1");
 
 	google::protobuf::Message* initQuickPlayMessage(string = "", string = "");
-
+	google::protobuf::Message* initOpenIdLoginMessage(int channelId = 0, string openId = "");
+	
 	void connectServer(const char* , const int);
 	void recvMessage();
 	void listenData();
@@ -49,6 +50,7 @@ public:
         country, string language, string device_id, string device_info, string
         ipaddress);
 	void getPingMessageFromServer();
+	void getOpenIdLoginMessageFromServer(int channelId, string openId);
 
 
 	void requestMessage(google::protobuf::Message *, int, int, string);
