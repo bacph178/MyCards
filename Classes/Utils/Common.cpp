@@ -1,6 +1,10 @@
 #include "Common.h"
 #include <string>
-#define TEST_ENVIRONMENT 1
+#define TEST_ENVIRONMENT 0
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "NativeUtility.h"
+#endif
 
 
 Common::Common(std::string device_id, std::string device_info, std::string 
@@ -39,35 +43,46 @@ Common* Common::getInstance() {
 std::string Common::getDeviceId() const {
 	if (TEST_ENVIRONMENT)
 		return "00000000";
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        return NativeUtility::deviceID();
+    #endif
 }
 
 std::string Common::getDeviceInfo() const {
 	if (TEST_ENVIRONMENT)
 		return "Samsung Galaxy S2";
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        return NativeUtility::deviceName();
+    #endif
 }
 
 std::string Common::getAppVersion() const {
 	if (TEST_ENVIRONMENT)
 		return "1";
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        return NativeUtility::appVersion();
+    #endif
 }
 
 std::string Common::getCp() const  {
-	if (TEST_ENVIRONMENT)
+	// if (TEST_ENVIRONMENT)
 		return "0";
+    
 }
 
 std::string Common::getCountry() const {
-	if (TEST_ENVIRONMENT)
+	// if (TEST_ENVIRONMENT)
 		return "vn";
+    
 }
 
 std::string Common::getLanguage() const {
-	if (TEST_ENVIRONMENT)
+	// if (TEST_ENVIRONMENT)
 		return "vi";
 }
 
 std::string Common::getIpaddress() const {
-	if (TEST_ENVIRONMENT)
+	// if (TEST_ENVIRONMENT)
 		return "127.0.0.1";
 }
 
@@ -102,3 +117,4 @@ int Common::getChannelId() {
 	}
 	return channelId;
 }
+

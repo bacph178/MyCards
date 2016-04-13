@@ -26,4 +26,9 @@
 class NativeUtility {
 public:
     static std::string objectiveC_call();
+    static std::string deviceID();
+    static std::string deviceName();
+    static std::string osVersion();
+    static std::string appVersion();
+    
 };

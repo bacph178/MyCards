@@ -15,6 +15,7 @@
 #include "Utils/NetworkManager.h"
 #include "Utils/TLMNConfig.hpp"
 
+
 Scene* IntroScene::createScene() {
     
     auto scene = Scene::create();
@@ -31,7 +32,6 @@ bool IntroScene::init() {
     if ( !BaseScene::init() ) {
         return false;
     }
-
     
     NetworkManager::getInstance()->connectServer(SERVER_NAME, SERVER_PORT);
     NetworkManager::getInstance()->getInitializeMessageFromServer(
@@ -46,7 +46,7 @@ bool IntroScene::init() {
     NetworkManager::getInstance()->listenData();
 
     auto background = MSprite::create("bg.png",visibleSize);
-	background->setPosition(MVec2(0, 0)); 
+	background->setPosition(MVec2(0, 0));
     background->setColor(Color3B::BLACK);
 	this->addChild(background);
     
@@ -54,13 +54,13 @@ bool IntroScene::init() {
     label->setPosition(MVec2(width/2 - label->getWidth()/2,height/2 - label->getHeight()/2));
     this->addChild(label);
     
-    
-    
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        CCLOG("id iphone : %s",NativeUtility::objectiveC_call().c_str());
+        CCLOG("device id: %s",NativeUtility::deviceID().c_str());
+        CCLOG("device name: %s",NativeUtility::deviceName().c_str());
+        CCLOG("os version: %s",NativeUtility::osVersion().c_str());
+        CCLOG("app version: %s",NativeUtility::appVersion().c_str());
     #endif
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    
     
     #endif
     
