@@ -279,6 +279,7 @@ void ShowGame::update(float dt) {
 		}
 		else {
 			cocos2d::MessageBox(((BINEnterZoneResponse *)result.first)->message().c_str(), "XXX");
+		
 		}
 	}
 

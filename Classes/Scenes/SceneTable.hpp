@@ -7,8 +7,8 @@
 //
 
 
-#ifndef __TABLE_SCENE_H__
-#define __TABLE_SCENE_H__
+#ifndef __SCENE_TABLE_HPP__
+#define __SCENE_TABLE_HPP__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
@@ -29,9 +29,10 @@ public :
     void lTableCallBack(Ref *pSender, ui::ListView::EventType type);
     void rTableCallBack(Ref *pSender, ui::ListView::EventType type);
     void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
-    
     virtual bool init() override;
     virtual void onExit() override;
+
+	void update(float) override; 
     
     CREATE_FUNC(SceneTable);
     
@@ -51,4 +52,4 @@ protected:
     bool scroll_bottom;
     
 };
-#endif // __TABLE_SCENE_H__
+#endif // __SCENE_TABLE_HPP__

@@ -22,8 +22,9 @@ message BINRoomConfig {
 message BINEnterZoneResponse {
     required bool responseCode = 1;
     optional string message = 2;
-	repeated BINRoomConfig cashRoomConfigs = 3;
-	repeated BINRoomConfig goldRoomConfigs = 4;
+	optional bool enableDisplayRoomList = 3;
+	repeated BINRoomConfig cashRoomConfigs = 4;
+	repeated BINRoomConfig goldRoomConfigs = 5;
 }
 
 //End EnterZone 

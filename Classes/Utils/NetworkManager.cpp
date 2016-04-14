@@ -4,21 +4,7 @@
 	#pragma comment(lib, "libprotobuf.lib")
 #endif
 
-//#ifdef _WIN32
-//#include <windows.h>
-//
-//void sleep(int milliseconds)
-//{
-//	Sleep(milliseconds);
-//}
-//#else
-//#include <unistd.h>
-//
-//void sleep(int milliseconds)
-//{
-//	usleep(milliseconds * 1000); // takes microseconds
-//}
-//#endif
+
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/descriptor.h>
@@ -44,7 +30,8 @@
 #include "protobufObject/open_id_login.pb.h"
 #include "protobufObject/enter_zone.pb.h"
 #include "protobufObject/player.pb.h"
-
+#include "protobufObject/session_expired.pb.h"
+#include "protobufObject/filter_room.pb.h"
 
 
 #define MOD_GZIP_ZLIB_WINDOWSIZE 15
@@ -55,6 +42,20 @@
 
 USING_NS_CC; 
 using namespace std;
+
+#ifdef _WIN32
+
+void sleep(int milliseconds)
+{
+	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+#else
+
+void sleep(int milliseconds)
+{
+	usleep(milliseconds * 1000); // takes microseconds
+}
+#endif
 
 vector<char> decompress_gzip2(const char* byte_arr, int length) {
 
@@ -147,6 +148,12 @@ google::protobuf::Message* getTypeMessage(google::protobuf::Message* msg, int me
 		break;
 	case NetworkManager::ENTER_ZONE:
 		msg = new BINEnterZoneResponse();
+		break;
+	case NetworkManager::PING:
+		msg = new BINPingResponse(); 
+		break;
+	case NetworkManager::FILTER_ROOM: 
+		msg = new BINFilterRoomResponse();
 		break;
 	default:
 		break;
@@ -372,6 +379,17 @@ google::protobuf::Message* NetworkManager::initEnterZoneMessage(int zoneId) {
 	return request;
 }
 
+google::protobuf::Message* NetworkManager::initFilterRoomMessage(int zone_id, 
+	bool vip_room, int first_result, int max_result) {
+	auto request = new BINFilterRoomRequest(); 
+	request->set_zoneid(zone_id);
+	request->set_viproom(vip_room);
+	request->set_firstresult(first_result);
+	request->set_maxresult(max_result);
+	return request; 
+}
+
+
 google::protobuf::Message* NetworkManager::initQuickPlayMessage(string
 	device_id, string device_info) {
 	BINQuickPlayRequest *request = new BINQuickPlayRequest(); 
@@ -395,7 +413,7 @@ google::protobuf::Message* NetworkManager::initPingMessage(int disconnectTime) {
 void sendPing(char* ackBuf, int size) {
 	while (1) {
 		DefaultSocket::getInstance()->sendData(ackBuf, size);
-	//	sleep(1000);
+		sleep(1000);
 	}
 }
 
@@ -421,6 +439,14 @@ void NetworkManager::getEnterZoneMessageFromServer(int zoneId) {
 	google::protobuf::Message *request = initOpenIdLoginMessage(zoneId);
 	requestMessage(request, Common::getInstance()->getOS(),
 		NetworkManager::ENTER_ZONE, Common::getInstance()->getSessionId());
+}
+
+void NetworkManager::getFilterRoomMessageFromServer(int zone_id, bool vip_room,
+	int first_result, int max_result) {
+	google::protobuf::Message *request = initFilterRoomMessage(zone_id, 
+		vip_room, first_result, max_result);
+	requestMessage(request, Common::getInstance()->getOS(),
+		NetworkManager::FILTER_ROOM, Common::getInstance()->getSessionId());
 }
 
 void NetworkManager::requestMessage(google::protobuf::Message *request, int os,

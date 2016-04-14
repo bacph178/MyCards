@@ -110,7 +110,7 @@ int Common::getOS()  {
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 		os =Common::IOS;
 #else
-		os = 0;
+		os = Common::IOS;
 #endif
 	}
 	return os; 

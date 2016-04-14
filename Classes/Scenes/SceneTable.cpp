@@ -5,7 +5,11 @@
 #include "UI/M9Path.hpp"
 #include "UI/MLabel.hpp"
 #include "Utils/TLMNConfig.hpp"
+#include "Utils/NetworkManager.h"
+#include "Utils/Common.h"
+#include "protobufObject/filter_room.pb.h"
 #include "ShowGame.h"
+
 
 #define TAG_BTN_BACK 1
 #define TAG_BTN_PLAYNOW 2
@@ -55,9 +59,66 @@ bool SceneTable::init() {
     this->initTable(visibleSize, origin);
     
     this->initMenu(visibleSize, origin);
-    
+	NetworkManager::getInstance()->getFilterRoomMessageFromServer(
+		Common::getInstance()->getZoneId(0), true, -1, -1);
+	this->scheduleUpdate(); 
     return true;
     
+}
+
+google::protobuf::Message* onFilterRoomEvent(int message_id) {
+	std::mutex mtx;
+	bool isSuccess = false;
+	int k = -1;
+	mtx.lock();
+	//handle login
+	pair<google::protobuf::Message*, int> result;
+	for (int i = 0; i<NetworkManager::listEvent.size(); i++) {
+		if (NetworkManager::listEvent[i][0].second == message_id){
+			result = NetworkManager::listEvent[i][0];
+			// isSuccess = ((BINEnterZoneResponse *)result.first)->responsecode();
+			k = i;
+			break;
+		}
+	}
+
+	if (k != -1)
+		NetworkManager::listEvent.erase(NetworkManager::listEvent.begin() + k);
+
+	mtx.unlock();
+
+	if (k != -1) { //found
+		if (isSuccess) {
+			auto scene = SceneTable::createScene();
+			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
+			isSuccess = false;
+		}
+		else {
+			// cocos2d::MessageBox(((BINEnterZoneResponse *)result.first)->message().c_str(), "XXX");
+		}
+		return result.first;
+	}
+	return 0;
+}
+
+void SceneTable::update(float delta) {
+	BaseScene::update(delta);
+	//
+	BINFilterRoomResponse* response = (BINFilterRoomResponse*)onFilterRoomEvent(NetworkManager::FILTER_ROOM);
+	if (response != 0){
+		if (response->responsecode()) {
+			vector<BINRoomPlay> listRoomPlay;
+			for (int i = 0; i < response->roomplays_size(); i++) {
+				listRoomPlay.push_back(response->roomplays(i));
+			}
+
+			//TODO: add item to listview (roomName, minBet,	enteringPlayer/ roomCapacity, passwordRequired)
+		}
+		else {
+
+		}
+	}
+
 }
 
 void SceneTable::initMenu(Size visibleSize,Vec2 origin){
@@ -227,6 +288,16 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
         lvRight->pushBackCustomItem(custom_item);
     }
     lvRight->setItemsMargin(15);
+	/*lvRight->addEventListener([this](Ref* sender, ui::ListView::EventType type){
+		CCLOG("123");
+	});
+
+	[this](Ref* sender, ui::ListView::EventType type) {
+		if (type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
+			CCLOG("scrolViewCallback %s", "CLicked!");
+		}
+	}*/
+
     lvRight->setBounceEnabled(true);
     lvRight->setGravity(ListView::Gravity::LEFT);
     lvRight->setContentSize(layoutRight->getContentSize());
@@ -234,13 +305,12 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
     lvRight->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(SceneTable::rTableCallBack, this));
     lvRight->addEventListener((ui::ScrollView::ccScrollViewCallback)CC_CALLBACK_2(SceneTable::rScrollTableCallBack, this));
     layoutRight->addChild(lvRight);
-    
     //======
-    
-    
-    
+
 }
 
+<<<<<<< HEAD
+=======
 void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType type){
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
         CCLOG("CLicked!");
@@ -255,6 +325,7 @@ void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::Eve
         scroll_bottom = true;
     }
 }
+>>>>>>> d14930d99448d58cc85560ff14a0b719c706b0a4
 
 void SceneTable::tableCallBack(cocos2d::Ref *sender, Widget::TouchEventType type){
     if(type == Widget::TouchEventType::ENDED){

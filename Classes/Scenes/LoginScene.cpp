@@ -195,6 +195,7 @@ bool loginSuccess = false;
 std::mutex mtx;
 
 void LoginScene::update(float delta){
+	BaseScene::update(delta);
     auto position = sprite->getPosition();
     position.x -= 250 * delta;
     if (position.x  < 0 - (sprite->getBoundingBox().size.width / 2))
@@ -240,8 +241,6 @@ void LoginScene::update(float delta){
 		if (NetworkManager::listEvent[i][0].second == NetworkManager::QUICK_PLAY){
 			result = NetworkManager::listEvent[i][0];
 			quickPlaySuccess = ((BINQuickPlayResponse *)result.first)->responsecode();
-
-			
 			k = i;
 			break;
 		}
