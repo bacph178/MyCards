@@ -14,6 +14,7 @@
 #include "cocos-ext.h"
 #include "UI/MSprite.hpp"
 #include "BaseScene.hpp"
+#include "ui/CocosGUI.h"
 
 using namespace cocos2d;
 
@@ -27,7 +28,15 @@ class SceneTable : public BaseScene
     
     void menuCallBack(Ref *sender,ui::Widget::TouchEventType type);
     void phongCallBack(Ref *sender,ui::Widget::TouchEventType type);
+<<<<<<< HEAD
     void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);    
+=======
+    void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);
+    void lTableCallBack(Ref *pSender, ui::ListView::EventType type);
+    void rTableCallBack(Ref *pSender, ui::ListView::EventType type);
+    void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
+    
+>>>>>>> d14930d99448d58cc85560ff14a0b719c706b0a4
     virtual bool init() override;
     virtual void onExit() override;
 
@@ -42,5 +51,9 @@ public:
     void initMenu(Size size,Vec2 origin);
     void initTable(Size size,Vec2 origin);
     
+protected:
+    ui::ListView* lvRight;
+    ui::ListView* lvLeft;
+    bool scroll_bottom;
 };
 #endif // __SCENE_TABLE_HPP__

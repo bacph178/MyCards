@@ -9,7 +9,6 @@
 #include "BaseScene.hpp"
 #include "Utils/TLMNConfig.hpp"
 
-
 bool BaseScene::init()
 {
     if(!Layer::init())
@@ -25,6 +24,7 @@ bool BaseScene::init()
     Vec2 _origin = Director::getInstance()->getVisibleOrigin();
     originX = _origin.x;
     originY = _origin.y;
+
 	this->scheduleUpdate();
     return true;
 }

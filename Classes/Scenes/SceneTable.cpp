@@ -5,12 +5,11 @@
 #include "UI/M9Path.hpp"
 #include "UI/MLabel.hpp"
 #include "Utils/TLMNConfig.hpp"
-
 #include "Utils/NetworkManager.h"
 #include "Utils/Common.h"
 #include "protobufObject/filter_room.pb.h"
+#include "ShowGame.h"
 
-#include "ui/CocosGUI.h"
 
 #define TAG_BTN_BACK 1
 #define TAG_BTN_PLAYNOW 2
@@ -195,23 +194,21 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
     layoutLeft->setPosition(Vec2(origin.x+15,origin.y+visibleSize.height*0.125f));
     this->addChild(layoutLeft);
     
-    auto lv1 = ListView::create();
+    lvLeft = ListView::create();
     //auto testxxx = MText::create("This is a notification xxxxxx!",15);
     //lv1->setItemModel(testxxx);
     for(int i=0;i<20;i++){
         auto testxxx = MText::create("This is a notification xxxxxx!,nothing.don't look at me!please!",15);
         testxxx->ignoreContentAdaptWithSize(false);
         testxxx->setContentSize(Size(layoutLeft->getContentSize().width,testxxx->getHeight()*2));
-        lv1->pushBackCustomItem(testxxx);
+        lvLeft->pushBackCustomItem(testxxx);
     }
     
-    lv1->setItemsMargin(10);
-    //lv1->setBounceEnabled(true);
-    lv1->setGravity(ListView::Gravity::LEFT);
-    lv1->setContentSize(layoutLeft->getContentSize());
-    //lv1->setPosition(layoutLeft->getPosition());
-    lv1->setScrollBarEnabled(false);
-    layoutLeft->addChild(lv1);
+    lvLeft->setItemsMargin(10);
+    lvLeft->setGravity(ListView::Gravity::LEFT);
+    lvLeft->setContentSize(layoutLeft->getContentSize());
+    lvLeft->setScrollBarEnabled(false);
+    layoutLeft->addChild(lvLeft);
     
     //==========================Layout Right
     
@@ -247,10 +244,7 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
     layoutRight->setPosition(Vec2(origin.x+15+backgroundLeft->getWidth(),origin.y+visibleSize.height*0.125f));
     this->addChild(layoutRight);
     
-    auto lvRight = ListView::create();
-    //auto model = Button::create();
-    //lvRight->setItemModel(model);
-    
+    lvRight = ListView::create();
     for (int i=0; i<20; i++)
     {
         auto bkg_item = Sprite::create("bgr_list_item.png");
@@ -281,6 +275,7 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
         custom_item->addChild(money);
         custom_item->addChild(status);
         custom_item->addChild(lock);
+        custom_item->setTouchEnabled(true);
         lvRight->pushBackCustomItem(custom_item);
     }
     lvRight->setItemsMargin(15);
@@ -297,11 +292,30 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
     lvRight->setBounceEnabled(true);
     lvRight->setGravity(ListView::Gravity::LEFT);
     lvRight->setContentSize(layoutRight->getContentSize());
+    lvRight->setTouchEnabled(true);
+    lvRight->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(SceneTable::rTableCallBack, this));
+    lvRight->addEventListener((ui::ScrollView::ccScrollViewCallback)CC_CALLBACK_2(SceneTable::rScrollTableCallBack, this));
     layoutRight->addChild(lvRight);
     //======
 
 }
 
+<<<<<<< HEAD
+=======
+void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType type){
+    if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
+        CCLOG("CLicked!");
+        
+    }
+}
+
+void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::EventType type){
+    if(!scroll_bottom && type == ui::ScrollView::EventType::SCROLL_TO_BOTTOM){
+        CCLOG("BOTTOM!");
+        scroll_bottom = true;
+    }
+}
+>>>>>>> d14930d99448d58cc85560ff14a0b719c706b0a4
 
 void SceneTable::tableCallBack(cocos2d::Ref *sender, Widget::TouchEventType type){
     if(type == Widget::TouchEventType::ENDED){
@@ -317,8 +331,8 @@ void SceneTable::menuCallBack(cocos2d::Ref *sender, Widget::TouchEventType type)
             case TAG_BTN_BACK:
                 CCLOG("%s","Button Back");
             {
-                //auto select = ShowGame::createScene();
-                //Director::getInstance()->replaceScene(TransitionCrossFade::create(0.15f, select));
+                auto select = ShowGame::createScene();
+                Director::getInstance()->replaceScene(TransitionCrossFade::create(0.15f, select));
             }
                 break;
             case TAG_BTN_CREATE:
