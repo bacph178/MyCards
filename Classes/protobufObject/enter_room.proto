@@ -1,6 +1,7 @@
 option java_package = "com.mi.game.network.data.bin";
 
 //EnterRoom 
+import "player.proto";
 
 message BINEnterRoomRequest {
 	required int32 roomIndex = 1;

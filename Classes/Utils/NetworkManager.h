@@ -38,9 +38,14 @@ public:
 	google::protobuf::Message* initFilterRoomMessage(int zone_id = 5, bool 
 		vip_room = false, int first_result = -1, int max_result = -1);
 
+	google::protobuf::Message* initEnterRoomMessage(int room_index = 0, bool vip_room = false, std::string password = "");
+
 	google::protobuf::Message* initQuickPlayMessage(string = "", string = "");
 	google::protobuf::Message* initOpenIdLoginMessage(int channelId = 0, string openId = "");
 	google::protobuf::Message* initEnterZoneMessage(int zoneId);
+	google::protobuf::Message* initCreateRoomMessage(int zone_id, int 
+		room_group_id, bool vip_room, int min_bet, int player_size, 
+		std::string password = "");
 	
 	void connectServer(const char* , const int);
 	void recvMessage();
@@ -54,9 +59,12 @@ public:
         country, string language, string device_id, string device_info, string
         ipaddress);
 	void getPingMessageFromServer();
+	void getEnterRoomMessageFromServer(int room_index, bool vip_room, string password);
 	void getFilterRoomMessageFromServer(int zone_id, bool vip_room, int first_result, int max_result);
 	void getOpenIdLoginMessageFromServer(int channelId, string openId);
 	void getEnterZoneMessageFromServer(int zoneId);
+	void getCreateRoomMessageFromServer(int zone_id, int room_group_id, bool 
+		vip_room, int min_bet, int player_size, std::string password);
 
 	void requestMessage(google::protobuf::Message *, int, int, string);
 
