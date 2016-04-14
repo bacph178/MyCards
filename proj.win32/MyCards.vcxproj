@@ -163,6 +163,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Scenes\PopupMenu.cpp" />
     <ClCompile Include="..\Classes\Scenes\PopupSetting.cpp" />
     <ClCompile Include="..\Classes\Scenes\RegisterScene.cpp" />
+    <ClCompile Include="..\Classes\Scenes\SceneTable.cpp" />
     <ClCompile Include="..\Classes\Scenes\ShowGame.cpp" />
     <ClCompile Include="..\Classes\Scenes\TLMienNam.cpp" />
     <ClCompile Include="..\Classes\UI\M9Path.cpp" />
@@ -198,6 +199,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Scenes\PopupMenu.hpp" />
     <ClInclude Include="..\Classes\Scenes\PopupSetting.hpp" />
     <ClInclude Include="..\Classes\Scenes\RegisterScene.h" />
+    <ClInclude Include="..\Classes\Scenes\SceneTable.hpp" />
     <ClInclude Include="..\Classes\Scenes\ShowGame.h" />
     <ClInclude Include="..\Classes\Scenes\TLMienNam.h" />
     <ClInclude Include="..\Classes\UI\M9Path.hpp" />

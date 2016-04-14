@@ -20,6 +20,8 @@ public:
     
     virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event) { };
     virtual void onKeyRelease(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event) { };
+
+	void update(float) override; 
     
     CREATE_FUNC(BaseScene);
     

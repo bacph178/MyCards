@@ -9,6 +9,7 @@
 #include "BaseScene.hpp"
 #include "Utils/TLMNConfig.hpp"
 
+
 bool BaseScene::init()
 {
     if(!Layer::init())
@@ -24,7 +25,7 @@ bool BaseScene::init()
     Vec2 _origin = Director::getInstance()->getVisibleOrigin();
     originX = _origin.x;
     originY = _origin.y;
-    
+	this->scheduleUpdate();
     return true;
 }
 
@@ -34,4 +35,8 @@ Vec2 BaseScene::MVec2(float x, float y) {
 
 void BaseScene::onExit() {
     Layer::onExit();
+}
+
+void BaseScene::update(float delta) {
+	CCLOG("TAG: %s", "updated");
 }

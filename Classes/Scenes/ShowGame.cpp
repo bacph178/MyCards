@@ -1,6 +1,7 @@
 #include "ShowGame.h"
 #include "LoginScene.h"
 #include "TLMienNam.h"
+#include "SceneTable.hpp"
 
 #include "UI/MButton.hpp"
 #include "UI/MSprite.hpp"
@@ -271,12 +272,14 @@ void ShowGame::update(float dt) {
 
 	if (k != -1) { //found
 		if (isSuccess) {
-			auto scene = TLMienNam::createScene();
+			// ((BINEnterZoneResponse *)result.first)->enabledisplayroomlist();
+			auto scene = SceneTable::createScene();
 			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
 			isSuccess = false;
 		}
 		else {
 			cocos2d::MessageBox(((BINEnterZoneResponse *)result.first)->message().c_str(), "XXX");
+		
 		}
 	}
 

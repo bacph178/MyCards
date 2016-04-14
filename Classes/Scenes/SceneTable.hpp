@@ -7,8 +7,8 @@
 //
 
 
-#ifndef __TABLE_SCENE_H__
-#define __TABLE_SCENE_H__
+#ifndef __SCENE_TABLE_HPP__
+#define __SCENE_TABLE_HPP__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
@@ -27,10 +27,11 @@ class SceneTable : public BaseScene
     
     void menuCallBack(Ref *sender,ui::Widget::TouchEventType type);
     void phongCallBack(Ref *sender,ui::Widget::TouchEventType type);
-    void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);
-    
+    void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);    
     virtual bool init() override;
     virtual void onExit() override;
+
+	void update(float) override; 
     
     CREATE_FUNC(SceneTable);
     
@@ -42,4 +43,4 @@ public:
     void initTable(Size size,Vec2 origin);
     
 };
-#endif // __TABLE_SCENE_H__
+#endif // __SCENE_TABLE_HPP__

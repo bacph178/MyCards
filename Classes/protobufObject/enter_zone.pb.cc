@@ -77,9 +77,10 @@ void protobuf_AssignDesc_enter_5fzone_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(BINRoomConfig));
   BINEnterZoneResponse_descriptor_ = file->message_type(2);
-  static const int BINEnterZoneResponse_offsets_[4] = {
+  static const int BINEnterZoneResponse_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINEnterZoneResponse, responsecode_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINEnterZoneResponse, message_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINEnterZoneResponse, enabledisplayroomlist_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINEnterZoneResponse, cashroomconfigs_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BINEnterZoneResponse, goldroomconfigs_),
   };
@@ -138,11 +139,12 @@ void protobuf_AddDesc_enter_5fzone_2eproto() {
     "pRoom\030\003 \002(\010\022\017\n\007minCash\030\004 \002(\005\022\017\n\007minGold\030"
     "\005 \002(\005\022\020\n\010minLevel\030\006 \002(\005\022\024\n\014roomCapacity\030"
     "\007 \002(\005\022\022\n\nplayerSize\030\010 \002(\005\022\016\n\006minBet\030\t \002("
-    "\005\022\013\n\003tax\030\n \002(\005\"\217\001\n\024BINEnterZoneResponse\022"
-    "\024\n\014responseCode\030\001 \002(\010\022\017\n\007message\030\002 \001(\t\022\'"
-    "\n\017cashRoomConfigs\030\003 \003(\0132\016.BINRoomConfig\022"
-    "\'\n\017goldRoomConfigs\030\004 \003(\0132\016.BINRoomConfig"
-    "B\036\n\034com.mi.game.network.data.bin", 432);
+    "\005\022\013\n\003tax\030\n \002(\005\"\256\001\n\024BINEnterZoneResponse\022"
+    "\024\n\014responseCode\030\001 \002(\010\022\017\n\007message\030\002 \001(\t\022\035"
+    "\n\025enableDisplayRoomList\030\003 \001(\010\022\'\n\017cashRoo"
+    "mConfigs\030\004 \003(\0132\016.BINRoomConfig\022\'\n\017goldRo"
+    "omConfigs\030\005 \003(\0132\016.BINRoomConfigB\036\n\034com.m"
+    "i.game.network.data.bin", 463);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "enter_zone.proto", &protobuf_RegisterTypes);
   BINEnterZoneRequest::default_instance_ = new BINEnterZoneRequest();
@@ -965,6 +967,7 @@ void BINRoomConfig::Swap(BINRoomConfig* other) {
 #ifndef _MSC_VER
 const int BINEnterZoneResponse::kResponseCodeFieldNumber;
 const int BINEnterZoneResponse::kMessageFieldNumber;
+const int BINEnterZoneResponse::kEnableDisplayRoomListFieldNumber;
 const int BINEnterZoneResponse::kCashRoomConfigsFieldNumber;
 const int BINEnterZoneResponse::kGoldRoomConfigsFieldNumber;
 #endif  // !_MSC_VER
@@ -987,6 +990,7 @@ void BINEnterZoneResponse::SharedCtor() {
   _cached_size_ = 0;
   responsecode_ = false;
   message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  enabledisplayroomlist_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1031,6 +1035,7 @@ void BINEnterZoneResponse::Clear() {
         message_->clear();
       }
     }
+    enabledisplayroomlist_ = false;
   }
   cashroomconfigs_.Clear();
   goldroomconfigs_.Clear();
@@ -1072,12 +1077,28 @@ bool BINEnterZoneResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_cashRoomConfigs;
+        if (input->ExpectTag(24)) goto parse_enableDisplayRoomList;
         break;
       }
 
-      // repeated .BINRoomConfig cashRoomConfigs = 3;
+      // optional bool enableDisplayRoomList = 3;
       case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_enableDisplayRoomList:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &enabledisplayroomlist_)));
+          set_has_enabledisplayroomlist();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_cashRoomConfigs;
+        break;
+      }
+
+      // repeated .BINRoomConfig cashRoomConfigs = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_cashRoomConfigs:
@@ -1086,13 +1107,13 @@ bool BINEnterZoneResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_cashRoomConfigs;
-        if (input->ExpectTag(34)) goto parse_goldRoomConfigs;
+        if (input->ExpectTag(34)) goto parse_cashRoomConfigs;
+        if (input->ExpectTag(42)) goto parse_goldRoomConfigs;
         break;
       }
 
-      // repeated .BINRoomConfig goldRoomConfigs = 4;
-      case 4: {
+      // repeated .BINRoomConfig goldRoomConfigs = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_goldRoomConfigs:
@@ -1101,7 +1122,7 @@ bool BINEnterZoneResponse::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(34)) goto parse_goldRoomConfigs;
+        if (input->ExpectTag(42)) goto parse_goldRoomConfigs;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1138,16 +1159,21 @@ void BINEnterZoneResponse::SerializeWithCachedSizes(
       2, this->message(), output);
   }
 
-  // repeated .BINRoomConfig cashRoomConfigs = 3;
-  for (int i = 0; i < this->cashroomconfigs_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->cashroomconfigs(i), output);
+  // optional bool enableDisplayRoomList = 3;
+  if (has_enabledisplayroomlist()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->enabledisplayroomlist(), output);
   }
 
-  // repeated .BINRoomConfig goldRoomConfigs = 4;
+  // repeated .BINRoomConfig cashRoomConfigs = 4;
+  for (int i = 0; i < this->cashroomconfigs_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, this->cashroomconfigs(i), output);
+  }
+
+  // repeated .BINRoomConfig goldRoomConfigs = 5;
   for (int i = 0; i < this->goldroomconfigs_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, this->goldroomconfigs(i), output);
+      5, this->goldroomconfigs(i), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1173,18 +1199,23 @@ void BINEnterZoneResponse::SerializeWithCachedSizes(
         2, this->message(), target);
   }
 
-  // repeated .BINRoomConfig cashRoomConfigs = 3;
+  // optional bool enableDisplayRoomList = 3;
+  if (has_enabledisplayroomlist()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->enabledisplayroomlist(), target);
+  }
+
+  // repeated .BINRoomConfig cashRoomConfigs = 4;
   for (int i = 0; i < this->cashroomconfigs_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->cashroomconfigs(i), target);
+        4, this->cashroomconfigs(i), target);
   }
 
-  // repeated .BINRoomConfig goldRoomConfigs = 4;
+  // repeated .BINRoomConfig goldRoomConfigs = 5;
   for (int i = 0; i < this->goldroomconfigs_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->goldroomconfigs(i), target);
+        5, this->goldroomconfigs(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1210,8 +1241,13 @@ int BINEnterZoneResponse::ByteSize() const {
           this->message());
     }
 
+    // optional bool enableDisplayRoomList = 3;
+    if (has_enabledisplayroomlist()) {
+      total_size += 1 + 1;
+    }
+
   }
-  // repeated .BINRoomConfig cashRoomConfigs = 3;
+  // repeated .BINRoomConfig cashRoomConfigs = 4;
   total_size += 1 * this->cashroomconfigs_size();
   for (int i = 0; i < this->cashroomconfigs_size(); i++) {
     total_size +=
@@ -1219,7 +1255,7 @@ int BINEnterZoneResponse::ByteSize() const {
         this->cashroomconfigs(i));
   }
 
-  // repeated .BINRoomConfig goldRoomConfigs = 4;
+  // repeated .BINRoomConfig goldRoomConfigs = 5;
   total_size += 1 * this->goldroomconfigs_size();
   for (int i = 0; i < this->goldroomconfigs_size(); i++) {
     total_size +=
@@ -1261,6 +1297,9 @@ void BINEnterZoneResponse::MergeFrom(const BINEnterZoneResponse& from) {
     if (from.has_message()) {
       set_message(from.message());
     }
+    if (from.has_enabledisplayroomlist()) {
+      set_enabledisplayroomlist(from.enabledisplayroomlist());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1293,6 +1332,7 @@ void BINEnterZoneResponse::Swap(BINEnterZoneResponse* other) {
   if (other != this) {
     std::swap(responsecode_, other->responsecode_);
     std::swap(message_, other->message_);
+    std::swap(enabledisplayroomlist_, other->enabledisplayroomlist_);
     cashroomconfigs_.Swap(&other->cashroomconfigs_);
     goldroomconfigs_.Swap(&other->goldroomconfigs_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

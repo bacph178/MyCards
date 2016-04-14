@@ -35,6 +35,9 @@ public:
 		, string = "vn", string = "vi", string = "00000000", string = 
 		"Samsung galaxy S2",  string = "127.0.0.1");
 
+	google::protobuf::Message* initFilterRoomMessage(int zone_id = 5, bool 
+		vip_room = false, int first_result = -1, int max_result = -1);
+
 	google::protobuf::Message* initQuickPlayMessage(string = "", string = "");
 	google::protobuf::Message* initOpenIdLoginMessage(int channelId = 0, string openId = "");
 	google::protobuf::Message* initEnterZoneMessage(int zoneId);
@@ -51,6 +54,7 @@ public:
         country, string language, string device_id, string device_info, string
         ipaddress);
 	void getPingMessageFromServer();
+	void getFilterRoomMessageFromServer(int zone_id, bool vip_room, int first_result, int max_result);
 	void getOpenIdLoginMessageFromServer(int channelId, string openId);
 	void getEnterZoneMessageFromServer(int zoneId);
 

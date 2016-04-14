@@ -369,10 +369,17 @@ class BINEnterZoneResponse : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // repeated .BINRoomConfig cashRoomConfigs = 3;
+  // optional bool enableDisplayRoomList = 3;
+  inline bool has_enabledisplayroomlist() const;
+  inline void clear_enabledisplayroomlist();
+  static const int kEnableDisplayRoomListFieldNumber = 3;
+  inline bool enabledisplayroomlist() const;
+  inline void set_enabledisplayroomlist(bool value);
+
+  // repeated .BINRoomConfig cashRoomConfigs = 4;
   inline int cashroomconfigs_size() const;
   inline void clear_cashroomconfigs();
-  static const int kCashRoomConfigsFieldNumber = 3;
+  static const int kCashRoomConfigsFieldNumber = 4;
   inline const ::BINRoomConfig& cashroomconfigs(int index) const;
   inline ::BINRoomConfig* mutable_cashroomconfigs(int index);
   inline ::BINRoomConfig* add_cashroomconfigs();
@@ -381,10 +388,10 @@ class BINEnterZoneResponse : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::BINRoomConfig >*
       mutable_cashroomconfigs();
 
-  // repeated .BINRoomConfig goldRoomConfigs = 4;
+  // repeated .BINRoomConfig goldRoomConfigs = 5;
   inline int goldroomconfigs_size() const;
   inline void clear_goldroomconfigs();
-  static const int kGoldRoomConfigsFieldNumber = 4;
+  static const int kGoldRoomConfigsFieldNumber = 5;
   inline const ::BINRoomConfig& goldroomconfigs(int index) const;
   inline ::BINRoomConfig* mutable_goldroomconfigs(int index);
   inline ::BINRoomConfig* add_goldroomconfigs();
@@ -399,6 +406,8 @@ class BINEnterZoneResponse : public ::google::protobuf::Message {
   inline void clear_has_responsecode();
   inline void set_has_message();
   inline void clear_has_message();
+  inline void set_has_enabledisplayroomlist();
+  inline void clear_has_enabledisplayroomlist();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -406,9 +415,10 @@ class BINEnterZoneResponse : public ::google::protobuf::Message {
   ::google::protobuf::RepeatedPtrField< ::BINRoomConfig > cashroomconfigs_;
   ::google::protobuf::RepeatedPtrField< ::BINRoomConfig > goldroomconfigs_;
   bool responsecode_;
+  bool enabledisplayroomlist_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_enter_5fzone_2eproto();
   friend void protobuf_AssignDesc_enter_5fzone_2eproto();
@@ -814,7 +824,29 @@ inline void BINEnterZoneResponse::set_allocated_message(::std::string* message) 
   }
 }
 
-// repeated .BINRoomConfig cashRoomConfigs = 3;
+// optional bool enableDisplayRoomList = 3;
+inline bool BINEnterZoneResponse::has_enabledisplayroomlist() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void BINEnterZoneResponse::set_has_enabledisplayroomlist() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void BINEnterZoneResponse::clear_has_enabledisplayroomlist() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void BINEnterZoneResponse::clear_enabledisplayroomlist() {
+  enabledisplayroomlist_ = false;
+  clear_has_enabledisplayroomlist();
+}
+inline bool BINEnterZoneResponse::enabledisplayroomlist() const {
+  return enabledisplayroomlist_;
+}
+inline void BINEnterZoneResponse::set_enabledisplayroomlist(bool value) {
+  set_has_enabledisplayroomlist();
+  enabledisplayroomlist_ = value;
+}
+
+// repeated .BINRoomConfig cashRoomConfigs = 4;
 inline int BINEnterZoneResponse::cashroomconfigs_size() const {
   return cashroomconfigs_.size();
 }
@@ -839,7 +871,7 @@ BINEnterZoneResponse::mutable_cashroomconfigs() {
   return &cashroomconfigs_;
 }
 
-// repeated .BINRoomConfig goldRoomConfigs = 4;
+// repeated .BINRoomConfig goldRoomConfigs = 5;
 inline int BINEnterZoneResponse::goldroomconfigs_size() const {
   return goldroomconfigs_.size();
 }
