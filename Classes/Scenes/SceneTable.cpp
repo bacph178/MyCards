@@ -79,14 +79,6 @@ google::protobuf::Message* onFilterRoomEvent(int message_id) {
 	mtx.unlock();
 
 	if (k != -1) { //found
-		if (isSuccess) {
-			auto scene = SceneTable::createScene();
-			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
-			isSuccess = false;
-		}
-		else {
-			// cocos2d::MessageBox(((BINEnterZoneResponse *)result.first)->message().c_str(), "XXX");
-		}
 		return result.first;
 	}
 	return 0;
@@ -300,8 +292,7 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
 
 }
 
-<<<<<<< HEAD
-=======
+
 void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType type){
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
         CCLOG("CLicked!");
@@ -315,7 +306,7 @@ void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::Eve
         scroll_bottom = true;
     }
 }
->>>>>>> d14930d99448d58cc85560ff14a0b719c706b0a4
+
 
 void SceneTable::tableCallBack(cocos2d::Ref *sender, Widget::TouchEventType type){
     if(type == Widget::TouchEventType::ENDED){

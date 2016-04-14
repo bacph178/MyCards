@@ -28,15 +28,10 @@ class SceneTable : public BaseScene
     
     void menuCallBack(Ref *sender,ui::Widget::TouchEventType type);
     void phongCallBack(Ref *sender,ui::Widget::TouchEventType type);
-<<<<<<< HEAD
-    void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);    
-=======
     void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);
     void lTableCallBack(Ref *pSender, ui::ListView::EventType type);
     void rTableCallBack(Ref *pSender, ui::ListView::EventType type);
     void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
-    
->>>>>>> d14930d99448d58cc85560ff14a0b719c706b0a4
     virtual bool init() override;
     virtual void onExit() override;
 
