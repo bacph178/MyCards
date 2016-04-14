@@ -11,6 +11,7 @@
 #include "protobufObject/enter_zone.pb.h"
 
 
+
 #define TAG_BTN_BACK 1
 #define TAG_BTN_MENU 2
 #define TAG_BTN_NAPXU 3
@@ -272,8 +273,7 @@ void ShowGame::update(float dt) {
 
 	if (k != -1) { //found
 		if (isSuccess) {
-			// ((BINEnterZoneResponse *)result.first)->enabledisplayroomlist();
-			auto scene = SceneTable::createScene();
+			auto scene = SceneTable::createScene(true);
 			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
 			isSuccess = false;
 		}
