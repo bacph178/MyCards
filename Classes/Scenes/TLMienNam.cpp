@@ -39,12 +39,9 @@ Scene* TLMienNam::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool TLMienNam::init()
-{
-    //////////////////////////////
-    // 1. super init first
-    if ( !Layer::init() )
-    {
+bool TLMienNam::init() {
+    
+    if ( !BaseScene::init() ) {
         return false;
     }
     
@@ -71,7 +68,7 @@ bool TLMienNam::init()
     return true;
 }
 
-void TLMienNam::initMenu(Size visibleSize,Vec2 origin){
+void TLMienNam::initMenu(Size visibleSize,Vec2 origin) {
     
     auto bkg = MSprite::create("bgr_select_table.jpg",visibleSize);
     bkg->setPosition(Point(origin.x, origin.y));
@@ -129,7 +126,7 @@ void TLMienNam::initGame(){
     this->showInitCard();
 }
 
-void TLMienNam::initCards(){
+void TLMienNam::initCards() {
     std::vector<Card> cards;
     for (int type = 0; type < CARD_SUIT_TYPE_NUM; type++) {
         for (int number = 0; number < CARD_NUM_OF_SUIT; number++) {
@@ -154,8 +151,7 @@ void TLMienNam::initCards(){
     
 }
 
-Card TLMienNam::getCard()
-{
+Card TLMienNam::getCard() {
     std::random_device rd;
     std::mt19937 rand = std::mt19937(rd());
     
@@ -171,7 +167,7 @@ void TLMienNam::createOtherCards(PositionIndex positionIndex, int tag,float marg
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     double cardScale = this->cardScale();
     
-    auto cardSprite = Sprite::create("nullx.png");
+    auto cardSprite = Sprite::createWithSpriteFrameName("nullx.png");
     
     Size cardSize = Size(cardSprite->getContentSize().width * cardScale,
                          cardSprite->getContentSize().height * cardScale);
@@ -240,9 +236,9 @@ void TLMienNam::createCards(PositionIndex positionIndex, int tag){
 }
 
 
-void TLMienNam::showInitCard(){
+void TLMienNam::showInitCard() {
     
-    for(int i=0;i<CARD_X_NUM;i++){
+    for(int i=0;i<CARD_X_NUM;i++) {
         
     }
 //    for (int tag = 0; tag < CARD_X_NUM; tag++) {
@@ -308,7 +304,7 @@ double TLMienNam::cardScale(){
         Size visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-		auto card = Sprite::create("nullx.png");
+        auto card = Sprite::createWithSpriteFrameName("nullx.png");
         double scaleX = ((visibleSize.width - CARD_MARGIN * (CARD_X_NUM + 1)) / CARD_X_NUM) / card->getContentSize().width;
         
         cardScale = scaleX;
@@ -358,9 +354,9 @@ void TLMienNam::playCallBack(Ref *pSender, ui::Widget::TouchEventType eventType)
     
 }
 
-void TLMienNam::menuCallBack(Ref *pSender, ui::Widget::TouchEventType eventType){
+void TLMienNam::menuCallBack(Ref *pSender, ui::Widget::TouchEventType eventType) {
     MButton *btn = (MButton*) pSender;
-    if(eventType == ui::Widget::TouchEventType::ENDED){
+    if(eventType == ui::Widget::TouchEventType::ENDED) {
         int tag = btn->getTag();
         switch (tag) {
             case TAG_BTN_MENU:
@@ -386,5 +382,9 @@ void TLMienNam::menuCallBack(Ref *pSender, ui::Widget::TouchEventType eventType)
     
 }
 
+
+void TLMienNam::onExit() {
+    BaseScene::onExit();
+}
 
 

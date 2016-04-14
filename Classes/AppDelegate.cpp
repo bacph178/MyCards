@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
     
     // create a scene. it's an autorelease object
-    auto scene = TLMienNam::createScene();
+    auto scene = SceneTable::createScene();
     
     // run
     director->runWithScene(scene);

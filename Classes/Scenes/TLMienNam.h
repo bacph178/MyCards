@@ -4,12 +4,13 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "Objects/CardSprite.hpp"
+#include "BaseScene.hpp"
 
 class SettingDialog;
 
 using namespace cocos2d;
 
-class TLMienNam : public cocos2d::Layer
+class TLMienNam : public BaseScene
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
@@ -17,6 +18,7 @@ public:
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init() override;
+    virtual void onExit() override;
     
     // implement the "static create()" method manually
     CREATE_FUNC(TLMienNam);

@@ -16,7 +16,6 @@ CardSprite* CardSprite::create(Card card, PositionIndex PositionIndex) {
     return cardSprite;
 }
 
-
 bool CardSprite::init() {
     
     if (!Sprite::init()) {
