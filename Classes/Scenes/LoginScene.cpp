@@ -215,7 +215,6 @@ void LoginScene::update(float delta){
     
     if(k != -1)
         NetworkManager::listEvent.erase(NetworkManager::listEvent.begin() + k);
-    
     mtx.unlock();
     
     

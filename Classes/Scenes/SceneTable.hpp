@@ -18,13 +18,10 @@
 
 using namespace cocos2d;
 
-class SceneTable : public BaseScene
-{
+class SceneTable : public BaseScene {
+public :
     
-    Size window_size;
-    public :
-    
-    static cocos2d::Scene* createScene();
+    static cocos2d::Scene* createScene(bool enableDisplayRoomList);
     
     void menuCallBack(Ref *sender,ui::Widget::TouchEventType type);
     void phongCallBack(Ref *sender,ui::Widget::TouchEventType type);
@@ -41,13 +38,17 @@ class SceneTable : public BaseScene
     //void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
     
 public:
-    MSprite * btn_phong;
     void initMenu(Size size,Vec2 origin);
     void initTable(Size size,Vec2 origin);
     
 protected:
+    
+    MSprite * btn_phong;
+    
     ui::ListView* lvRight;
     ui::ListView* lvLeft;
+    
     bool scroll_bottom;
+    
 };
 #endif // __TABLE_SCENE_H__

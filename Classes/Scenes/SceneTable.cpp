@@ -17,7 +17,11 @@
 
 using namespace cocos2d::ui;
 
-Scene* SceneTable::createScene() {
+bool enableDisplayRoomList;
+
+Scene* SceneTable::createScene(bool tempEnableDisplayRoomList) {
+    
+    enableDisplayRoomList = tempEnableDisplayRoomList;
     
     auto scene = Scene::create();
     
@@ -42,6 +46,11 @@ bool SceneTable::init() {
     background_screen->setPosition(Vec2(origin.x,origin.y));
     this->addChild(background_screen);
     
+    if(enableDisplayRoomList){
+        CCLOG("XXXX: true");
+    }else{
+        CCLOG("XXXX: false");
+    }
     
     this->initTable(visibleSize, origin);
     
@@ -242,6 +251,7 @@ void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType t
 void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::EventType type){
     if(!scroll_bottom && type == ui::ScrollView::EventType::SCROLL_TO_BOTTOM){
         CCLOG("BOTTOM!");
+        lvRight->removeAllChildren();
         scroll_bottom = true;
     }
 }

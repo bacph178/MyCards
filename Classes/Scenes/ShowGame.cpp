@@ -1,6 +1,7 @@
 #include "ShowGame.h"
 #include "LoginScene.h"
 #include "TLMienNam.h"
+#include "SceneTable.hpp"
 
 #include "UI/MButton.hpp"
 #include "UI/MSprite.hpp"
@@ -8,6 +9,7 @@
 #include "Utils/NetworkManager.h"
 #include "Utils/Common.h"
 #include "protobufObject/enter_zone.pb.h"
+
 
 
 #define TAG_BTN_BACK 1
@@ -271,7 +273,7 @@ void ShowGame::update(float dt) {
 
 	if (k != -1) { //found
 		if (isSuccess) {
-			auto scene = TLMienNam::createScene();
+			auto scene = SceneTable::createScene(true);
 			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
 			isSuccess = false;
 		}
