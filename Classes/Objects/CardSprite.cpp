@@ -8,7 +8,7 @@ using namespace cocos2d;
 
 CardSprite* CardSprite::create(Card card, PositionIndex PositionIndex) {
     
-    CardSprite* cardSprite = (CardSprite *) Sprite::createWithSpriteFrameName("01co.png");
+    CardSprite* cardSprite = (CardSprite *)Sprite::createWithSpriteFrameName("01co.png");
     cardSprite->setCard(card);
     cardSprite->setPositionIndex(PositionIndex);
     cardSprite->addEvents();
