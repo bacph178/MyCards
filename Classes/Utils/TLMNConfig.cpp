@@ -51,10 +51,10 @@ const char* SPRITE_LIST_GAME = "girl_list_game.png" ;
 const char* BKF_LIST_GAME = "bkg_list_game.jpg" ;
 
 // TLMN
-const char* BTN_MESSAGE = "btn_messange.png" ;
+const char* BTN_MESSAGE = "btn_message.png" ;
 const char* BTN_SOUND_ON = "btn_sound_on.png" ;
 const char* BTN_SOUND_OFF = "btn_sound_off.png" ;
-const char* BTN_PURCHASE = "btn_purchase.png" ;
+const char* BTN_PURCHASE = "btn_purcharse.png" ;
 const char* BTN_BUTTON = "ic_button_primary.png" ;
 const char* BKG_CHAT_BOX = "bkg_charbox.9.png" ;
 const char* BKG_TABLE = "bkg_table.jpg" ;

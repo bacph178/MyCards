@@ -48,20 +48,24 @@ bool TLMienNam::init()
         return false;
     }
     
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Cards.plist");
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     
     this->initMenu(visibleSize, origin);
-
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Cards.plist");
-
+    
     sprite = Sprite::create("bgr_textview.png");
     sprite->setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
     this->addChild(sprite, 0);
     
-   // this->initGame();
-   
+    auto texture = Sprite::createWithSpriteFrameName("01co.png");
+    texture->setPosition(Vec2(origin.x,origin.y));
+    this->addChild(texture);
+    
+    this->initGame();
+    
     this->scheduleUpdate();
     
     return true;
@@ -210,8 +214,8 @@ void TLMienNam::createCards(PositionIndex positionIndex, int tag){
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     double cardScale = this->cardScale();
     
-    auto card = this->getCard();
-    auto cardSprite = CardSprite::create(card, positionIndex);
+    auto cardx = this->getCard();
+    auto cardSprite = CardSprite::create(cardx,positionIndex);
     
     Size cardSize = Size(cardSprite->getContentSize().width * cardScale,
                          cardSprite->getContentSize().height * cardScale);
@@ -263,9 +267,6 @@ void TLMienNam::showInitCard(){
         this->createCards(positionIndex, i);
         this->addChild(card_tag[i]);
     }
-    //for (int i=0; i<card_tag.size(); i++) {
-        
-    //}
     
     //create other Cards left
     float marginXLeft = 200;

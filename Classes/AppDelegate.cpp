@@ -4,6 +4,8 @@
 #endif
 #include "Scenes/IntroScene.h"
 #include "Utils/TLMNConfig.hpp"
+#include "Scenes/TLMienNam.h"
+#include "Scenes/SceneTable.hpp"
 
 USING_NS_CC;
 
@@ -63,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
     
     // create a scene. it's an autorelease object
-    auto scene = IntroScene::createScene();
+    auto scene = TLMienNam::createScene();
     
     // run
     director->runWithScene(scene);

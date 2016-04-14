@@ -277,6 +277,7 @@
 		2FDCBEED1CBDD891002C1C53 /* TLMienNam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6C91CB8BB09009620E9 /* TLMienNam.cpp */; };
 		2FDCBEEE1CBDD897002C1C53 /* CardSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F65C6E81CB8BD0B009620E9 /* CardSprite.cpp */; };
 		2FDCBEF11CBDE8AD002C1C53 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDCBEEF1CBDE849002C1C53 /* JavaVM.framework */; };
+		2FFEAF051CBEAA7200AF7A23 /* SceneTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FFEAF031CBEAA7200AF7A23 /* SceneTable.cpp */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -611,6 +612,8 @@
 		2F9BAD0F1CBB4CD30073A210 /* register.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = register.pb.h; sourceTree = "<group>"; };
 		2F9BAD101CBB4CD30073A210 /* register.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = register.proto; sourceTree = "<group>"; };
 		2FDCBEEF1CBDE849002C1C53 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
+		2FFEAF031CBEAA7200AF7A23 /* SceneTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneTable.cpp; sourceTree = "<group>"; };
+		2FFEAF041CBEAA7200AF7A23 /* SceneTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneTable.hpp; sourceTree = "<group>"; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -815,6 +818,8 @@
 				2F65C6C81CB8BB09009620E9 /* ShowGame.h */,
 				2F65C6C91CB8BB09009620E9 /* TLMienNam.cpp */,
 				2F65C6CA1CB8BB09009620E9 /* TLMienNam.h */,
+				2FFEAF031CBEAA7200AF7A23 /* SceneTable.cpp */,
+				2FFEAF041CBEAA7200AF7A23 /* SceneTable.hpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1491,6 +1496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FFEAF051CBEAA7200AF7A23 /* SceneTable.cpp in Sources */,
 				2F9BACF31CBB4AAB0073A210 /* TLMNConfig.cpp in Sources */,
 				2F9BACF11CBB4AAB0073A210 /* DefaultSocket.cpp in Sources */,
 				2F65C6E51CB8BB5F009620E9 /* MSprite.cpp in Sources */,
