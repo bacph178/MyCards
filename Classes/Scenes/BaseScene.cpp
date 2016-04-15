@@ -38,5 +38,5 @@ void BaseScene::onExit() {
 }
 
 void BaseScene::update(float delta) {
-	CCLOG("TAG: %s", "updated");
+	//CCLOG("TAG: %s", "updated");
 }

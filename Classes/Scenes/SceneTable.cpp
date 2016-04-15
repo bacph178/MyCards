@@ -399,50 +399,16 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoom){
     }
 }
 
-void SceneTable::setItemorListView2(vector<BINRoomPlay> listRoomPlay){
-    
-	for (int i = 0; i<listRoomPlay.size(); i++) {
-        
-        auto bkg_item = Sprite::create("bgr_list_item.png");
-        auto number_table = MLabel::create("10000",30);
-        auto money = MLabel::create("1000 xu",30);
-        auto status = MLabel::create("0/10",30);
-        
-        auto lock = Sprite::create("ic_lock.png");
-        auto custom_item = Layout::create();
-        
-        Size size = Size(width*0.8f-30,height*0.75f*5/6);
-        
-        custom_item->setContentSize(Size(size.width,bkg_item->getContentSize().height));
-        
-        bkg_item->setScaleX(size.width/bkg_item->getContentSize().width);
-        bkg_item->setPosition(size.width/2,custom_item->getContentSize().height/2);
-        
-        number_table->setPosition(Vec2(number_table->getContentSize().width/2+size.width/8,
-                                       custom_item->getContentSize().height / 2.0f-number_table->getContentSize().height/2));
-        money->setPosition(Vec2(money->getContentSize().width/2+size.width*2.5f/8,
-                                custom_item->getContentSize().height / 2.0f-money->getContentSize().height/2));
-        status->setPosition(Vec2(status->getContentSize().width/2+size.width*5/8,
-                                 custom_item->getContentSize().height / 2.0f-status->getContentSize().height/2));
-        lock->setPosition(Vec2(lock->getContentSize().width/2+size.width*7/8,
-                               custom_item->getContentSize().height / 2.0f));
-        
-        custom_item->addChild(bkg_item);
-        custom_item->addChild(number_table);
-        custom_item->addChild(money);
-        custom_item->addChild(status);
-        custom_item->addChild(lock);
-        custom_item->setTouchEnabled(true);
-        lvRight->pushBackCustomItem(custom_item);
-    }
-}
-
 
 void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType type){
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
-        CCLOG("CLicked!");
         
+       //Layout* item = (Layout*)pSender;
+        //CCLOG("CLicked!+%zd",lvRight->getItems().size());
         
+        ListView* listView = static_cast<ListView*>(pSender);
+        
+        log("%ld",listView->getCurSelectedIndex());
     }
 }
 

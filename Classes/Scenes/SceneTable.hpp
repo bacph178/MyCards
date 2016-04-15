@@ -35,7 +35,6 @@ public :
     void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
     
     void setItemorListView(std::vector<BINRoomPlay> listRoomPlay);
-    void setItemorListView2(std::vector<BINRoomPlay> listRoomPlay);
     
     virtual bool init() override;
     virtual void onExit() override;
