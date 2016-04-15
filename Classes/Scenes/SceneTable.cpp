@@ -106,6 +106,7 @@ void SceneTable::update(float delta) {
 				listRoomPlay.push_back(response->roomplays(i));
 				// listRoomPlay.insert();
 			}	
+			setItemorListView(listRoomPlay); 
 		}
 		else {
 			//
@@ -340,7 +341,7 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin, vector<BINRoomPlay> lis
     lvRight = ListView::create();
     lvRight->setItemsMargin(15);
 	
-    setItemorListView(listRoomPlay);
+    //setItemorListView(listRoomPlay);
 
     lvRight->setBounceEnabled(true);
     lvRight->setGravity(ListView::Gravity::LEFT);
@@ -354,14 +355,15 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin, vector<BINRoomPlay> lis
 
 }
 
-void SceneTable::setItemorListView(vector<BINRoomPlay> listRoomPlay){
+void SceneTable::setItemorListView(vector<BINRoomPlay> listRoom){
     
-    for (int i=0; i<20; i++) {
+	lvRight->removeAllChildren();
+	for (int i = 0; i<listRoom.size(); i++) {
         
         auto bkg_item = Sprite::create("bgr_list_item.png");
-        auto number_table = MLabel::create("6",30);
-        auto money = MLabel::create("1000 xu",30);
-        auto status = MLabel::create("xxx",30);
+		auto number_table = MLabel::create(listRoom[i].roomid()+"", 30);
+		auto money = MLabel::create(listRoom[i].minbet() + " xu", 30);
+		auto status = MLabel::create(listRoom[i].enteringplayer() + "/" + listRoom[i].roomcapacity(), 30);
         
         auto lock = Sprite::create("ic_lock.png");
         auto custom_item = Layout::create();
@@ -387,6 +389,7 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoomPlay){
         custom_item->addChild(money);
         custom_item->addChild(status);
         custom_item->addChild(lock);
+		lock->setVisible(listRoom[i].passwordrequired());
         custom_item->setTouchEnabled(true);
         lvRight->pushBackCustomItem(custom_item);
     }
@@ -394,12 +397,12 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoomPlay){
 
 void SceneTable::setItemorListView2(vector<BINRoomPlay> listRoomPlay){
     
-    for (int i=0; i<20; i++) {
+	for (int i = 0; i<listRoomPlay.size(); i++) {
         
         auto bkg_item = Sprite::create("bgr_list_item.png");
-        auto number_table = MLabel::create("16",30);
+        auto number_table = MLabel::create("10000",30);
         auto money = MLabel::create("1000 xu",30);
-        auto status = MLabel::create("xxx",30);
+        auto status = MLabel::create("0/10",30);
         
         auto lock = Sprite::create("ic_lock.png");
         auto custom_item = Layout::create();
@@ -443,7 +446,7 @@ void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::Eve
     if(!scroll_bottom && type == ui::ScrollView::EventType::SCROLL_TO_BOTTOM){
         CCLOG("BOTTOM!");
         
-        //setItemorListView2(listRoomPlay);
+        setItemorListView(listRoomPlay);
         scroll_bottom = true;
     }
 }

@@ -516,7 +516,6 @@ void NetworkManager::getEnterRoomMessageFromServer(int room_index, bool
 		Common::getInstance()->getSessionId());
 }
 
-
 google::protobuf::Message* NetworkManager::initCreateRoomMessage(int zone_id,
 	int room_group_id, bool vip_room, int min_bet, int player_size, std::string
 	password) {
@@ -538,8 +537,6 @@ void NetworkManager::getCreateRoomMessageFromServer(int zone_id, int
 	requestMessage(request, Common::getInstance()->getOS(),
 		NetworkManager::CREATE_ROOM, Common::getInstance()->getSessionId());
 }
-
-
 
 void NetworkManager::listenData() {
 	std::thread *t = new std::thread(&NetworkManager::recvMessage, this);
