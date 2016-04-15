@@ -406,7 +406,7 @@ void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType t
        //Layout* item = (Layout*)pSender;
         //CCLOG("CLicked!+%zd",lvRight->getItems().size());
         
-        ListView* listView = static_cast<ListView*>(pSender);
+        ListView* listView = (ListView*) pSender;
         
         log("%ld",listView->getCurSelectedIndex());
     }
