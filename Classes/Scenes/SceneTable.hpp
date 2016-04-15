@@ -16,6 +16,8 @@
 #include "BaseScene.hpp"
 #include "ui/CocosGUI.h"
 
+#include "protobufObject/filter_room.pb.h"
+
 using namespace cocos2d;
 
 class SceneTable : public BaseScene {
@@ -29,6 +31,10 @@ public :
     void lTableCallBack(Ref *pSender, ui::ListView::EventType type);
     void rTableCallBack(Ref *pSender, ui::ListView::EventType type);
     void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
+    
+    void setItemorListView(std::vector<BINRoomPlay> listRoomPlay);
+    void setItemorListView2(std::vector<BINRoomPlay> listRoomPlay);
+    
     virtual bool init() override;
     virtual void onExit() override;
 
@@ -50,6 +56,7 @@ protected:
     ui::ListView* lvLeft;
     
     bool scroll_bottom;
+    std::vector<BINRoomPlay> listRoomPlay;
     
 };
 #endif // __SCENE_TABLE_HPP__

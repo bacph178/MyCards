@@ -237,6 +237,7 @@
 		2F65C89D1CB8BF57009620E9 /* toogle_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F65C7841CB8BF57009620E9 /* toogle_on.png */; };
 		2F65C89E1CB8BF57009620E9 /* toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F65C7851CB8BF57009620E9 /* toolbar.png */; };
 		2F65C89F1CB8BF57009620E9 /* toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F65C7851CB8BF57009620E9 /* toolbar.png */; };
+		2F73AF011CBFDBC90077BB46 /* MListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F73AEFF1CBFDBC90077BB46 /* MListView.cpp */; };
 		2F9BACF11CBB4AAB0073A210 /* DefaultSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F9BACEB1CBB4AAB0073A210 /* DefaultSocket.cpp */; };
 		2F9BACF21CBB4AAB0073A210 /* NetworkManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F9BACED1CBB4AAB0073A210 /* NetworkManager.cpp */; };
 		2F9BACF31CBB4AAB0073A210 /* TLMNConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F9BACEF1CBB4AAB0073A210 /* TLMNConfig.cpp */; };
@@ -575,6 +576,8 @@
 		2F65C7831CB8BF57009620E9 /* toogle_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toogle_off.png; sourceTree = "<group>"; };
 		2F65C7841CB8BF57009620E9 /* toogle_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toogle_on.png; sourceTree = "<group>"; };
 		2F65C7851CB8BF57009620E9 /* toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar.png; sourceTree = "<group>"; };
+		2F73AEFF1CBFDBC90077BB46 /* MListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MListView.cpp; sourceTree = "<group>"; };
+		2F73AF001CBFDBC90077BB46 /* MListView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MListView.hpp; sourceTree = "<group>"; };
 		2F9BACEA1CBB4AAB0073A210 /* CommonSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonSocket.h; sourceTree = "<group>"; };
 		2F9BACEB1CBB4AAB0073A210 /* DefaultSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DefaultSocket.cpp; sourceTree = "<group>"; };
 		2F9BACEC1CBB4AAB0073A210 /* DefaultSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultSocket.h; sourceTree = "<group>"; };
@@ -841,6 +844,8 @@
 				2F65C6DE1CB8BB5F009620E9 /* MText.hpp */,
 				2F65C6DF1CB8BB5F009620E9 /* Popup.cpp */,
 				2F65C6E01CB8BB5F009620E9 /* Popup.hpp */,
+				2F73AEFF1CBFDBC90077BB46 /* MListView.cpp */,
+				2F73AF001CBFDBC90077BB46 /* MListView.hpp */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1526,6 +1531,7 @@
 				2F65C6D11CB8BB09009620E9 /* ShowGame.cpp in Sources */,
 				2F65C69D1CB8B9E2009620E9 /* extension_set.cc in Sources */,
 				2F65C6E31CB8BB5F009620E9 /* MEditBox.cpp in Sources */,
+				2F73AF011CBFDBC90077BB46 /* MListView.cpp in Sources */,
 				2F65C6A21CB8B9E2009620E9 /* gzip_stream.cc in Sources */,
 				2F9BAD1F1CBB4CD30073A210 /* player.pb.cc in Sources */,
 				2F65C6A11CB8B9E2009620E9 /* coded_stream.cc in Sources */,

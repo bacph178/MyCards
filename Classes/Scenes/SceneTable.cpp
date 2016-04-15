@@ -7,7 +7,6 @@
 #include "Utils/TLMNConfig.hpp"
 #include "Utils/NetworkManager.h"
 #include "Utils/Common.h"
-#include "protobufObject/filter_room.pb.h"
 #include "ShowGame.h"
 
 
@@ -88,14 +87,6 @@ google::protobuf::Message* onFilterRoomEvent(int message_id) {
 	mtx.unlock();
 
 	if (k != -1) { //found
-		if (isSuccess) {
-			auto scene = SceneTable::createScene();
-			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, scene));
-			isSuccess = false;
-		}
-		else {
-			// cocos2d::MessageBox(((BINEnterZoneResponse *)result.first)->message().c_str(), "XXX");
-		}
 		return result.first;
 	}
 	return 0;
@@ -121,7 +112,8 @@ void SceneTable::update(float delta) {
 
 }
 
-void SceneTable::initMenu(Size visibleSize,Vec2 origin){
+void SceneTable::initMenu(Size visibleSize,Vec2 origin) {
+    
     auto btn_back = MButton::create(BTN_BACK,TAG_BTN_BACK);
     btn_back->setPosition(Vec2(origin.x+10,origin.y+visibleSize.height-btn_back->getHeight()-10));
     btn_back->addTouchEventListener(CC_CALLBACK_2(SceneTable::menuCallBack, this));
@@ -249,13 +241,31 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
     
     
     Layout* layoutRight = Layout::create();
-    layoutRight->setContentSize(Size(backgroundRight->getWidth()-30,backgroundRight->getHeight()*5/6));
-    layoutRight->setPosition(Vec2(origin.x+15+backgroundLeft->getWidth(),origin.y+visibleSize.height*0.125f));
+    layoutRight->setContentSize(Size(width*0.8f-30,height*0.75f*5/6));
+    layoutRight->setPosition(MVec2(15+width*0.2f,height*0.125f));
     this->addChild(layoutRight);
     
     lvRight = ListView::create();
-    for (int i=0; i<20; i++)
-    {
+    lvRight->setItemsMargin(15);
+	
+    setItemorListView(listRoomPlay);
+
+    lvRight->setBounceEnabled(true);
+    lvRight->setGravity(ListView::Gravity::LEFT);
+    lvRight->setContentSize(layoutRight->getContentSize());
+    lvRight->setTouchEnabled(true);
+    lvRight->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(SceneTable::rTableCallBack, this));
+    lvRight->addEventListener((ui::ScrollView::ccScrollViewCallback)CC_CALLBACK_2(SceneTable::rScrollTableCallBack, this));
+    
+    layoutRight->addChild(lvRight);
+    //======
+
+}
+
+void SceneTable::setItemorListView(vector<BINRoomPlay> listRoomPlay){
+    
+    for (int i=0; i<20; i++) {
+        
         auto bkg_item = Sprite::create("bgr_list_item.png");
         auto number_table = MLabel::create("6",30);
         auto money = MLabel::create("1000 xu",30);
@@ -264,19 +274,20 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
         auto lock = Sprite::create("ic_lock.png");
         auto custom_item = Layout::create();
         
-        custom_item->setContentSize(Size(layoutRight->getContentSize().width,lock->getContentSize().height*2));
+        Size size = Size(width*0.8f-30,height*0.75f*5/6);
         
-        bkg_item->setScale(layoutRight->getContentSize().width/bkg_item->getContentSize().width,
-                           lock->getContentSize().height*2/bkg_item->getContentSize().height);
-        bkg_item->setPosition(layoutRight->getContentSize().width/2,custom_item->getContentSize().height/2);
+        custom_item->setContentSize(Size(size.width,bkg_item->getContentSize().height));
         
-        number_table->setPosition(Vec2(number_table->getContentSize().width/2+backgroundRight->getContentSize().width/8,
+        bkg_item->setScaleX(size.width/bkg_item->getContentSize().width);
+        bkg_item->setPosition(size.width/2,custom_item->getContentSize().height/2);
+        
+        number_table->setPosition(Vec2(number_table->getContentSize().width/2+size.width/8,
                                        custom_item->getContentSize().height / 2.0f-number_table->getContentSize().height/2));
-        money->setPosition(Vec2(money->getContentSize().width/2+backgroundRight->getContentSize().width*2.5f/8,
+        money->setPosition(Vec2(money->getContentSize().width/2+size.width*2.5f/8,
                                 custom_item->getContentSize().height / 2.0f-money->getContentSize().height/2));
-        status->setPosition(Vec2(status->getContentSize().width/2+backgroundRight->getContentSize().width*5/8,
+        status->setPosition(Vec2(status->getContentSize().width/2+size.width*5/8,
                                  custom_item->getContentSize().height / 2.0f-status->getContentSize().height/2));
-        lock->setPosition(Vec2(lock->getContentSize().width/2+backgroundRight->getContentSize().width*7/8,
+        lock->setPosition(Vec2(lock->getContentSize().width/2+size.width*7/8,
                                custom_item->getContentSize().height / 2.0f));
         
         custom_item->addChild(bkg_item);
@@ -287,33 +298,52 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin){
         custom_item->setTouchEnabled(true);
         lvRight->pushBackCustomItem(custom_item);
     }
-    lvRight->setItemsMargin(15);
-	/*lvRight->addEventListener([this](Ref* sender, ui::ListView::EventType type){
-		CCLOG("123");
-	});
-
-	[this](Ref* sender, ui::ListView::EventType type) {
-		if (type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
-			CCLOG("scrolViewCallback %s", "CLicked!");
-		}
-	}*/
-
-    lvRight->setBounceEnabled(true);
-    lvRight->setGravity(ListView::Gravity::LEFT);
-    lvRight->setContentSize(layoutRight->getContentSize());
-    lvRight->setTouchEnabled(true);
-    lvRight->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(SceneTable::rTableCallBack, this));
-    lvRight->addEventListener((ui::ScrollView::ccScrollViewCallback)CC_CALLBACK_2(SceneTable::rScrollTableCallBack, this));
-    layoutRight->addChild(lvRight);
-    //======
-
 }
 
-<<<<<<< HEAD
-=======
+
+void SceneTable::setItemorListView2(vector<BINRoomPlay> listRoomPlay){
+    
+    for (int i=0; i<20; i++) {
+        
+        auto bkg_item = Sprite::create("bgr_list_item.png");
+        auto number_table = MLabel::create("16",30);
+        auto money = MLabel::create("1000 xu",30);
+        auto status = MLabel::create("xxx",30);
+        
+        auto lock = Sprite::create("ic_lock.png");
+        auto custom_item = Layout::create();
+        
+        Size size = Size(width*0.8f-30,height*0.75f*5/6);
+        
+        custom_item->setContentSize(Size(size.width,bkg_item->getContentSize().height));
+        
+        bkg_item->setScaleX(size.width/bkg_item->getContentSize().width);
+        bkg_item->setPosition(size.width/2,custom_item->getContentSize().height/2);
+        
+        number_table->setPosition(Vec2(number_table->getContentSize().width/2+size.width/8,
+                                       custom_item->getContentSize().height / 2.0f-number_table->getContentSize().height/2));
+        money->setPosition(Vec2(money->getContentSize().width/2+size.width*2.5f/8,
+                                custom_item->getContentSize().height / 2.0f-money->getContentSize().height/2));
+        status->setPosition(Vec2(status->getContentSize().width/2+size.width*5/8,
+                                 custom_item->getContentSize().height / 2.0f-status->getContentSize().height/2));
+        lock->setPosition(Vec2(lock->getContentSize().width/2+size.width*7/8,
+                               custom_item->getContentSize().height / 2.0f));
+        
+        custom_item->addChild(bkg_item);
+        custom_item->addChild(number_table);
+        custom_item->addChild(money);
+        custom_item->addChild(status);
+        custom_item->addChild(lock);
+        custom_item->setTouchEnabled(true);
+        lvRight->pushBackCustomItem(custom_item);
+    }
+}
+
+
 void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType type){
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
         CCLOG("CLicked!");
+        
         
     }
 }
@@ -321,11 +351,11 @@ void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType t
 void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::EventType type){
     if(!scroll_bottom && type == ui::ScrollView::EventType::SCROLL_TO_BOTTOM){
         CCLOG("BOTTOM!");
-        lvRight->removeAllChildren();
+        
+        //setItemorListView2(listRoomPlay);
         scroll_bottom = true;
     }
 }
->>>>>>> d14930d99448d58cc85560ff14a0b719c706b0a4
 
 void SceneTable::tableCallBack(cocos2d::Ref *sender, Widget::TouchEventType type){
     if(type == Widget::TouchEventType::ENDED){
