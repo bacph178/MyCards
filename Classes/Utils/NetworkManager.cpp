@@ -32,6 +32,8 @@
 #include "protobufObject/player.pb.h"
 #include "protobufObject/session_expired.pb.h"
 #include "protobufObject/filter_room.pb.h"
+#include "protobufObject/enter_room.pb.h"
+#include "protobufObject/create_room.pb.h"
 
 
 #define MOD_GZIP_ZLIB_WINDOWSIZE 15
@@ -105,12 +107,6 @@ vector<char> decompress_gzip2(const char* byte_arr, int length) {
 
 void callNetwork(char* ackBuf, int size) {  
 	DefaultSocket::getInstance()->sendData(ackBuf, size);
-	/*if (DEBUG) {
-		vector<char> bufferRead(4096);
-		int canRead = DefaultSocket::getInstance()->readData(bufferRead, 4096);
-		vector<pair<google::protobuf::Message*, int>> listMessages =
-			NetworkManager::parseFrom(bufferRead, 4096);
-	}*/
 }
 
 NetworkManager *NetworkManager::getInstance() {
@@ -501,6 +497,47 @@ void NetworkManager::recvMessage() {
 		}
 	}
 }
+
+google::protobuf::Message* NetworkManager::initEnterRoomMessage(int room_index, bool vip_room, std::string password) {
+	auto request = new BINEnterRoomRequest(); 
+	request->set_roomindex(room_index);
+	request->set_viproom(vip_room);
+	request->set_password(password);
+	return request; 
+}
+
+void NetworkManager::getEnterRoomMessageFromServer(int room_index, bool 
+	vip_room, std::string password) {
+	google::protobuf::Message *request = initEnterRoomMessage(room_index, 
+		vip_room, password);
+	requestMessage(request, Common::getInstance()->getOS(),
+		NetworkManager::ENTER_ROOM, 
+		Common::getInstance()->getSessionId());
+}
+
+
+google::protobuf::Message* NetworkManager::initCreateRoomMessage(int zone_id,
+	int room_group_id, bool vip_room, int min_bet, int player_size, std::string
+	password) {
+	auto request = new BINCreateRoomRequest(); 
+	request->set_zoneid(zone_id);
+	request->set_roomgroupid(room_group_id);
+	request->set_viproom(vip_room);
+	request->set_minbet(min_bet);
+	request->set_playersize(player_size);
+	request->set_password(password);
+	return request;
+}
+
+void NetworkManager::getCreateRoomMessageFromServer(int zone_id, int 
+	room_group_id, bool vip_room, int min_bet, int player_size, std::string password) {
+	google::protobuf::Message *request = initCreateRoomMessage(zone_id,
+		room_group_id, vip_room, min_bet, player_size, password);
+	requestMessage(request, Common::getInstance()->getOS(),
+		NetworkManager::CREATE_ROOM, Common::getInstance()->getSessionId());
+}
+
+
 
 void NetworkManager::listenData() {
 	std::thread *t = new std::thread(&NetworkManager::recvMessage, this);

@@ -1,5 +1,3 @@
-package net.jarlehansen.protobuf.javame;
-
 option java_package = "com.mi.game.network.data.bin";
 
 //CreateRoom 

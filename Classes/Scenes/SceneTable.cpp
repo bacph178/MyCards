@@ -55,7 +55,9 @@ bool SceneTable::init() {
         CCLOG("XXXX: false");
     }
     
-    this->initTable(visibleSize, origin);
+
+	
+    this->initTable(visibleSize, origin, listRoomPlay);
     
     this->initMenu(visibleSize, origin);
 	NetworkManager::getInstance()->getFilterRoomMessageFromServer(
@@ -92,21 +94,21 @@ google::protobuf::Message* onFilterRoomEvent(int message_id) {
 	return 0;
 }
 
+
+
 void SceneTable::update(float delta) {
 	BaseScene::update(delta);
 	//
 	BINFilterRoomResponse* response = (BINFilterRoomResponse*)onFilterRoomEvent(NetworkManager::FILTER_ROOM);
 	if (response != 0){
 		if (response->responsecode()) {
-			vector<BINRoomPlay> listRoomPlay;
 			for (int i = 0; i < response->roomplays_size(); i++) {
 				listRoomPlay.push_back(response->roomplays(i));
-			}
-
-			//TODO: add item to listview (roomName, minBet,	enteringPlayer/ roomCapacity, passwordRequired)
+				// listRoomPlay.insert();
+			}	
 		}
 		else {
-
+			//
 		}
 	}
 
@@ -178,7 +180,97 @@ void SceneTable::initMenu(Size visibleSize,Vec2 origin) {
     this->addChild(btn_phong_free);
 }
 
-void SceneTable::initTable(Size visibleSize,Vec2 origin){
+void SceneTable::addLayoutRight(M9Path *backgroundLeft, MLabel *hoatdong, Size visibleSize, Vec2 origin, std::vector<BINRoomPlay> listRoom) {
+	auto backgroundRight = M9Path::create("tab_two.9.png", Size(visibleSize.width*0.8f, visibleSize.height*0.75f));
+	backgroundRight->setPosition(origin.x + visibleSize.width*0.2f,
+		origin.y + visibleSize.height / 2 - backgroundRight->getHeight() / 2);
+	this->addChild(backgroundRight);
+
+	auto ban_so = MLabel::create("Bàn số ▿", 32);
+	ban_so->setPosition(Vec2(origin.x - ban_so->getWidth() / 2 + visibleSize.width*0.32f,
+		hoatdong->getPosition().y));
+	this->addChild(ban_so);
+
+	auto tien_cuoc = MLabel::create("Tiền cược ▿", 32);
+	tien_cuoc->setPosition(Vec2(origin.x - tien_cuoc->getWidth() / 2 + visibleSize.width*0.55f,
+		hoatdong->getPosition().y));
+	this->addChild(tien_cuoc);
+
+	auto trang_thai = MLabel::create("Trạng thái ▿", 32);
+	trang_thai->setPosition(Vec2(origin.x - trang_thai->getWidth() / 2 + visibleSize.width*0.76f,
+		hoatdong->getPosition().y));
+	this->addChild(trang_thai);
+
+	auto khoa = MLabel::create("Khóa ▿", 32);
+	khoa->setPosition(Vec2(origin.x - khoa->getWidth() / 2 + visibleSize.width*0.945f,
+		hoatdong->getPosition().y));
+	this->addChild(khoa);
+
+
+	Layout* layoutRight = Layout::create();
+	layoutRight->setContentSize(Size(backgroundRight->getWidth() - 30, backgroundRight->getHeight() * 5 / 6));
+	layoutRight->setPosition(Vec2(origin.x + 15 + backgroundLeft->getWidth(), origin.y + visibleSize.height*0.125f));
+	this->addChild(layoutRight);
+
+	lvRight = ListView::create();
+	for (int i = 0; i<listRoom.size(); i++)
+	{
+		auto bkg_item = Sprite::create("bgr_list_item.png");
+
+		auto number_table = MLabel::create(listRoom[i].roomname(), 30);
+		auto money = MLabel::create(listRoom[i].minbet() + " xu", 30);
+		auto status = MLabel::create(listRoom[i].enteringplayer() + "/" + listRoom[i].roomcapacity(), 30);
+
+
+		auto lock = Sprite::create("ic_lock.png");
+
+		auto custom_item = Layout::create();
+
+		custom_item->setContentSize(Size(layoutRight->getContentSize().width, lock->getContentSize().height * 2));
+
+		bkg_item->setScale(layoutRight->getContentSize().width / bkg_item->getContentSize().width,
+			lock->getContentSize().height * 2 / bkg_item->getContentSize().height);
+		bkg_item->setPosition(layoutRight->getContentSize().width / 2, custom_item->getContentSize().height / 2);
+
+		number_table->setPosition(Vec2(number_table->getContentSize().width / 2 + backgroundRight->getContentSize().width / 8,
+			custom_item->getContentSize().height / 2.0f - number_table->getContentSize().height / 2));
+		money->setPosition(Vec2(money->getContentSize().width / 2 + backgroundRight->getContentSize().width*2.5f / 8,
+			custom_item->getContentSize().height / 2.0f - money->getContentSize().height / 2));
+		status->setPosition(Vec2(status->getContentSize().width / 2 + backgroundRight->getContentSize().width * 5 / 8,
+			custom_item->getContentSize().height / 2.0f - status->getContentSize().height / 2));
+		lock->setPosition(Vec2(lock->getContentSize().width / 2 + backgroundRight->getContentSize().width * 7 / 8,
+			custom_item->getContentSize().height / 2.0f));
+
+		custom_item->addChild(bkg_item);
+		custom_item->addChild(number_table);
+		custom_item->addChild(money);
+		custom_item->addChild(status);
+		custom_item->addChild(lock);
+		lock->setVisible(listRoom[i].passwordrequired());
+		custom_item->setTouchEnabled(true);
+		lvRight->pushBackCustomItem(custom_item);
+	}
+	lvRight->setItemsMargin(15);
+	/*lvRight->addEventListener([this](Ref* sender, ui::ListView::EventType type){
+	CCLOG("123");
+	});
+
+	[this](Ref* sender, ui::ListView::EventType type) {
+	if (type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
+	CCLOG("scrolViewCallback %s", "CLicked!");
+	}
+	}*/
+
+	lvRight->setBounceEnabled(true);
+	lvRight->setGravity(ListView::Gravity::LEFT);
+	lvRight->setContentSize(layoutRight->getContentSize());
+	lvRight->setTouchEnabled(true);
+	lvRight->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(SceneTable::rTableCallBack, this));
+	lvRight->addEventListener((ui::ScrollView::ccScrollViewCallback)CC_CALLBACK_2(SceneTable::rScrollTableCallBack, this));
+	layoutRight->addChild(lvRight);
+}
+
+void SceneTable::initTable(Size visibleSize,Vec2 origin, vector<BINRoomPlay> listRoom){
     //layout left
     auto backgroundLeft = M9Path::create("tab_one.9.png",Size(visibleSize.width*0.2f,visibleSize.height*0.75f));
     backgroundLeft->setPosition(origin.x,origin.y+ visibleSize.height/2-backgroundLeft->getContentSize().height/2);
@@ -300,7 +392,6 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoomPlay){
     }
 }
 
-
 void SceneTable::setItemorListView2(vector<BINRoomPlay> listRoomPlay){
     
     for (int i=0; i<20; i++) {
@@ -421,4 +512,4 @@ void SceneTable::phongCallBack(cocos2d::Ref *sender, Widget::TouchEventType type
 
 void SceneTable::onExit() {
     BaseScene::onExit();
-}
+};

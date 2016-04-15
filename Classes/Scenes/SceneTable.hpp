@@ -15,12 +15,14 @@
 #include "UI/MSprite.hpp"
 #include "BaseScene.hpp"
 #include "ui/CocosGUI.h"
-
+#include "UI/MLabel.hpp"
+#include "UI/M9Path.hpp"
 #include "protobufObject/filter_room.pb.h"
 
 using namespace cocos2d;
 
 class SceneTable : public BaseScene {
+    
 public :
     
     static cocos2d::Scene* createScene(bool enableDisplayRoomList);
@@ -43,11 +45,12 @@ public :
     CREATE_FUNC(SceneTable);
     
     //void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
-    
+
 public:
-    void initMenu(Size size,Vec2 origin);
-    void initTable(Size size,Vec2 origin);
-    
+	void initMenu(Size size, Vec2 origin);
+	void initTable(Size size, Vec2 origin, std::vector<BINRoomPlay> listRoomPlay);
+	void addLayoutRight(M9Path *backgroundLeft, MLabel *hoatdong, Size visibleSize, Vec2 origin, std::vector<BINRoomPlay> listRoom);
+
 protected:
     
     MSprite * btn_phong;
@@ -57,6 +60,7 @@ protected:
     
     bool scroll_bottom;
     std::vector<BINRoomPlay> listRoomPlay;
+
     
 };
 #endif // __SCENE_TABLE_HPP__
