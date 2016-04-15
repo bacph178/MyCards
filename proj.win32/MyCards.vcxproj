@@ -146,6 +146,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Objects\CardSprite.cpp" />
+    <ClCompile Include="..\Classes\protobufObject\create_room.pb.cc" />
+    <ClCompile Include="..\Classes\protobufObject\enter_room.pb.cc" />
     <ClCompile Include="..\Classes\protobufObject\enter_zone.pb.cc" />
     <ClCompile Include="..\Classes\protobufObject\filter_room.pb.cc" />
     <ClCompile Include="..\Classes\protobufObject\initialize.pb.cc" />
@@ -182,6 +184,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Objects\CardSprite.hpp" />
+    <ClInclude Include="..\Classes\protobufObject\create_room.pb.h" />
+    <ClInclude Include="..\Classes\protobufObject\enter_room.pb.h" />
     <ClInclude Include="..\Classes\protobufObject\enter_zone.pb.h" />
     <ClInclude Include="..\Classes\protobufObject\filter_room.pb.h" />
     <ClInclude Include="..\Classes\protobufObject\initialize.pb.h" />

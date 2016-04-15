@@ -114,6 +114,12 @@
     <ClCompile Include="..\Classes\Scenes\SceneTable.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\protobufObject\create_room.pb.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\protobufObject\enter_room.pb.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -219,6 +225,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Scenes\SceneTable.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobufObject\create_room.pb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\protobufObject\enter_room.pb.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

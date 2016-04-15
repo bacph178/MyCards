@@ -498,7 +498,8 @@ void NetworkManager::recvMessage() {
 	}
 }
 
-google::protobuf::Message* NetworkManager::initEnterRoomMessage(int room_index, bool vip_room, std::string password) {
+google::protobuf::Message* NetworkManager::initEnterRoomMessage(int room_index,
+	bool vip_room, std::string password) {
 	auto request = new BINEnterRoomRequest(); 
 	request->set_roomindex(room_index);
 	request->set_viproom(vip_room);
@@ -530,7 +531,8 @@ google::protobuf::Message* NetworkManager::initCreateRoomMessage(int zone_id,
 }
 
 void NetworkManager::getCreateRoomMessageFromServer(int zone_id, int 
-	room_group_id, bool vip_room, int min_bet, int player_size, std::string password) {
+	room_group_id, bool vip_room, int min_bet, int player_size, std::string 
+	password) {
 	google::protobuf::Message *request = initCreateRoomMessage(zone_id,
 		room_group_id, vip_room, min_bet, player_size, password);
 	requestMessage(request, Common::getInstance()->getOS(),
