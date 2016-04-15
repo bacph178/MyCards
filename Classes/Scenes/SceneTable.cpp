@@ -361,9 +361,13 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoom){
 	for (int i = 0; i<listRoom.size(); i++) {
         
         auto bkg_item = Sprite::create("bgr_list_item.png");
-		auto number_table = MLabel::create(listRoom[i].roomid()+"", 30);
-		auto money = MLabel::create(listRoom[i].minbet() + " xu", 30);
-		auto status = MLabel::create(listRoom[i].enteringplayer() + "/" + listRoom[i].roomcapacity(), 30);
+        char buffer[50];
+        sprintf(buffer, "%d", listRoom[i].roomindex());
+		auto number_table = MLabel::create(buffer, 30);
+        sprintf(buffer, "%d xu", listRoom[i].minbet());
+		auto money = MLabel::create(buffer, 30);
+        sprintf(buffer, "%d/%d", listRoom[i].enteringplayer(), listRoom[i].roomcapacity());
+		auto status = MLabel::create(buffer, 30);
         
         auto lock = Sprite::create("ic_lock.png");
         auto custom_item = Layout::create();
