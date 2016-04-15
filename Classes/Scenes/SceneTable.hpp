@@ -22,24 +22,29 @@
 using namespace cocos2d;
 
 class SceneTable : public BaseScene {
-public:
+    
+public :
+    
+    static cocos2d::Scene* createScene(bool enableDisplayRoomList);
+    
+    void menuCallBack(Ref *sender,ui::Widget::TouchEventType type);
+    void phongCallBack(Ref *sender,ui::Widget::TouchEventType type);
+    void tableCallBack(Ref *sender,ui::Widget::TouchEventType type);
+    void lTableCallBack(Ref *pSender, ui::ListView::EventType type);
+    void rTableCallBack(Ref *pSender, ui::ListView::EventType type);
+    void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
+    
+    void setItemorListView(std::vector<BINRoomPlay> listRoomPlay);
+    void setItemorListView2(std::vector<BINRoomPlay> listRoomPlay);
+    
+    virtual bool init() override;
+    virtual void onExit() override;
 
-	static cocos2d::Scene* createScene(bool enableDisplayRoomList);
-
-	void menuCallBack(Ref *sender, ui::Widget::TouchEventType type);
-	void phongCallBack(Ref *sender, ui::Widget::TouchEventType type);
-	void tableCallBack(Ref *sender, ui::Widget::TouchEventType type);
-	void lTableCallBack(Ref *pSender, ui::ListView::EventType type);
-	void rTableCallBack(Ref *pSender, ui::ListView::EventType type);
-	void rScrollTableCallBack(Ref *pSender, ui::ScrollView::EventType type);
-	virtual bool init() override;
-	virtual void onExit() override;
-
-	void update(float) override;
-
-	CREATE_FUNC(SceneTable);
-
-	//void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
+	void update(float) override; 
+    
+    CREATE_FUNC(SceneTable);
+    
+    //void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
 
 public:
 	void initMenu(Size size, Vec2 origin);
@@ -47,14 +52,15 @@ public:
 	void addLayoutRight(M9Path *backgroundLeft, MLabel *hoatdong, Size visibleSize, Vec2 origin, std::vector<BINRoomPlay> listRoom);
 
 protected:
+    
+    MSprite * btn_phong;
+    
+    ui::ListView* lvRight;
+    ui::ListView* lvLeft;
+    
+    bool scroll_bottom;
+    std::vector<BINRoomPlay> listRoomPlay;
 
-	MSprite * btn_phong;
-
-	ui::ListView* lvRight;
-	ui::ListView* lvLeft;
-
-	bool scroll_bottom;
-	std::vector<BINRoomPlay> listRoomPlay;
     
 };
 #endif // __SCENE_TABLE_HPP__

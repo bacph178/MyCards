@@ -7,7 +7,6 @@
 #include "Utils/TLMNConfig.hpp"
 #include "Utils/NetworkManager.h"
 #include "Utils/Common.h"
-#include "protobufObject/filter_room.pb.h"
 #include "ShowGame.h"
 
 
@@ -115,7 +114,8 @@ void SceneTable::update(float delta) {
 
 }
 
-void SceneTable::initMenu(Size visibleSize,Vec2 origin){
+void SceneTable::initMenu(Size visibleSize,Vec2 origin) {
+    
     auto btn_back = MButton::create(BTN_BACK,TAG_BTN_BACK);
     btn_back->setPosition(Vec2(origin.x+10,origin.y+visibleSize.height-btn_back->getHeight()-10));
     btn_back->addTouchEventListener(CC_CALLBACK_2(SceneTable::menuCallBack, this));
@@ -306,8 +306,128 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin, vector<BINRoomPlay> lis
     //==========================Layout Right
     
     
-	addLayoutRight(backgroundLeft, hoatdong, visibleSize, origin, listRoom);
+    auto backgroundRight = M9Path::create("tab_two.9.png",Size(visibleSize.width*0.8f,visibleSize.height*0.75f));
+    backgroundRight->setPosition(origin.x+visibleSize.width*0.2f,
+                                 origin.y+visibleSize.height/2-backgroundRight->getHeight()/2);
+    this->addChild(backgroundRight);
+    
+    auto ban_so = MLabel::create("Bàn số ▿",32);
+    ban_so->setPosition(Vec2(origin.x-ban_so->getWidth()/2 + visibleSize.width*0.32f,
+                             hoatdong->getPosition().y));
+    this->addChild(ban_so);
+    
+    auto tien_cuoc = MLabel::create("Tiền cược ▿",32);
+    tien_cuoc->setPosition(Vec2(origin.x-tien_cuoc->getWidth()/2 + visibleSize.width*0.55f,
+                                hoatdong->getPosition().y));
+    this->addChild(tien_cuoc);
+    
+    auto trang_thai = MLabel::create("Trạng thái ▿",32);
+    trang_thai->setPosition(Vec2(origin.x-trang_thai->getWidth()/2 + visibleSize.width*0.76f,
+                                 hoatdong->getPosition().y));
+    this->addChild(trang_thai);
+    
+    auto khoa = MLabel::create("Khóa ▿",32);
+    khoa->setPosition(Vec2(origin.x-khoa->getWidth()/2 + visibleSize.width*0.945f,
+                           hoatdong->getPosition().y));
+    this->addChild(khoa);
+    
+    
+    Layout* layoutRight = Layout::create();
+    layoutRight->setContentSize(Size(width*0.8f-30,height*0.75f*5/6));
+    layoutRight->setPosition(MVec2(15+width*0.2f,height*0.125f));
+    this->addChild(layoutRight);
+    
+    lvRight = ListView::create();
+    lvRight->setItemsMargin(15);
+	
+    setItemorListView(listRoomPlay);
 
+    lvRight->setBounceEnabled(true);
+    lvRight->setGravity(ListView::Gravity::LEFT);
+    lvRight->setContentSize(layoutRight->getContentSize());
+    lvRight->setTouchEnabled(true);
+    lvRight->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(SceneTable::rTableCallBack, this));
+    lvRight->addEventListener((ui::ScrollView::ccScrollViewCallback)CC_CALLBACK_2(SceneTable::rScrollTableCallBack, this));
+    
+    layoutRight->addChild(lvRight);
+    //======
+
+}
+
+void SceneTable::setItemorListView(vector<BINRoomPlay> listRoomPlay){
+    
+    for (int i=0; i<20; i++) {
+        
+        auto bkg_item = Sprite::create("bgr_list_item.png");
+        auto number_table = MLabel::create("6",30);
+        auto money = MLabel::create("1000 xu",30);
+        auto status = MLabel::create("xxx",30);
+        
+        auto lock = Sprite::create("ic_lock.png");
+        auto custom_item = Layout::create();
+        
+        Size size = Size(width*0.8f-30,height*0.75f*5/6);
+        
+        custom_item->setContentSize(Size(size.width,bkg_item->getContentSize().height));
+        
+        bkg_item->setScaleX(size.width/bkg_item->getContentSize().width);
+        bkg_item->setPosition(size.width/2,custom_item->getContentSize().height/2);
+        
+        number_table->setPosition(Vec2(number_table->getContentSize().width/2+size.width/8,
+                                       custom_item->getContentSize().height / 2.0f-number_table->getContentSize().height/2));
+        money->setPosition(Vec2(money->getContentSize().width/2+size.width*2.5f/8,
+                                custom_item->getContentSize().height / 2.0f-money->getContentSize().height/2));
+        status->setPosition(Vec2(status->getContentSize().width/2+size.width*5/8,
+                                 custom_item->getContentSize().height / 2.0f-status->getContentSize().height/2));
+        lock->setPosition(Vec2(lock->getContentSize().width/2+size.width*7/8,
+                               custom_item->getContentSize().height / 2.0f));
+        
+        custom_item->addChild(bkg_item);
+        custom_item->addChild(number_table);
+        custom_item->addChild(money);
+        custom_item->addChild(status);
+        custom_item->addChild(lock);
+        custom_item->setTouchEnabled(true);
+        lvRight->pushBackCustomItem(custom_item);
+    }
+}
+
+void SceneTable::setItemorListView2(vector<BINRoomPlay> listRoomPlay){
+    
+    for (int i=0; i<20; i++) {
+        
+        auto bkg_item = Sprite::create("bgr_list_item.png");
+        auto number_table = MLabel::create("16",30);
+        auto money = MLabel::create("1000 xu",30);
+        auto status = MLabel::create("xxx",30);
+        
+        auto lock = Sprite::create("ic_lock.png");
+        auto custom_item = Layout::create();
+        
+        Size size = Size(width*0.8f-30,height*0.75f*5/6);
+        
+        custom_item->setContentSize(Size(size.width,bkg_item->getContentSize().height));
+        
+        bkg_item->setScaleX(size.width/bkg_item->getContentSize().width);
+        bkg_item->setPosition(size.width/2,custom_item->getContentSize().height/2);
+        
+        number_table->setPosition(Vec2(number_table->getContentSize().width/2+size.width/8,
+                                       custom_item->getContentSize().height / 2.0f-number_table->getContentSize().height/2));
+        money->setPosition(Vec2(money->getContentSize().width/2+size.width*2.5f/8,
+                                custom_item->getContentSize().height / 2.0f-money->getContentSize().height/2));
+        status->setPosition(Vec2(status->getContentSize().width/2+size.width*5/8,
+                                 custom_item->getContentSize().height / 2.0f-status->getContentSize().height/2));
+        lock->setPosition(Vec2(lock->getContentSize().width/2+size.width*7/8,
+                               custom_item->getContentSize().height / 2.0f));
+        
+        custom_item->addChild(bkg_item);
+        custom_item->addChild(number_table);
+        custom_item->addChild(money);
+        custom_item->addChild(status);
+        custom_item->addChild(lock);
+        custom_item->setTouchEnabled(true);
+        lvRight->pushBackCustomItem(custom_item);
+    }
 }
 
 
@@ -315,17 +435,18 @@ void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType t
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
         CCLOG("CLicked!");
         
+        
     }
 }
 
 void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::EventType type){
     if(!scroll_bottom && type == ui::ScrollView::EventType::SCROLL_TO_BOTTOM){
         CCLOG("BOTTOM!");
-        lvRight->removeAllChildren();
+        
+        //setItemorListView2(listRoomPlay);
         scroll_bottom = true;
     }
 }
-
 
 void SceneTable::tableCallBack(cocos2d::Ref *sender, Widget::TouchEventType type){
     if(type == Widget::TouchEventType::ENDED){

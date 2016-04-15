@@ -10,8 +10,6 @@
 #include "Utils/Common.h"
 #include "protobufObject/enter_zone.pb.h"
 
-
-
 #define TAG_BTN_BACK 1
 #define TAG_BTN_MENU 2
 #define TAG_BTN_NAPXU 3

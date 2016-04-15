@@ -10,6 +10,7 @@
 USING_NS_CC;
 
 using namespace cocos2d::ui;
+
 class ShowGame : public BaseScene
 {
 public:
