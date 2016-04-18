@@ -1,18 +1,31 @@
 option java_package = "com.mi.game.network.data.bin";
 
-//EnterRoom 
 import "player.proto";
+//EnterRoom 
 
 message BINEnterRoomRequest {
 	required int32 roomIndex = 1;
-	required bool vipRoom = 2;
-	optional string password = 3;
+	optional string password = 2;
 }
 
 message BINEnterRoomResponse {
     required bool responseCode = 1;
     optional string message = 2;
-	repeated BINPlayer currentPlayers = 3;
+	repeated BINPlayer playingPlayers = 3;
+	repeated BINPlayer waitingPlayers = 4;
+	optional int64 ownerUserId = 5;
+}
+
+message BINNewPlayerEnterRoomResponse {
+    required bool responseCode = 1;
+    optional string message = 2;
+	optional int64 userId = 3;
+	optional string userName = 4;
+	optional int32 avatarId = 5;
+	optional int64 cash = 6;
+	optional int64 gold = 7;
+	optional int32 level = 8;
+	optional bool ready = 9;
 }
 
 //End EnterRoom 

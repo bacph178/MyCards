@@ -67,7 +67,9 @@ bool SceneTable::init() {
     
 }
 
-google::protobuf::Message* onFilterRoomEvent(int message_id) {
+bool isChangedStatus = false;
+
+google::protobuf::Message* checkEvent(int message_id) {
 	std::mutex mtx;
 	bool isSuccess = false;
 	int k = -1;
@@ -77,7 +79,6 @@ google::protobuf::Message* onFilterRoomEvent(int message_id) {
 	for (int i = 0; i<NetworkManager::listEvent.size(); i++) {
 		if (NetworkManager::listEvent[i][0].second == message_id){
 			result = NetworkManager::listEvent[i][0];
-			// isSuccess = ((BINEnterZoneResponse *)result.first)->responsecode();
 			k = i;
 			break;
 		}
@@ -98,8 +99,8 @@ google::protobuf::Message* onFilterRoomEvent(int message_id) {
 
 void SceneTable::update(float delta) {
 	BaseScene::update(delta);
-	//
-	BINFilterRoomResponse* response = (BINFilterRoomResponse*)onFilterRoomEvent(NetworkManager::FILTER_ROOM);
+	//handle filter room response
+	BINFilterRoomResponse* response = (BINFilterRoomResponse*)checkEvent(NetworkManager::FILTER_ROOM);
 	if (response != 0){
 		if (response->responsecode()) {
 			for (int i = 0; i < response->roomplays_size(); i++) {
@@ -113,6 +114,19 @@ void SceneTable::update(float delta) {
 		}
 	}
 
+	//handle enter room response
+
+	BINEnterRoomResponse *enterroomresponse = (BINEnterRoomResponse *)checkEvent(NetworkManager::ENTER_ROOM);
+
+	if (enterroomresponse != 0) {
+		if (enterroomresponse->responsecode()) {
+			auto tlmiennam = TLMienNam::createScene();
+			Director::getInstance()->replaceScene(TransitionCrossFade::create(0.25f, tlmiennam));
+		}
+		else {
+			cocos2d::MessageBox(enterroomresponse->message().c_str(), "xxx");
+		}
+	}
 }
 
 void SceneTable::initMenu(Size visibleSize,Vec2 origin) {
@@ -251,7 +265,7 @@ void SceneTable::addLayoutRight(M9Path *backgroundLeft, MLabel *hoatdong, Size v
 		custom_item->setTouchEnabled(true);
 		lvRight->pushBackCustomItem(custom_item);
 	}
-	lvRight->setItemsMargin(15);
+	lvRight->setItemsMargin(15);	
 	/*lvRight->addEventListener([this](Ref* sender, ui::ListView::EventType type){
 	CCLOG("123");
 	});
@@ -404,16 +418,18 @@ void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType t
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
         
         ListView* listView = (ListView*) pSender;
-        
-        log("%ld",listView->getCurSelectedIndex());
+        int index = listView->getCurSelectedIndex();
+		
+		CCLOG("index: %d", index);
+		NetworkManager::getInstance()->getEnterRoomMessageFromServer(
+			listRoomPlay[index].roomindex(), "");
     }
 }
 
 void SceneTable::rScrollTableCallBack(cocos2d::Ref *pSender, ui::ScrollView::EventType type){
     if(!scroll_bottom && type == ui::ScrollView::EventType::SCROLL_TO_BOTTOM){
         CCLOG("BOTTOM!");
-        
-        setItemorListView(listRoomPlay);
+        // setItemorListView(listRoomPlay);
         scroll_bottom = true;
     }
 }
@@ -469,10 +485,18 @@ void SceneTable::phongCallBack(cocos2d::Ref *sender, Widget::TouchEventType type
             case TAG_BTN_PHONGVIP:
                 CCLOG("%s","Phong Vip");
                 btn_phong->runAction(MoveTo::create(0.1f, Vec2(origin.x+visibleSize.width*0.2f,origin.y)));
+				//clear list and call network
+				listRoomPlay.clear();
+				NetworkManager::getInstance()->getFilterRoomMessageFromServer(
+					Common::getInstance()->getZoneId(tag), true, -1, -1);
                 break;
             case TAG_BTN_PHONGFREE:
                 CCLOG("%s","Phong Free");
                 btn_phong->runAction(MoveTo::create(0.1f, Vec2(origin.x+visibleSize.width*0.6f,origin.y)));
+				//clear list and call network
+				listRoomPlay.clear();
+				NetworkManager::getInstance()->getFilterRoomMessageFromServer(
+					Common::getInstance()->getZoneId(tag), false, -1, -1);
                 break;
             default:
                 break;

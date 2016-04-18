@@ -18,6 +18,7 @@
 #include "UI/MLabel.hpp"
 #include "UI/M9Path.hpp"
 #include "protobufObject/filter_room.pb.h"
+#include "protobufObject/enter_room.pb.h"
 
 using namespace cocos2d;
 

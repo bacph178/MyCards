@@ -34,6 +34,7 @@ void protobuf_ShutdownFile_enter_5froom_2eproto();
 
 class BINEnterRoomRequest;
 class BINEnterRoomResponse;
+class BINNewPlayerEnterRoomResponse;
 
 // ===================================================================
 
@@ -98,17 +99,10 @@ class BINEnterRoomRequest : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 roomindex() const;
   inline void set_roomindex(::google::protobuf::int32 value);
 
-  // required bool vipRoom = 2;
-  inline bool has_viproom() const;
-  inline void clear_viproom();
-  static const int kVipRoomFieldNumber = 2;
-  inline bool viproom() const;
-  inline void set_viproom(bool value);
-
-  // optional string password = 3;
+  // optional string password = 2;
   inline bool has_password() const;
   inline void clear_password();
-  static const int kPasswordFieldNumber = 3;
+  static const int kPasswordFieldNumber = 2;
   inline const ::std::string& password() const;
   inline void set_password(const ::std::string& value);
   inline void set_password(const char* value);
@@ -121,19 +115,16 @@ class BINEnterRoomRequest : public ::google::protobuf::Message {
  private:
   inline void set_has_roomindex();
   inline void clear_has_roomindex();
-  inline void set_has_viproom();
-  inline void clear_has_viproom();
   inline void set_has_password();
   inline void clear_has_password();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 roomindex_;
-  bool viproom_;
   ::std::string* password_;
+  ::google::protobuf::int32 roomindex_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_enter_5froom_2eproto();
   friend void protobuf_AssignDesc_enter_5froom_2eproto();
@@ -217,17 +208,36 @@ class BINEnterRoomResponse : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // repeated .BINPlayer currentPlayers = 3;
-  inline int currentplayers_size() const;
-  inline void clear_currentplayers();
-  static const int kCurrentPlayersFieldNumber = 3;
-  inline const ::BINPlayer& currentplayers(int index) const;
-  inline ::BINPlayer* mutable_currentplayers(int index);
-  inline ::BINPlayer* add_currentplayers();
+  // repeated .BINPlayer playingPlayers = 3;
+  inline int playingplayers_size() const;
+  inline void clear_playingplayers();
+  static const int kPlayingPlayersFieldNumber = 3;
+  inline const ::BINPlayer& playingplayers(int index) const;
+  inline ::BINPlayer* mutable_playingplayers(int index);
+  inline ::BINPlayer* add_playingplayers();
   inline const ::google::protobuf::RepeatedPtrField< ::BINPlayer >&
-      currentplayers() const;
+      playingplayers() const;
   inline ::google::protobuf::RepeatedPtrField< ::BINPlayer >*
-      mutable_currentplayers();
+      mutable_playingplayers();
+
+  // repeated .BINPlayer waitingPlayers = 4;
+  inline int waitingplayers_size() const;
+  inline void clear_waitingplayers();
+  static const int kWaitingPlayersFieldNumber = 4;
+  inline const ::BINPlayer& waitingplayers(int index) const;
+  inline ::BINPlayer* mutable_waitingplayers(int index);
+  inline ::BINPlayer* add_waitingplayers();
+  inline const ::google::protobuf::RepeatedPtrField< ::BINPlayer >&
+      waitingplayers() const;
+  inline ::google::protobuf::RepeatedPtrField< ::BINPlayer >*
+      mutable_waitingplayers();
+
+  // optional int64 ownerUserId = 5;
+  inline bool has_owneruserid() const;
+  inline void clear_owneruserid();
+  static const int kOwnerUserIdFieldNumber = 5;
+  inline ::google::protobuf::int64 owneruserid() const;
+  inline void set_owneruserid(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:BINEnterRoomResponse)
  private:
@@ -235,15 +245,19 @@ class BINEnterRoomResponse : public ::google::protobuf::Message {
   inline void clear_has_responsecode();
   inline void set_has_message();
   inline void clear_has_message();
+  inline void set_has_owneruserid();
+  inline void clear_has_owneruserid();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* message_;
-  ::google::protobuf::RepeatedPtrField< ::BINPlayer > currentplayers_;
+  ::google::protobuf::RepeatedPtrField< ::BINPlayer > playingplayers_;
+  ::google::protobuf::RepeatedPtrField< ::BINPlayer > waitingplayers_;
+  ::google::protobuf::int64 owneruserid_;
   bool responsecode_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_enter_5froom_2eproto();
   friend void protobuf_AssignDesc_enter_5froom_2eproto();
@@ -251,6 +265,178 @@ class BINEnterRoomResponse : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static BINEnterRoomResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class BINNewPlayerEnterRoomResponse : public ::google::protobuf::Message {
+ public:
+  BINNewPlayerEnterRoomResponse();
+  virtual ~BINNewPlayerEnterRoomResponse();
+
+  BINNewPlayerEnterRoomResponse(const BINNewPlayerEnterRoomResponse& from);
+
+  inline BINNewPlayerEnterRoomResponse& operator=(const BINNewPlayerEnterRoomResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const BINNewPlayerEnterRoomResponse& default_instance();
+
+  void Swap(BINNewPlayerEnterRoomResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  BINNewPlayerEnterRoomResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const BINNewPlayerEnterRoomResponse& from);
+  void MergeFrom(const BINNewPlayerEnterRoomResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bool responseCode = 1;
+  inline bool has_responsecode() const;
+  inline void clear_responsecode();
+  static const int kResponseCodeFieldNumber = 1;
+  inline bool responsecode() const;
+  inline void set_responsecode(bool value);
+
+  // optional string message = 2;
+  inline bool has_message() const;
+  inline void clear_message();
+  static const int kMessageFieldNumber = 2;
+  inline const ::std::string& message() const;
+  inline void set_message(const ::std::string& value);
+  inline void set_message(const char* value);
+  inline void set_message(const char* value, size_t size);
+  inline ::std::string* mutable_message();
+  inline ::std::string* release_message();
+  inline void set_allocated_message(::std::string* message);
+
+  // optional int64 userId = 3;
+  inline bool has_userid() const;
+  inline void clear_userid();
+  static const int kUserIdFieldNumber = 3;
+  inline ::google::protobuf::int64 userid() const;
+  inline void set_userid(::google::protobuf::int64 value);
+
+  // optional string userName = 4;
+  inline bool has_username() const;
+  inline void clear_username();
+  static const int kUserNameFieldNumber = 4;
+  inline const ::std::string& username() const;
+  inline void set_username(const ::std::string& value);
+  inline void set_username(const char* value);
+  inline void set_username(const char* value, size_t size);
+  inline ::std::string* mutable_username();
+  inline ::std::string* release_username();
+  inline void set_allocated_username(::std::string* username);
+
+  // optional int32 avatarId = 5;
+  inline bool has_avatarid() const;
+  inline void clear_avatarid();
+  static const int kAvatarIdFieldNumber = 5;
+  inline ::google::protobuf::int32 avatarid() const;
+  inline void set_avatarid(::google::protobuf::int32 value);
+
+  // optional int64 cash = 6;
+  inline bool has_cash() const;
+  inline void clear_cash();
+  static const int kCashFieldNumber = 6;
+  inline ::google::protobuf::int64 cash() const;
+  inline void set_cash(::google::protobuf::int64 value);
+
+  // optional int64 gold = 7;
+  inline bool has_gold() const;
+  inline void clear_gold();
+  static const int kGoldFieldNumber = 7;
+  inline ::google::protobuf::int64 gold() const;
+  inline void set_gold(::google::protobuf::int64 value);
+
+  // optional int32 level = 8;
+  inline bool has_level() const;
+  inline void clear_level();
+  static const int kLevelFieldNumber = 8;
+  inline ::google::protobuf::int32 level() const;
+  inline void set_level(::google::protobuf::int32 value);
+
+  // optional bool ready = 9;
+  inline bool has_ready() const;
+  inline void clear_ready();
+  static const int kReadyFieldNumber = 9;
+  inline bool ready() const;
+  inline void set_ready(bool value);
+
+  // @@protoc_insertion_point(class_scope:BINNewPlayerEnterRoomResponse)
+ private:
+  inline void set_has_responsecode();
+  inline void clear_has_responsecode();
+  inline void set_has_message();
+  inline void clear_has_message();
+  inline void set_has_userid();
+  inline void clear_has_userid();
+  inline void set_has_username();
+  inline void clear_has_username();
+  inline void set_has_avatarid();
+  inline void clear_has_avatarid();
+  inline void set_has_cash();
+  inline void clear_has_cash();
+  inline void set_has_gold();
+  inline void clear_has_gold();
+  inline void set_has_level();
+  inline void clear_has_level();
+  inline void set_has_ready();
+  inline void clear_has_ready();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* message_;
+  ::google::protobuf::int64 userid_;
+  ::std::string* username_;
+  ::google::protobuf::int32 avatarid_;
+  bool responsecode_;
+  bool ready_;
+  ::google::protobuf::int64 cash_;
+  ::google::protobuf::int64 gold_;
+  ::google::protobuf::int32 level_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_enter_5froom_2eproto();
+  friend void protobuf_AssignDesc_enter_5froom_2eproto();
+  friend void protobuf_ShutdownFile_enter_5froom_2eproto();
+
+  void InitAsDefaultInstance();
+  static BINNewPlayerEnterRoomResponse* default_instance_;
 };
 // ===================================================================
 
@@ -281,37 +467,15 @@ inline void BINEnterRoomRequest::set_roomindex(::google::protobuf::int32 value) 
   roomindex_ = value;
 }
 
-// required bool vipRoom = 2;
-inline bool BINEnterRoomRequest::has_viproom() const {
+// optional string password = 2;
+inline bool BINEnterRoomRequest::has_password() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void BINEnterRoomRequest::set_has_viproom() {
+inline void BINEnterRoomRequest::set_has_password() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void BINEnterRoomRequest::clear_has_viproom() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void BINEnterRoomRequest::clear_viproom() {
-  viproom_ = false;
-  clear_has_viproom();
-}
-inline bool BINEnterRoomRequest::viproom() const {
-  return viproom_;
-}
-inline void BINEnterRoomRequest::set_viproom(bool value) {
-  set_has_viproom();
-  viproom_ = value;
-}
-
-// optional string password = 3;
-inline bool BINEnterRoomRequest::has_password() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void BINEnterRoomRequest::set_has_password() {
-  _has_bits_[0] |= 0x00000004u;
-}
 inline void BINEnterRoomRequest::clear_has_password() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline void BINEnterRoomRequest::clear_password() {
   if (password_ != &::google::protobuf::internal::kEmptyString) {
@@ -469,29 +633,374 @@ inline void BINEnterRoomResponse::set_allocated_message(::std::string* message) 
   }
 }
 
-// repeated .BINPlayer currentPlayers = 3;
-inline int BINEnterRoomResponse::currentplayers_size() const {
-  return currentplayers_.size();
+// repeated .BINPlayer playingPlayers = 3;
+inline int BINEnterRoomResponse::playingplayers_size() const {
+  return playingplayers_.size();
 }
-inline void BINEnterRoomResponse::clear_currentplayers() {
-  currentplayers_.Clear();
+inline void BINEnterRoomResponse::clear_playingplayers() {
+  playingplayers_.Clear();
 }
-inline const ::BINPlayer& BINEnterRoomResponse::currentplayers(int index) const {
-  return currentplayers_.Get(index);
+inline const ::BINPlayer& BINEnterRoomResponse::playingplayers(int index) const {
+  return playingplayers_.Get(index);
 }
-inline ::BINPlayer* BINEnterRoomResponse::mutable_currentplayers(int index) {
-  return currentplayers_.Mutable(index);
+inline ::BINPlayer* BINEnterRoomResponse::mutable_playingplayers(int index) {
+  return playingplayers_.Mutable(index);
 }
-inline ::BINPlayer* BINEnterRoomResponse::add_currentplayers() {
-  return currentplayers_.Add();
+inline ::BINPlayer* BINEnterRoomResponse::add_playingplayers() {
+  return playingplayers_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::BINPlayer >&
-BINEnterRoomResponse::currentplayers() const {
-  return currentplayers_;
+BINEnterRoomResponse::playingplayers() const {
+  return playingplayers_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::BINPlayer >*
-BINEnterRoomResponse::mutable_currentplayers() {
-  return &currentplayers_;
+BINEnterRoomResponse::mutable_playingplayers() {
+  return &playingplayers_;
+}
+
+// repeated .BINPlayer waitingPlayers = 4;
+inline int BINEnterRoomResponse::waitingplayers_size() const {
+  return waitingplayers_.size();
+}
+inline void BINEnterRoomResponse::clear_waitingplayers() {
+  waitingplayers_.Clear();
+}
+inline const ::BINPlayer& BINEnterRoomResponse::waitingplayers(int index) const {
+  return waitingplayers_.Get(index);
+}
+inline ::BINPlayer* BINEnterRoomResponse::mutable_waitingplayers(int index) {
+  return waitingplayers_.Mutable(index);
+}
+inline ::BINPlayer* BINEnterRoomResponse::add_waitingplayers() {
+  return waitingplayers_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::BINPlayer >&
+BINEnterRoomResponse::waitingplayers() const {
+  return waitingplayers_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::BINPlayer >*
+BINEnterRoomResponse::mutable_waitingplayers() {
+  return &waitingplayers_;
+}
+
+// optional int64 ownerUserId = 5;
+inline bool BINEnterRoomResponse::has_owneruserid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void BINEnterRoomResponse::set_has_owneruserid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void BINEnterRoomResponse::clear_has_owneruserid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void BINEnterRoomResponse::clear_owneruserid() {
+  owneruserid_ = GOOGLE_LONGLONG(0);
+  clear_has_owneruserid();
+}
+inline ::google::protobuf::int64 BINEnterRoomResponse::owneruserid() const {
+  return owneruserid_;
+}
+inline void BINEnterRoomResponse::set_owneruserid(::google::protobuf::int64 value) {
+  set_has_owneruserid();
+  owneruserid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// BINNewPlayerEnterRoomResponse
+
+// required bool responseCode = 1;
+inline bool BINNewPlayerEnterRoomResponse::has_responsecode() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_responsecode() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_responsecode() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_responsecode() {
+  responsecode_ = false;
+  clear_has_responsecode();
+}
+inline bool BINNewPlayerEnterRoomResponse::responsecode() const {
+  return responsecode_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_responsecode(bool value) {
+  set_has_responsecode();
+  responsecode_ = value;
+}
+
+// optional string message = 2;
+inline bool BINNewPlayerEnterRoomResponse::has_message() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_message() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_message() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_message() {
+  if (message_ != &::google::protobuf::internal::kEmptyString) {
+    message_->clear();
+  }
+  clear_has_message();
+}
+inline const ::std::string& BINNewPlayerEnterRoomResponse::message() const {
+  return *message_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_message(const ::std::string& value) {
+  set_has_message();
+  if (message_ == &::google::protobuf::internal::kEmptyString) {
+    message_ = new ::std::string;
+  }
+  message_->assign(value);
+}
+inline void BINNewPlayerEnterRoomResponse::set_message(const char* value) {
+  set_has_message();
+  if (message_ == &::google::protobuf::internal::kEmptyString) {
+    message_ = new ::std::string;
+  }
+  message_->assign(value);
+}
+inline void BINNewPlayerEnterRoomResponse::set_message(const char* value, size_t size) {
+  set_has_message();
+  if (message_ == &::google::protobuf::internal::kEmptyString) {
+    message_ = new ::std::string;
+  }
+  message_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* BINNewPlayerEnterRoomResponse::mutable_message() {
+  set_has_message();
+  if (message_ == &::google::protobuf::internal::kEmptyString) {
+    message_ = new ::std::string;
+  }
+  return message_;
+}
+inline ::std::string* BINNewPlayerEnterRoomResponse::release_message() {
+  clear_has_message();
+  if (message_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = message_;
+    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void BINNewPlayerEnterRoomResponse::set_allocated_message(::std::string* message) {
+  if (message_ != &::google::protobuf::internal::kEmptyString) {
+    delete message_;
+  }
+  if (message) {
+    set_has_message();
+    message_ = message;
+  } else {
+    clear_has_message();
+    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional int64 userId = 3;
+inline bool BINNewPlayerEnterRoomResponse::has_userid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_userid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_userid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_userid() {
+  userid_ = GOOGLE_LONGLONG(0);
+  clear_has_userid();
+}
+inline ::google::protobuf::int64 BINNewPlayerEnterRoomResponse::userid() const {
+  return userid_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_userid(::google::protobuf::int64 value) {
+  set_has_userid();
+  userid_ = value;
+}
+
+// optional string userName = 4;
+inline bool BINNewPlayerEnterRoomResponse::has_username() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_username() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_username() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_username() {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    username_->clear();
+  }
+  clear_has_username();
+}
+inline const ::std::string& BINNewPlayerEnterRoomResponse::username() const {
+  return *username_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_username(const ::std::string& value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void BINNewPlayerEnterRoomResponse::set_username(const char* value) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(value);
+}
+inline void BINNewPlayerEnterRoomResponse::set_username(const char* value, size_t size) {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  username_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* BINNewPlayerEnterRoomResponse::mutable_username() {
+  set_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    username_ = new ::std::string;
+  }
+  return username_;
+}
+inline ::std::string* BINNewPlayerEnterRoomResponse::release_username() {
+  clear_has_username();
+  if (username_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = username_;
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void BINNewPlayerEnterRoomResponse::set_allocated_username(::std::string* username) {
+  if (username_ != &::google::protobuf::internal::kEmptyString) {
+    delete username_;
+  }
+  if (username) {
+    set_has_username();
+    username_ = username;
+  } else {
+    clear_has_username();
+    username_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional int32 avatarId = 5;
+inline bool BINNewPlayerEnterRoomResponse::has_avatarid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_avatarid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_avatarid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_avatarid() {
+  avatarid_ = 0;
+  clear_has_avatarid();
+}
+inline ::google::protobuf::int32 BINNewPlayerEnterRoomResponse::avatarid() const {
+  return avatarid_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_avatarid(::google::protobuf::int32 value) {
+  set_has_avatarid();
+  avatarid_ = value;
+}
+
+// optional int64 cash = 6;
+inline bool BINNewPlayerEnterRoomResponse::has_cash() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_cash() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_cash() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_cash() {
+  cash_ = GOOGLE_LONGLONG(0);
+  clear_has_cash();
+}
+inline ::google::protobuf::int64 BINNewPlayerEnterRoomResponse::cash() const {
+  return cash_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_cash(::google::protobuf::int64 value) {
+  set_has_cash();
+  cash_ = value;
+}
+
+// optional int64 gold = 7;
+inline bool BINNewPlayerEnterRoomResponse::has_gold() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_gold() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_gold() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_gold() {
+  gold_ = GOOGLE_LONGLONG(0);
+  clear_has_gold();
+}
+inline ::google::protobuf::int64 BINNewPlayerEnterRoomResponse::gold() const {
+  return gold_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_gold(::google::protobuf::int64 value) {
+  set_has_gold();
+  gold_ = value;
+}
+
+// optional int32 level = 8;
+inline bool BINNewPlayerEnterRoomResponse::has_level() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_level() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_level() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_level() {
+  level_ = 0;
+  clear_has_level();
+}
+inline ::google::protobuf::int32 BINNewPlayerEnterRoomResponse::level() const {
+  return level_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_level(::google::protobuf::int32 value) {
+  set_has_level();
+  level_ = value;
+}
+
+// optional bool ready = 9;
+inline bool BINNewPlayerEnterRoomResponse::has_ready() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void BINNewPlayerEnterRoomResponse::set_has_ready() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_has_ready() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void BINNewPlayerEnterRoomResponse::clear_ready() {
+  ready_ = false;
+  clear_has_ready();
+}
+inline bool BINNewPlayerEnterRoomResponse::ready() const {
+  return ready_;
+}
+inline void BINNewPlayerEnterRoomResponse::set_ready(bool value) {
+  set_has_ready();
+  ready_ = value;
 }
 
 

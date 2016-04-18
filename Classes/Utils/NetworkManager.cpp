@@ -141,6 +141,10 @@ google::protobuf::Message* getTypeMessage(google::protobuf::Message* msg, int me
 		msg = new BINSessionExpiredResponse(); 
 		break;
 	case NetworkManager::ENTER_ROOM:
+		msg = new BINEnterRoomResponse();
+		break;
+	case NetworkManager::NEW_PLAYER_ENTER_ROOM:
+		msg = new BINNewPlayerEnterRoomResponse(); 
 		break;
 	case NetworkManager::ENTER_ZONE:
 		msg = new BINEnterZoneResponse();
@@ -499,18 +503,16 @@ void NetworkManager::recvMessage() {
 }
 
 google::protobuf::Message* NetworkManager::initEnterRoomMessage(int room_index,
-	bool vip_room, std::string password) {
+	std::string password) {
 	auto request = new BINEnterRoomRequest(); 
 	request->set_roomindex(room_index);
-	request->set_viproom(vip_room);
 	request->set_password(password);
 	return request; 
 }
 
-void NetworkManager::getEnterRoomMessageFromServer(int room_index, bool 
-	vip_room, std::string password) {
-	google::protobuf::Message *request = initEnterRoomMessage(room_index, 
-		vip_room, password);
+void NetworkManager::getEnterRoomMessageFromServer(int room_index, std::string
+	password) {
+	google::protobuf::Message *request = initEnterRoomMessage(room_index, password);
 	requestMessage(request, Common::getInstance()->getOS(),
 		NetworkManager::ENTER_ROOM, 
 		Common::getInstance()->getSessionId());
