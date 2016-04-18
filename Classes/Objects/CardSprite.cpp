@@ -5,6 +5,7 @@
 #include "Utils/TLMNConfig.hpp"
 
 using namespace cocos2d;
+using namespace std;
 
 CardSprite* CardSprite::create(Card card, PositionIndex PositionIndex) {
     
@@ -23,19 +24,16 @@ bool CardSprite::init() {
     }
     
     this->isBack = false;
-    this->suit = "Spade";
-    this->value = "1";
     this->state = Idle;
-    
     this->cardState = Idle;
     this->isFirstTimeClick = false;
-    this->origionPostion = cocos2d::Vec2(0,0);
+    this->origionPostion = Vec2(0,0);
     
     return true;
 }
 
-std::string CardSprite::getName(){
-    return getFileName(this->getCard());
+string CardSprite::getName(){
+    return getFileName();
 }
 
 void CardSprite::onEnter() {
@@ -43,12 +41,12 @@ void CardSprite::onEnter() {
 }
 
 void CardSprite::addEvents(){
-    auto listener = cocos2d::EventListenerTouchOneByOne::create();
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
-    listener->onTouchBegan = [&](cocos2d::Touch* touch, cocos2d::Event* event) {
-        cocos2d::Vec2 p = touch->getLocation();
-        cocos2d::Rect rect = this->getBoundingBox();
+    listener->onTouchBegan = [&](Touch* touch, Event* event) {
+        Vec2 p = touch->getLocation();
+        Rect rect = this->getBoundingBox();
         
         if(rect.containsPoint(p))
         {
@@ -58,7 +56,7 @@ void CardSprite::addEvents(){
         return false; // we did not consume this event, pass thru.
     };
     
-    listener->onTouchEnded = [=](cocos2d::Touch* touch, cocos2d::Event* event) {
+    listener->onTouchEnded = [=](Touch* touch, Event* event) {
         
         CardSprite::touchEvent(touch);
         if(cardState == Idle){
@@ -67,46 +65,38 @@ void CardSprite::addEvents(){
                 isFirstTimeClick = true;
             }
             cardState = OnHand;
-            auto moveBy = MoveBy::create(0.15f, cocos2d::Vec2(0,25));
+            auto moveBy = MoveBy::create(0.15f, Vec2(0,25));
             this->runAction(moveBy);
             
         }else if(cardState == OnHand){
             cardState = Idle;
             isFirstTimeClick = false;
-            auto moveBy = MoveBy::create(0.15f, cocos2d::Vec2(0,-25));
+            auto moveBy = MoveBy::create(0.15f, Vec2(0,-25));
             this->runAction(moveBy);
         }
     };
     
-    cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 // MOVE
 
 void CardSprite::setMove(float x, float y, float time){
-    this->runAction(MoveTo::create(time,cocos2d::Vec2(x,y)));
+    this->runAction(MoveTo::create(time, Vec2(x,y)));
 }
 
 void CardSprite::setMove(float x, float y){
-    this->runAction(MoveTo::create(0.15f,cocos2d::Vec2(x,y)));
+    this->runAction(MoveTo::create(0.15f, Vec2(x,y)));
 }
 
 // GET & SET
 
-void CardSprite::setValue(string value){
-    this->value = value;
-}
-
 string CardSprite::getValue(){
-    return this->value;
-}
-
-void CardSprite::setSuit(string suit){
-    this->suit = suit;
+    return to_string(cardValue % 10);
 }
 
 string CardSprite::getSuit(){
-    return this->suit;
+    return to_string(cardValue / 10);
 }
 
 void CardSprite::setIsBack(bool isBack){
@@ -133,20 +123,12 @@ int CardSprite::getCardValue(){
     return this->cardValue;
 }
 
-void CardSprite::setNumberValue(int numberValue){
-    this->numberValue = numberValue;
-}
-
 int CardSprite::getNumberValue(){
-    return this->numberValue;
-}
-
-void CardSprite::setNumberSuit(int numberSuit){
-    this->numberSuit = numberSuit;
+    return this->cardValue / 10;
 }
 
 int CardSprite::getNumberSuit(){
-    return this->numberSuit;
+    return this->cardValue % 10;
 }
 
 void CardSprite::setIndex(int index){
@@ -189,38 +171,39 @@ void CardSprite::update(){
     }
 }
 
-
-
 // Touch Event!
 
-void CardSprite::touchEvent(cocos2d::Touch* touch)
+void CardSprite::touchEvent(Touch* touch)
 {
     CCLOG("touched : %s",getName().c_str());
 }
 
-std::string CardSprite::getFileName(Card card)
+string CardSprite::getFileName()
 {
     std::string filename;
+    int type = this->cardValue % 10;
+    int number = this->cardValue / 10;
     
-    switch (card.type) {
+    switch (type) {
+        case 3: {
+            filename = filename = StringUtils::format("%02dro.png", number);
+            break;
+        }
+        case 4: {
+            filename = filename = StringUtils::format("%02dco.png", number);
+            break;
+        }
+        case 2: {
+            filename = filename = StringUtils::format("%02dtep.png", number);
+            break;
+        }
+        case 1: {
+            filename = filename = StringUtils::format("%02dbich.png", number);
+            break;
+        }
             
-        case Diamonds: {
-            filename = StringUtils::format("%02dro.png",card.number);
-            break;
-        }
-        case Hearts: {
-            filename = StringUtils::format("%02dco.png",card.number);
-            break;
-        }
-        case Clubs: {
-            filename = StringUtils::format("%02dtep.png",card.number);
-            break;
-        }
-        case Spade: {
-            filename = StringUtils::format("%02dbich.png",card.number);
-            break;
-        }
-        case OTHER: {
+            
+        default: {
             filename = StringUtils::format("nullx.png");
             break;
         }

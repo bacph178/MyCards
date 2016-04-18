@@ -48,7 +48,7 @@ struct PositionIndex {
     int y;
 };
 
-class CardSprite : public cocos2d::Sprite {
+class CardSprite : public Sprite {
 public:
     static CardSprite* create(Card card, PositionIndex PositionIndex);
     virtual bool init() override; // Initializing process
@@ -75,10 +75,7 @@ public:
     void setMove(float x,float y);
     
     // GET & SET
-    void setValue(string value);
     string getValue();
-    
-    void setSuit(string suit);
     string getSuit();
     
     void setIsBack(bool isBack);
@@ -90,10 +87,7 @@ public:
     void  setCardValue(int cardValue);
     int getCardValue();
     
-    void setNumberValue(int numberValue);
     int getNumberValue();
-    
-    void setNumberSuit(int numberSuit);
     int getNumberSuit();
     
     void setIndex(int index);
@@ -102,27 +96,21 @@ public:
     void setCardType(CardType type);
     CardType getCardType();
     
-    void setPostion(cocos2d::Vec2 postion);
-    cocos2d::Vec2 getpostion();
+    void setPostion(Vec2 postion);
+    Vec2 getpostion();
     
 private:
-    std::string getFileName(Card card); // get image
+    string getFileName(); // get image
 
 private:
-    std::string suit;
-    std::string value;
     int cardValue;
-    int numberValue;
-    int numberSuit;
-    
     int index;
     
     bool isBack;
     enum CardState state;
-    cocos2d::Vec2 originalPosition;
-    
-    cocos2d::Vec2 screenPoint;
-    cocos2d::Vec2 offset;
+    Vec2 originalPosition;
+    Vec2 screenPoint;
+    Vec2 offset;
     
     bool isSavedPosition;
 };
