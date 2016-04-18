@@ -403,9 +403,6 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoom){
 void SceneTable::rTableCallBack(cocos2d::Ref *pSender, ui::ListView::EventType type){
     if(type == ui::ListView::EventType::ON_SELECTED_ITEM_END){
         
-       //Layout* item = (Layout*)pSender;
-        //CCLOG("CLicked!+%zd",lvRight->getItems().size());
-        
         ListView* listView = (ListView*) pSender;
         
         log("%ld",listView->getCurSelectedIndex());
