@@ -26,6 +26,8 @@ package org.cocos2dx.lib;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 
@@ -36,6 +38,8 @@ public class Cocos2dxHandler extends Handler {
     // Constants
     // ===========================================================
     public final static int HANDLER_SHOW_DIALOG = 1;
+    
+    public final static int HANDLER_SHOW_GOOGLE = 2;
 
     // ===========================================================
     // Fields
@@ -66,7 +70,17 @@ public class Cocos2dxHandler extends Handler {
             case Cocos2dxHandler.HANDLER_SHOW_DIALOG:
                 showDialog(msg);
                 break;
+            case Cocos2dxHandler.HANDLER_SHOW_GOOGLE:
+            	showGoogle("www.google.com");
+                break;
         }
+    }
+    
+    private void showGoogle(String url) {
+    	Cocos2dxActivity theActivity = this.mActivity.get();
+    	Intent aIntent = new Intent (Intent.ACTION_VIEW);
+        aIntent.setData(Uri.parse(url));
+        theActivity.startActivity(aIntent);
     }
     
     private void showDialog(Message msg) {

@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,10 +71,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxWebViewHelper mWebViewHelper = null;
     private Cocos2dxEditBoxHelper mEditBoxHelper = null;
     private boolean hasFocus = false;
+    public static Activity _activiy;
 
     public Cocos2dxGLSurfaceView getGLSurfaceView(){
         return  mGLSurfaceView;
     }
+    
 
     public class Cocos2dxEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
     {
@@ -264,6 +267,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         onLoadNativeLibraries();
         SDKBox.init(this);
 
+        _activiy = this;
+        
         sContext = this;
         this.mHandler = new Cocos2dxHandler(this);
         
@@ -288,6 +293,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
+    
+    
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
     private static native int[] getGLContextAttrs();
     
@@ -298,6 +305,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
     // Methods for/from SuperClass/Interfaces
     // ===========================================================
+    
+    public static void openURLX(String url) {
+        Intent aIntent = new Intent (Intent.ACTION_VIEW);
+        aIntent.setData(Uri.parse(url));
+        _activiy.startActivity(aIntent);
+    }
 
     @Override
     protected void onStart() {

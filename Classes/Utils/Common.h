@@ -31,8 +31,6 @@ private:
 	static int FACEBOOK_CHANNEL;
 	static int GOOGLE_CHANNEL;
 	static int TIENLENMIENNAM_ZONE;
-	static int ANDROID;
-	static int IOS;
 	
 	std::string device_id; 
 	std::string device_info; 

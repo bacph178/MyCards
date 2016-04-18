@@ -221,7 +221,6 @@ void SceneTable::addLayoutRight(M9Path *backgroundLeft, MLabel *hoatdong, Size v
 		hoatdong->getPosition().y));
 	this->addChild(khoa);
 
-
 	Layout* layoutRight = Layout::create();
 	layoutRight->setContentSize(Size(backgroundRight->getWidth() - 30, backgroundRight->getHeight() * 5 / 6));
 	layoutRight->setPosition(Vec2(origin.x + 15 + backgroundLeft->getWidth(), origin.y + visibleSize.height*0.125f));

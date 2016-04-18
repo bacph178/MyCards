@@ -7,6 +7,9 @@
 	#include "NativeUtility.h"
 #endif
 
+#define ANDROID 2
+#define IOS 1
+
 
 Common::Common(std::string device_id, std::string device_info, std::string 
 	app_version, std::string cp, std::string country, std::string language,
@@ -28,9 +31,7 @@ Common::~Common() {
 }
 
 int Common::FACEBOOK_CHANNEL = 1; 
-int Common::GOOGLE_CHANNEL = 2; 
-int Common::ANDROID = 1; 
-int Common::IOS = 2;
+int Common::GOOGLE_CHANNEL = 2;
 int Common::TIENLENMIENNAM_ZONE = 5; 
 char* Common::KEY_SESSION_ID = "key_session_id";
 
@@ -106,11 +107,11 @@ std::string Common::getIpaddress() const {
 int Common::getOS()  {
 	if (os == 0) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-		os = Common::ANDROID;
+		os = ANDROID;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-		os =Common::IOS;
+		os =IOS;
 #else
-		os = Common::IOS;
+		os = IOS;
 #endif
 	}
 	return os; 

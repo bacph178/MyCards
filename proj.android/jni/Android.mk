@@ -76,7 +76,7 @@ LOCAL_MODULE := cocos2dcpp_shared
 
 LOCAL_MODULE_FILENAME := libcocos2dcpp
 
-LOCAL_SRC_FILES := hellocpp/main.cpp
+LOCAL_SRC_FILES := hellocpp/main.cpp \ ../../cocos2d/cocos/platform/android/jni/JniLink.cpp
 
 DELEGATE_FILE_LIST := $(wildcard $(LOCAL_PATH)/../../Classes/*.cpp)
 LOCAL_SRC_FILES += $(DELEGATE_FILE_LIST:$(LOCAL_PATH)/%=%)

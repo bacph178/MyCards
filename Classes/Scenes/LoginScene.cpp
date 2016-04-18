@@ -25,6 +25,8 @@
 #pragma comment(lib, "libprotobuf.lib")
 #endif
 
+#include "platform/android/jni/JniLink.h"
+
 
 
 #include <string>
@@ -277,11 +279,13 @@ void LoginScene::menuCallBack(Ref *pSender, Widget::TouchEventType eventType){
         switch (tag) {
             case TAG_BTN_FACEBOOK:
                 CCLOG("%s","Login with facebook!");
-
-                
-				#ifdef SDKBOX_ENABLED
-					sdkbox::PluginFacebook::login(); 
-				#endif
+            
+        #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                openURLX("www.google.com");
+        #endif
+//				#ifdef SDKBOX_ENABLED
+//					sdkbox::PluginFacebook::login(); 
+//				#endif
 
                 break;
             case TAG_BTN_LOGIN:
