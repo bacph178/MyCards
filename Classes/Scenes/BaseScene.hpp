@@ -28,9 +28,10 @@ public:
 protected:
     Vec2   MVec2(float x, float y);
     
-    Size visibleSize;
-    float   width;
-    float   height;
+    Size    visibleSize;
+    float   visibleWidth;
+    float   visibleHeight;
+    Vec2    origin;
     float   originX;
     float   originY;
     

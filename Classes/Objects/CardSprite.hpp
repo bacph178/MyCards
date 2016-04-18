@@ -54,12 +54,11 @@ public:
     virtual bool init() override; // Initializing process
     void onEnter() override; // Display pre-treatment
     void addEvents();
-    void touchEvent(cocos2d::Touch* touch);
+    void touchEvent(Touch* touch);
     
-    std::string getName(); // get name
-    CardState cardState;  // card state
+    string getName(); // get name
     bool isFirstTimeClick;
-    cocos2d::Vec2 origionPostion;
+    Vec2 origionPostion;
     
     void update();
     
@@ -107,7 +106,7 @@ private:
     int index;
     
     bool isBack;
-    enum CardState state;
+    enum CardState cardState;
     Vec2 originalPosition;
     Vec2 screenPoint;
     Vec2 offset;

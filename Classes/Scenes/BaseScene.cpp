@@ -18,10 +18,11 @@ bool BaseScene::init()
 
     Size _visibleSize = Director::getInstance()->getVisibleSize();
     visibleSize = _visibleSize;
-    width = _visibleSize.width;
-    height = _visibleSize.height;
+    visibleWidth = _visibleSize.width;
+    visibleHeight = _visibleSize.height;
     
     Vec2 _origin = Director::getInstance()->getVisibleOrigin();
+    origin = _origin;
     originX = _origin.x;
     originY = _origin.y;
 

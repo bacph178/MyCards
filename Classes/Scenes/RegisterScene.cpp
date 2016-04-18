@@ -56,11 +56,11 @@ bool RegisterScene::init() {
 void RegisterScene::initMenu(){
     
     auto bigken = MSprite::create("bigken_logo.png");
-    bigken->setPosition(MVec2(20,height-bigken->getHeight()-20));
+    bigken->setPosition(MVec2(20, visibleHeight - bigken->getHeight() - 20));
     this->addChild(bigken);
     
     auto girl = MSprite::create("girl2.png");
-    girl->setPosition(MVec2(width/6,0));
+    girl->setPosition(MVec2(visibleWidth / 6,0));
     this->addChild(girl);
     
     
@@ -68,7 +68,7 @@ void RegisterScene::initMenu(){
     
     //register Button
     auto btn_register = MButton::create("ic_button_register.png",TAG_BTN_REGISTER);
-    btn_register->setPosition(MVec2(width-50-btn_register->getWidth(),height / 3));
+    btn_register->setPosition(MVec2(visibleWidth - 50 - btn_register->getWidth(), visibleHeight / 3));
     btn_register->setZoomScale(0.01f);
     btn_register->addTouchEventListener(CC_CALLBACK_2(RegisterScene::menuCallBack, this));
     this->addChild(btn_register);
@@ -96,7 +96,7 @@ void RegisterScene::initMenu(){
     
     // btn back
     auto btn_back = MButton::create(BTN_BACK,TAG_BTN_BACK);
-    btn_back->setPosition(Vec2(width-10 - btn_back->getWidth(),10));
+    btn_back->setPosition(Vec2(visibleWidth - 10 - btn_back->getWidth(), 10));
     btn_back->addTouchEventListener(CC_CALLBACK_2(RegisterScene::menuCallBack, this));
     this->addChild(btn_back);
     

@@ -51,7 +51,7 @@ bool IntroScene::init() {
 	this->addChild(background);
     
     auto label = MLabel::create("BigKen Online", 65);
-    label->setPosition(MVec2(width/2 - label->getWidth()/2,height/2 - label->getHeight()/2));
+    label->setPosition(MVec2(visibleWidth / 2 - label->getWidth() / 2, visibleHeight / 2 - label->getHeight()/2));
     this->addChild(label);
     
     #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

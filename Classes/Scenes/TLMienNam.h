@@ -9,12 +9,13 @@
 class SettingDialog;
 
 using namespace cocos2d;
+using namespace std;
 
 class TLMienNam : public BaseScene
 {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
-    static cocos2d::Scene* createScene();
+    static Scene* createScene();
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init() override;
@@ -26,12 +27,12 @@ public:
     void update(float) override;
 
 protected:
-    std::vector<Card> _cards;
-    std::vector<Card> _cards_left;
-    std::vector<Card> _cards_right;
-    std::vector<Card> _cards_top;
+    vector<Card> _cards;
+    vector<Card> _cards_left;
+    vector<Card> _cards_right;
+    vector<Card> _cards_top;
     
-    std::vector<CardSprite*> card_tag;
+    vector<CardSprite*> card_tag;
     
     void initMenu(Size size,Vec2 origin);
     void initCards();
@@ -42,9 +43,9 @@ protected:
     void initGame();
     double cardScale();
     
-    void menuCallBack(Ref *pSender, cocos2d::ui::Widget::TouchEventType eventType);
-    void playCallBack(Ref *pSender, cocos2d::ui::Widget::TouchEventType eventType);
-    void cardCallBack(Ref *pSender, cocos2d::ui::Widget::TouchEventType eventType);
+    void menuCallBack(Ref *pSender, ui::Widget::TouchEventType eventType);
+    void playCallBack(Ref *pSender, ui::Widget::TouchEventType eventType);
+    void cardCallBack(Ref *pSender, ui::Widget::TouchEventType eventType);
     
 private:
     

@@ -71,7 +71,7 @@ bool isChangedStatus = false;
 
 google::protobuf::Message* checkEvent(int message_id) {
 	std::mutex mtx;
-	bool isSuccess = false;
+//	bool isSuccess = false;
 	int k = -1;
 	mtx.lock();
 	//handle login
@@ -347,8 +347,8 @@ void SceneTable::initTable(Size visibleSize,Vec2 origin, vector<BINRoomPlay> lis
     
     
     Layout* layoutRight = Layout::create();
-    layoutRight->setContentSize(Size(width*0.8f-30,height*0.75f*5/6));
-    layoutRight->setPosition(MVec2(15+width*0.2f,height*0.125f));
+    layoutRight->setContentSize(Size(visibleWidth * 0.8f - 30, visibleHeight * 0.75f * 5 / 6));
+    layoutRight->setPosition(MVec2(15 + visibleWidth * 0.2f, visibleHeight * 0.125f));
     this->addChild(layoutRight);
     
     lvRight = ListView::create();
@@ -385,7 +385,7 @@ void SceneTable::setItemorListView(vector<BINRoomPlay> listRoom){
         auto lock = Sprite::create("ic_lock.png");
         auto custom_item = Layout::create();
         
-        Size size = Size(width*0.8f-30,height*0.75f*5/6);
+        Size size = Size(visibleWidth * 0.8f - 30, visibleHeight * 0.75f * 5 / 6);
         
         custom_item->setContentSize(Size(size.width,bkg_item->getContentSize().height));
         

@@ -13,8 +13,6 @@
 #define TAG_BTN_XEPBAI 116
 #define TAG_BTN_DANHBAI 117
 
-using namespace cocos2d;
-
 #define CARD_SHOWING_ZORDER 1
 
 #define CARD_SUIT_TYPE_NUM 4 // Loại bài trong bộ
@@ -22,6 +20,9 @@ using namespace cocos2d;
 
 #define CARD_X_NUM 13 // rows
 #define CARD_MARGIN 10 // Khoảng cách giữa các thẻ
+
+using namespace cocos2d;
+using namespace std;
 
 Scene* TLMienNam::createScene()
 {
@@ -47,19 +48,11 @@ bool TLMienNam::init() {
     
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Cards.plist");
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
-    
     this->initMenu(visibleSize, origin);
     
     sprite = Sprite::create("bgr_textview.png");
     sprite->setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
     this->addChild(sprite, 0);
-    
-    auto texture = Sprite::createWithSpriteFrameName("01co.png");
-    texture->setPosition(Vec2(origin.x,origin.y));
-    this->addChild(texture);
     
     this->initGame();
     
@@ -127,7 +120,7 @@ void TLMienNam::initGame(){
 }
 
 void TLMienNam::initCards() {
-    std::vector<Card> cards;
+    vector<Card> cards;
     for (int type = 0; type < CARD_SUIT_TYPE_NUM; type++) {
         for (int number = 0; number < CARD_NUM_OF_SUIT; number++) {
             Card card;
@@ -152,10 +145,10 @@ void TLMienNam::initCards() {
 }
 
 Card TLMienNam::getCard() {
-    std::random_device rd;
-    std::mt19937 rand = std::mt19937(rd());
+    random_device rd;
+    mt19937 rand = mt19937(rd());
     
-    int index = std::uniform_int_distribution<int>(0, (int)_cards.size() - 1)(rand);
+    int index = uniform_int_distribution<int>(0, (int)_cards.size() - 1)(rand);
     auto card = _cards[index];
     _cards.erase(_cards.begin() + index);
     
@@ -163,8 +156,6 @@ Card TLMienNam::getCard() {
 }
 
 void TLMienNam::createOtherCards(PositionIndex positionIndex, int tag,float marginX,float marginY,float rotage){
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
     double cardScale = this->cardScale();
     
     auto cardSprite = Sprite::createWithSpriteFrameName("nullx.png");
@@ -172,8 +163,8 @@ void TLMienNam::createOtherCards(PositionIndex positionIndex, int tag,float marg
     Size cardSize = Size(cardSprite->getContentSize().width * cardScale,
                          cardSprite->getContentSize().height * cardScale);
     
-    cardSprite->setPosition(Vec2(origin.x+visibleSize.width/2,
-                                 origin.y+visibleSize.height/2));
+    cardSprite->setPosition(Vec2(originX + visibleWidth / 2,
+                                 originY + visibleHeight / 2));
     cardSprite->setScaleX(cardScale);
     cardSprite->setScaleY(cardScale);
     //cardSprite->setTag(tag);
@@ -181,20 +172,17 @@ void TLMienNam::createOtherCards(PositionIndex positionIndex, int tag,float marg
     auto delay = DelayTime::create(1.5f);
     auto rotaged = RotateTo::create(0, rotage);
     auto scaleBy = ScaleBy::create(0, 0.8f);
-    cardSize = cardSize*0.8f;
+    cardSize = cardSize * 0.8f;
     Vec2 move;
-    if(marginX<visibleSize.width/2){ //============================== left
-        move = Vec2(origin.x + marginX + cardSize.height/2,
-                    origin.y + marginY
-                    +(positionIndex.y-6)*cardSize.width/4);
-    }else if (marginX>visibleSize.width/2){ //======================= right
-        move = Vec2(origin.x + marginX - cardSize.height/2,
-                    origin.y + marginY
-                    +(positionIndex.y-6)*cardSize.width/4);
+    if(marginX < visibleWidth / 2){ //============================== left
+        move = Vec2(originX + marginX + cardSize.height / 2,
+                    originY + marginY +(positionIndex.y - 6) * cardSize.width / 4);
+    }else if (marginX > visibleWidth / 2){ //======================= right
+        move = Vec2(originX + marginX - cardSize.height / 2,
+                    originY + marginY +( positionIndex.y - 6) * cardSize.width / 4);
     }else{ //========================================================= top
-        move = Vec2(origin.x + marginX
-                    + (positionIndex.x-6)*cardSize.width/3,
-                    origin.y+marginY - cardSize.height/2);
+        move = Vec2(originX + marginX + (positionIndex.x - 6) * cardSize.width / 3,
+                    originY + marginY - cardSize.height / 2);
     }
     auto moveTo = MoveTo::create(0.5f, move);
     auto sequence = Sequence::create(delay,rotaged,scaleBy,moveTo, NULL);
@@ -205,9 +193,6 @@ void TLMienNam::createOtherCards(PositionIndex positionIndex, int tag,float marg
 
 
 void TLMienNam::createCards(PositionIndex positionIndex, int tag){
-    
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
     double cardScale = this->cardScale();
     
     auto cardx = this->getCard();
@@ -216,8 +201,7 @@ void TLMienNam::createCards(PositionIndex positionIndex, int tag){
     Size cardSize = Size(cardSprite->getContentSize().width * cardScale,
                          cardSprite->getContentSize().height * cardScale);
     
-    cardSprite->setPosition(Vec2(origin.x+visibleSize.width/2,
-                                 origin.y + visibleSize.height/2));
+    cardSprite->setPosition(Vec2(originX + visibleWidth / 2, originY + visibleHeight / 2));
     cardSprite->setScaleX(cardScale);
     cardSprite->setScaleY(cardScale);
     cardSprite->setTag(tag);
@@ -226,8 +210,8 @@ void TLMienNam::createCards(PositionIndex positionIndex, int tag){
     MoveTo* moveTo;
     
     moveTo = MoveTo::create(0.5f,
-                            Vec2(origin.x + visibleSize.width/2 + (positionIndex.x-6) * cardSize.width/3,
-                            origin.y + 50 +cardSize.height/2 ));
+                            Vec2(originX + visibleWidth / 2 + (positionIndex.x - 6) * cardSize.width / 3,
+                            originY + 50 + cardSize.height / 2));
     
     auto sequence = Sequence::create(delay,moveTo, NULL);
     cardSprite->runAction(sequence);
@@ -249,9 +233,7 @@ void TLMienNam::showInitCard() {
 //        }
 //    }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    Vec2 center = Vec2(origin.x+visibleSize.width/2,origin.y+visibleSize.height/2);
+    Vec2 center = Vec2(originX + visibleWidth / 2, originY + visibleHeight / 2);
     
     //createCard
     
@@ -266,7 +248,7 @@ void TLMienNam::showInitCard() {
     
     //create other Cards left
     float marginXLeft = 200;
-    float marginYLeft = visibleSize.height/2;
+    float marginYLeft = visibleHeight / 2;
     for(int i=0;i<CARD_X_NUM;i++){
         PositionIndex positionIndex;
         positionIndex.x = 0;
@@ -275,8 +257,8 @@ void TLMienNam::showInitCard() {
     }
     
     //create other Cards right
-    float marginXRight = visibleSize.width-200;
-    float marginYRight = visibleSize.height/2;
+    float marginXRight = visibleWidth - 200;
+    float marginYRight = visibleHeight / 2;
     for(int i=0;i<CARD_X_NUM;i++){
         PositionIndex positionIndex;
         positionIndex.x = 0;
@@ -285,8 +267,8 @@ void TLMienNam::showInitCard() {
     }
     
     //create other Cards top
-    float marginXTop = visibleSize.width/2;
-    float marginYTop = visibleSize.height-50;
+    float marginXTop = visibleWidth / 2;
+    float marginYTop = visibleHeight - 50;
     for(int i=0;i<CARD_X_NUM;i++){
         PositionIndex positionIndex;
         positionIndex.x = i;
@@ -301,27 +283,20 @@ double TLMienNam::cardScale(){
     static double cardScale = 0;
     
     if (cardScale == 0) {
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        
         auto card = Sprite::createWithSpriteFrameName("nullx.png");
-        double scaleX = ((visibleSize.width - CARD_MARGIN * (CARD_X_NUM + 1)) / CARD_X_NUM) / card->getContentSize().width;
+        double scaleX = ((visibleWidth - CARD_MARGIN * (CARD_X_NUM + 1)) / CARD_X_NUM) / card->getContentSize().width;
         
         cardScale = scaleX;
     }
     return cardScale;
 }
 
-void TLMienNam::cardCallBack(cocos2d::Ref *pSender, ui::Widget::TouchEventType eventType){
+void TLMienNam::cardCallBack(Ref *pSender, ui::Widget::TouchEventType eventType){
     if(eventType == ui::Widget::TouchEventType::ENDED){
-        Size visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
         //MButton *button = (MButton*) pSender;
         for (int i=0; i<card_tag.size(); i++) {
             if(card_tag[i]->isFirstTimeClick)
-                card_tag[i]->setMove(origin.x+visibleSize.width/2,origin.y+visibleSize.height/2, 0.15f);
-            
-        
+                card_tag[i]->setMove(originX + visibleWidth / 2, originY + visibleHeight / 2, 0.15f);
         }
     }
 }
@@ -329,7 +304,6 @@ void TLMienNam::cardCallBack(cocos2d::Ref *pSender, ui::Widget::TouchEventType e
 
 void TLMienNam::update(float delta){
     auto position = sprite->getPosition();
-    //cocos2d::log("%f",delta);
     position.x -= 250 * delta;
     if (position.x  < 0 - (sprite->getBoundingBox().size.width / 2))
         position.x = this->getBoundingBox().getMaxX() + sprite->getBoundingBox().size.width/2;

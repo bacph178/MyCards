@@ -48,7 +48,7 @@ bool ShowGame::init() {
     this->addChild(bkg);
     
     auto girl = MSprite::create("girl2.png");
-    girl->setPosition(MVec2(width/2-girl->getWidth()/2,0));
+    girl->setPosition(MVec2(visibleWidth / 2 - girl->getWidth() / 2, 0));
     this->addChild(girl);
     
     //====================================  buttons
@@ -56,14 +56,14 @@ bool ShowGame::init() {
     {
         
         auto btn_back = MButton::create(BTN_BACK,TAG_BTN_BACK);
-        btn_back->setPosition(MVec2(10,height-10- btn_back->getHeight()));
+        btn_back->setPosition(MVec2(10, visibleHeight - 10 - btn_back->getHeight()));
         btn_back->addTouchEventListener( CC_CALLBACK_2(ShowGame::menuCallBack, this) );
         this->addChild(btn_back);
         
         //btn Menu
         auto btn_mennu = MButton::create(BTN_MENU,TAG_BTN_MENU);
-        btn_mennu->setPosition(MVec2(width-10-btn_mennu->getWidth(),
-                                    height-10- btn_mennu->getHeight()));
+        btn_mennu->setPosition(MVec2(visibleWidth - 10 - btn_mennu->getWidth(),
+                                     visibleHeight - 10 - btn_mennu->getHeight()));
         btn_mennu->addTouchEventListener( CC_CALLBACK_2(ShowGame::menuCallBack, this) );
         this->addChild(btn_mennu);
     }
@@ -73,26 +73,26 @@ bool ShowGame::init() {
     {
         
         auto bkg_navigationbar = MSprite::create("ic_navigationbar.png");
-        bkg_navigationbar->setScale(width/bkg_navigationbar->getWidth(),1);
+        bkg_navigationbar->setScale(visibleWidth / bkg_navigationbar->getWidth(), 1);
         bkg_navigationbar->setPosition(MVec2(0,0));
         this->addChild(bkg_navigationbar);
         
         // nap xu
         auto btn_napxu = MButton::createExtends("ic_charge.png","Nạp xu",30,TAG_BTN_NAPXU);
-        btn_napxu->setPosition(MVec2(width*1.3f/5,
+        btn_napxu->setPosition(MVec2(visibleWidth * 1.3f / 5,
                                     bkg_navigationbar->getHeight()/2 - btn_napxu->getHeight()/2));
         btn_napxu->addTouchEventListener( CC_CALLBACK_2(ShowGame::menuCallBack, this) );
         this->addChild(btn_napxu);
         
         // tro giup
         auto btn_trogiup = MButton::createExtends(BTN_HELPER,"Trợ giúp",30,TAG_BTN_TROGIUP);
-        btn_trogiup->setPosition(Vec2(originX + width*3.3f/5,btn_napxu->getPosition().y));
+        btn_trogiup->setPosition(Vec2(originX + visibleWidth * 3.3f / 5, btn_napxu->getPosition().y));
         btn_trogiup->addTouchEventListener( CC_CALLBACK_2(ShowGame::menuCallBack, this) );
         this->addChild(btn_trogiup);
         
         // cai dat
         auto btn_caidat = MButton::createExtends("ic_setting.png","Cài đặt",30,TAG_BTN_CAIDAT);
-        btn_caidat->setPosition(Vec2(originX + width*4.3f/5,btn_napxu->getPosition().y));
+        btn_caidat->setPosition(Vec2(originX + visibleWidth * 4.3f / 5, btn_napxu->getPosition().y));
         btn_caidat->addTouchEventListener( CC_CALLBACK_2(ShowGame::menuCallBack, this) );
         this->addChild(btn_caidat);
     }
@@ -102,11 +102,11 @@ bool ShowGame::init() {
     // add scroll view
     auto game_button = MSprite::create("game_xocdia.png");
     
-    Size scollFrameSize = Size(width,game_button->getHeight()*1.2f);
+    Size scollFrameSize = Size(visibleWidth, game_button->getHeight() * 1.2f);
     auto scrollView = ScrollView::create();
     scrollView->setContentSize(scollFrameSize);
    
-    scrollView->setPosition(MVec2(0,height*1/6));
+    scrollView->setPosition(MVec2(0,visibleHeight * 1 / 6));
     scrollView->setDirection(ScrollView::Direction::HORIZONTAL);
     scrollView->setScrollBarEnabled(false);
     scrollView->setBounceEnabled(true);

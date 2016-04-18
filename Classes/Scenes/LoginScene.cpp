@@ -77,18 +77,18 @@ bool LoginScene::init() {
     
     //hotline
     auto hotline_txt = MLabel::create("Hotline : 19001755",25);
-    hotline_txt->setPosition(MVec2(15,height-15-hotline_txt->getHeight()));
+    hotline_txt->setPosition(MVec2(15, visibleHeight - 15 - hotline_txt->getHeight()));
     
     
     //version
     auto version_txt = MLabel::create("Ver 1.0",25);
-    version_txt->setPosition(MVec2(width-version_txt->getWidth()-15,
-                                  height-15-version_txt->getHeight()));
+    version_txt->setPosition(MVec2(visibleWidth - version_txt->getWidth() - 15,
+                                  visibleHeight - 15 - version_txt->getHeight()));
     
     
     //girl
     auto girl = MSprite::create(SPRITE_GIRL_LOGIN);
-    girl->setPosition(originX + width / 8, originY);
+    girl->setPosition(originX + visibleWidth / 8, originY);
     
     
     //========================= buttons
@@ -96,7 +96,8 @@ bool LoginScene::init() {
     
     //loginfacebook Button
     auto btn_login_facebook = MButton::create(BTN_LOGIN_FACEBOOK,"Đăng nhập facebook",30,TAG_BTN_FACEBOOK);
-    btn_login_facebook->setPosition(MVec2(width*0.95f-btn_login_facebook->getWidth(),height/3.0f));
+    btn_login_facebook->setPosition(MVec2(visibleWidth * 0.95f - btn_login_facebook->getWidth(),
+                                          visibleHeight / 3.0f));
     btn_login_facebook->setZoomScale(0.01f);
     btn_login_facebook->addTouchEventListener( CC_CALLBACK_2(LoginScene::menuCallBack,this));
     

@@ -24,7 +24,6 @@ bool CardSprite::init() {
     }
     
     this->isBack = false;
-    this->state = Idle;
     this->cardState = Idle;
     this->isFirstTimeClick = false;
     this->origionPostion = Vec2(0,0);
@@ -108,11 +107,11 @@ bool CardSprite::getIsBack(){
 }
 
 void CardSprite::setState(CardState state){
-    this->state = state;
+    this->cardState = state;
 }
 
 CardState CardSprite::getState(){
-    return this->state;
+    return this->cardState;
 }
 
 void CardSprite::setCardValue(int cardValue){
@@ -141,7 +140,7 @@ int CardSprite::getIndex(){
 
 
 void CardSprite::update(){
-    switch(state)
+    switch(cardState)
     {
         case Idle:
         {
